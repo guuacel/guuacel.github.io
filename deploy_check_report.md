@@ -103,14 +103,15 @@ HTTP 本地静态服务器检查结果：
 | 默认分支设置为 `main` | 通过 | 已执行 `git branch -M main` |
 | 远程仓库已配置 | 通过 | `origin` 指向 `https://github.com/ccddcc/ccddcc.github.io.git` |
 | 初始 commit | 通过 | 本报告随初始提交一起提交 |
-| 是否 push 到远程 | 未执行 | 未经额外确认，不执行 push |
+| 是否 push 到远程 | 失败 | 执行 `git push -u origin main` 时 GitHub 返回 Repository not found |
 
 ## 8. GitHub CLI
 
 | 检查项 | 状态 | 说明 |
 |---|---:|---|
 | `gh` 是否可用 | 未安装 | 当前环境未识别 `gh` 命令 |
-| 是否创建远程仓库 | 未执行 | 请手动在 GitHub 创建 `ccddcc.github.io` 或安装并登录 GitHub CLI |
+| GitHub 连接器账号 | 不匹配 | 当前连接器登录账号为 `guuacel`，不是目标账号 `ccddcc` |
+| 是否创建远程仓库 | 未执行 | 请使用 `ccddcc` 账号手动创建仓库，或安装并登录 GitHub CLI 后再创建 |
 
 ## 9. 仍需用户手动补充的 TODO
 
@@ -120,7 +121,24 @@ HTTP 本地静态服务器检查结果：
 4. 补充 ResearchGate 链接，或保持 `#`。
 5. 补充更多论文、PDF 链接和 BibTeX。
 6. 补充科研项目、专利软著、获奖信息。
-7. 在 GitHub 创建远程仓库后执行 `git push -u origin main`。
+7. 在 GitHub 使用 `ccddcc` 账号创建远程仓库后执行 `git push -u origin main`。
+
+## 11. 部署尝试记录
+
+已尝试执行：
+
+```bash
+git push -u origin main
+```
+
+失败原因：
+
+```text
+remote: Repository not found.
+fatal: repository 'https://github.com/ccddcc/ccddcc.github.io.git/' not found
+```
+
+判断：目标远程仓库尚未创建，或当前本机 Git 凭据没有 `ccddcc/ccddcc.github.io` 的访问权限。当前 GitHub 连接器登录账号为 `guuacel`，不能用于创建或部署到 `ccddcc` 账号。
 
 ## 10. 结论
 
