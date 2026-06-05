@@ -73,7 +73,7 @@ HTTP 本地静态服务器检查结果：
 | 默认语言为中文 | 通过 | `main.js` 默认 `zh` |
 | English 按钮切换英文 | 通过 | 导航栏按钮切换为 `en` |
 | 中文按钮切回中文 | 通过 | 导航栏按钮切换为 `zh` |
-| 使用 `localStorage` 保存语言 | 通过 | key 为 `ccddcc-homepage-language` |
+| 使用 `localStorage` 保存语言 | 通过 | key 为 `guuacel-homepage-language` |
 | 刷新后语言保持 | 通过 | 初始化时读取 `localStorage` |
 | 首页、导航栏、About、Research、Publications、Projects、Patents、Awards、Contact 均可切换 | 通过 | `profile.json` 中 `zh` 与 `en` 字段完整 |
 | 页面输出空值占位词 | 通过 | 源码扫描未发现相关空值字面量，渲染函数也有 fallback |
@@ -103,7 +103,7 @@ HTTP 本地静态服务器检查结果：
 | 默认分支设置为 `main` | 通过 | 已执行 `git branch -M main` |
 | 远程仓库已配置 | 通过 | `origin` 指向 `https://github.com/guuacel/guuacel.github.io.git` |
 | 初始 commit | 通过 | 本报告随初始提交一起提交 |
-| 是否 push 到远程 | 失败 | `git ls-remote origin` 返回 Repository not found |
+| 是否 push 到远程 | 通过 | 已执行 `git push -u origin main` |
 
 ## 8. GitHub CLI
 
@@ -111,7 +111,7 @@ HTTP 本地静态服务器检查结果：
 |---|---:|---|
 | `gh` 是否可用 | 未安装 | 当前环境未识别 `gh` 命令 |
 | GitHub 连接器账号 | 匹配 | 当前目标账号已调整为 `guuacel` |
-| 是否创建远程仓库 | 未执行 | 当前环境没有 `gh`，GitHub 连接器也看不到 `guuacel/guuacel.github.io` |
+| 是否创建远程仓库 | 通过 | 已通过本机 Git 凭据调用 GitHub API 创建 `guuacel/guuacel.github.io` |
 
 ## 9. 仍需用户手动补充的 TODO
 
@@ -121,30 +121,33 @@ HTTP 本地静态服务器检查结果：
 4. 补充 ResearchGate 链接，或保持 `#`。
 5. 补充更多论文、PDF 链接和 BibTeX。
 6. 补充科研项目、专利软著、获奖信息。
-7. 先在 GitHub 上创建或授权访问 `guuacel/guuacel.github.io`，再执行 `git push -u origin main`。
+7. GitHub Pages 首次部署可能需要等待数分钟；如果页面未更新，请稍后刷新或清理浏览器缓存。
 
-## 10. 部署尝试记录
+## 10. 部署记录
 
-目标已调整为：
+目标仓库：
 
 ```text
 https://github.com/guuacel/guuacel.github.io.git
 ```
 
-已重新执行远程可访问性检查：
-
-```bash
-git ls-remote origin
-```
-
-失败原因：
+已创建远程仓库：
 
 ```text
-remote: Repository not found.
-fatal: repository 'https://github.com/guuacel/guuacel.github.io.git/' not found
+guuacel/guuacel.github.io
 ```
 
-当前 GitHub 连接器登录账号为 `guuacel`，但可见仓库列表中没有 `guuacel/guuacel.github.io`。需要先在 GitHub 网页端创建该仓库，或授予当前凭据访问权限。
+已推送本地 `main` 分支：
+
+```bash
+git push -u origin main
+```
+
+GitHub Pages 地址：
+
+```text
+https://guuacel.github.io
+```
 
 ## 11. 结论
 

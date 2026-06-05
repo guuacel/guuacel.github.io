@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const STORAGE_KEY = "ccddcc-homepage-language";
+  const STORAGE_KEY = "guuacel-homepage-language";
   const DATA_PATH = "assets/data/profile.json";
   const sections = ["about", "research", "publications", "projects", "patents", "awards", "contact"];
   let profile;
