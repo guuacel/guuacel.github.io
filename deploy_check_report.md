@@ -149,6 +149,12 @@ GitHub Pages 地址：
 https://guuacel.github.io
 ```
 
+远程页面访问检查：
+
+```text
+HTTP 200 OK
+```
+
 ## 11. 结论
 
 该目录已整理为可直接作为 GitHub Pages 仓库使用的静态站点版本。`index.html` 位于根目录，核心资源路径均为相对路径，`.nojekyll` 已创建，中英文切换功能由 `profile.json` 和 `main.js` 驱动。
