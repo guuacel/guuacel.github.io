@@ -103,7 +103,7 @@ HTTP 本地静态服务器检查结果：
 | 默认分支设置为 `main` | 通过 | 已执行 `git branch -M main` |
 | 远程仓库已配置 | 通过 | `origin` 指向 `https://github.com/guuacel/guuacel.github.io.git` |
 | 初始 commit | 通过 | 本报告随初始提交一起提交 |
-| 是否 push 到远程 | 待重新尝试 | 目标已改为 `guuacel/guuacel.github.io` |
+| 是否 push 到远程 | 失败 | `git ls-remote origin` 返回 Repository not found |
 
 ## 8. GitHub CLI
 
@@ -111,7 +111,7 @@ HTTP 本地静态服务器检查结果：
 |---|---:|---|
 | `gh` 是否可用 | 未安装 | 当前环境未识别 `gh` 命令 |
 | GitHub 连接器账号 | 匹配 | 当前目标账号已调整为 `guuacel` |
-| 是否创建远程仓库 | 未执行 | 本地将尝试 push 到已配置的 `origin` |
+| 是否创建远程仓库 | 未执行 | 当前环境没有 `gh`，GitHub 连接器也看不到 `guuacel/guuacel.github.io` |
 
 ## 9. 仍需用户手动补充的 TODO
 
@@ -121,7 +121,7 @@ HTTP 本地静态服务器检查结果：
 4. 补充 ResearchGate 链接，或保持 `#`。
 5. 补充更多论文、PDF 链接和 BibTeX。
 6. 补充科研项目、专利软著、获奖信息。
-7. 确认 GitHub Pages 是否使用 `main` 分支作为部署来源。
+7. 先在 GitHub 上创建或授权访问 `guuacel/guuacel.github.io`，再执行 `git push -u origin main`。
 
 ## 10. 部署尝试记录
 
@@ -131,11 +131,20 @@ HTTP 本地静态服务器检查结果：
 https://github.com/guuacel/guuacel.github.io.git
 ```
 
-待重新执行：
+已重新执行远程可访问性检查：
 
 ```bash
-git push -u origin main
+git ls-remote origin
 ```
+
+失败原因：
+
+```text
+remote: Repository not found.
+fatal: repository 'https://github.com/guuacel/guuacel.github.io.git/' not found
+```
+
+当前 GitHub 连接器登录账号为 `guuacel`，但可见仓库列表中没有 `guuacel/guuacel.github.io`。需要先在 GitHub 网页端创建该仓库，或授予当前凭据访问权限。
 
 ## 11. 结论
 
