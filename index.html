@@ -1,48 +1,117 @@
-﻿<!doctype html>
-<html lang="zh-CN">
+<!DOCTYPE html>
+<html lang="zh" data-theme="light">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Chuanda Cai | Academic Homepage</title>
-  <meta name="description" content="Chuanda Cai 的中英文双语学术个人主页，适用于 GitHub Pages 部署。">
-  <meta name="keywords" content="Chuanda Cai, academic homepage, information security, applied cryptography, secret image sharing">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <title>个人学术主页 | Academic Homepage</title>
+  <meta name="description" content="个人学术主页 - 研究方向包括工业控制网络安全、工业物联网安全、密码协议、零信任认证、安全数据共享与隐私保护计算。">
+  <meta name="keywords" content="网络安全,工业控制,物联网,密码协议,零信任,隐私保护,学术主页,cybersecurity,ICS,IIoT,cryptography">
   <meta name="author" content="Chuanda Cai">
-  <link rel="canonical" href="https://guuacel.github.io">
-  <meta property="og:title" content="Chuanda Cai | Academic Homepage">
-  <meta property="og:description" content="A bilingual academic homepage for GitHub Pages.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="个人学术主页 | Academic Homepage">
+  <meta property="og:description" content="个人学术主页 - 研究方向包括工业控制网络安全、工业物联网安全、密码协议等。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://guuacel.github.io">
-  <meta property="og:image" content="assets/img/avatar-placeholder.png">
+  <meta property="og:image" content="https://guuacel.github.io/assets/img/avatar-placeholder.png">
+  <meta property="og:site_name" content="Academic Homepage">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="个人学术主页 | Academic Homepage">
+  <meta name="twitter:description" content="个人学术主页 - 研究方向包括工业控制网络安全、工业物联网安全、密码协议等。">
+
   <link rel="icon" type="image/png" href="assets/img/avatar-placeholder.png">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://guuacel.github.io">
+
+  <!-- Preload critical assets -->
   <link rel="preload" href="assets/css/style.css" as="style">
+  <link rel="preload" href="assets/data/profile.json" as="fetch" crossorigin="anonymous">
+
+  <!-- Stylesheet -->
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a class="brand" href="#home" data-bind="site.brand">Chuanda Cai</a>
-      <button class="menu-button" id="menuButton" type="button" aria-label="Toggle navigation" aria-expanded="false">
-        <span></span><span></span><span></span>
+
+  <!-- ====================================================================
+       Navigation Bar
+       ==================================================================== -->
+  <header class="navbar" id="navbar" role="banner">
+    <div class="container">
+      <a href="#hero" class="nav-brand" aria-label="Home">🎓 Academic</a>
+
+      <nav class="nav-links" id="navLinks" role="navigation" aria-label="Main navigation">
+        <!-- Dynamically rendered by main.js -->
+      </nav>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
-      <nav class="site-nav" id="siteNav" aria-label="Main navigation"></nav>
     </div>
   </header>
 
-  <main id="home">
-    <section class="hero section-band" id="hero" aria-labelledby="heroTitle"></section>
-    <section class="section" id="about" aria-labelledby="aboutTitle"></section>
-    <section class="section section-alt" id="research" aria-labelledby="researchTitle"></section>
-    <section class="section" id="publications" aria-labelledby="publicationsTitle"></section>
-    <section class="section section-alt" id="projects" aria-labelledby="projectsTitle"></section>
-    <section class="section" id="patents" aria-labelledby="patentsTitle"></section>
-    <section class="section section-alt" id="awards" aria-labelledby="awardsTitle"></section>
-    <section class="section" id="contact" aria-labelledby="contactTitle"></section>
+  <!-- ====================================================================
+       Main Content
+       ==================================================================== -->
+  <main role="main">
+    <!-- Hero Section -->
+    <section class="hero" id="hero" aria-labelledby="hero-heading">
+      <!-- Dynamically rendered by main.js -->
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about" aria-labelledby="about-heading">
+      <!-- Dynamically rendered by main.js -->
+    </section>
+
+    <!-- Research Section -->
+    <section class="section" id="research" aria-labelledby="research-heading">
+      <!-- Dynamically rendered by main.js -->
+    </section>
+
+    <!-- Publications Section -->
+    <section class="section" id="publications" aria-labelledby="publications-heading">
+      <!-- Dynamically rendered by main.js -->
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section" id="projects" aria-labelledby="projects-heading">
+      <!-- Dynamically rendered by main.js -->
+    </section>
+
+    <!-- Patents Section -->
+    <section class="section" id="patents" aria-labelledby="patents-heading">
+      <!-- Dynamically rendered by main.js -->
+    </section>
+
+    <!-- Awards Section -->
+    <section class="section" id="awards" aria-labelledby="awards-heading">
+      <!-- Dynamically rendered by main.js -->
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact" aria-labelledby="contact-heading">
+      <!-- Dynamically rendered by main.js -->
+    </section>
   </main>
 
-  <footer class="site-footer" id="footer"></footer>
-  <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
+  <!-- ====================================================================
+       Footer
+       ==================================================================== -->
+  <footer class="footer" id="footer" role="contentinfo">
+    <!-- Dynamically rendered by main.js -->
+  </footer>
 
-  <script src="assets/js/main.js?v=20260605-project-text"></script>
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top" title="Back to top">↑</button>
+
+  <!-- Scripts -->
+  <script src="assets/js/main.js?v=20260605-restore-data"></script>
 </body>
 </html>
-

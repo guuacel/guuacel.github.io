@@ -1,256 +1,641 @@
+/**
+ * Academic Personal Homepage — Main JavaScript
+ *
+ * Responsibilities:
+ *  - Load profile.json
+ *  - Render all sections dynamically
+ *  - Language switching (zh / en)
+ *  - Mobile navigation
+ *  - Publication filtering
+ *  - BibTeX expand/collapse
+ *  - Smooth scrolling
+ *  - Back-to-top button
+ */
+
 (function () {
-  "use strict";
+  'use strict';
 
-  const STORAGE_KEY = "guuacel-homepage-language";
-  const DATA_PATH = "assets/data/profile.json";
-  const sections = ["about", "research", "publications", "projects", "patents", "awards", "contact"];
-  let profile;
-  let lang = "zh";
+  /* ======================================================================
+     State
+     ====================================================================== */
+  let profileData = null;
+  let currentLang = 'zh';
 
-  const $ = (id) => document.getElementById(id);
-  const safe = (value, fallback = "TODO") => {
-    if (value == void 0 || value === "") return fallback;
-    return String(value);
-  };
-  const esc = (value) => {
-    const span = document.createElement("span");
-    span.textContent = safe(value);
-    return span.innerHTML;
-  };
-  const current = () => profile[lang] || profile.zh || profile.en;
+  /* ======================================================================
+     DOM References
+     ====================================================================== */
+  const DOM = {};
 
-  async function init() {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      lang = saved === "en" || saved === "zh" ? saved : "zh";
-      const response = await fetch(DATA_PATH);
-      if (!response.ok) throw new Error(`${DATA_PATH} returned ${response.status}`);
-      profile = await response.json();
-      renderAll();
-      bindGlobalEvents();
-    } catch (error) {
-      document.querySelector("main").innerHTML = `
-        <section class="error container">
-          <h1>Profile data failed to load</h1>
-          <p>Please check that <code>${DATA_PATH}</code> exists and is valid JSON.</p>
-          <p class="muted">${esc(error.message)}</p>
-        </section>`;
-      console.error(error);
-    }
+  function cacheDom() {
+    DOM.navbar = document.getElementById('navbar');
+    DOM.navLinks = document.getElementById('navLinks');
+    DOM.menuToggle = document.getElementById('menuToggle');
+    DOM.langToggle = document.getElementById('langToggle');
+    DOM.backToTop = document.getElementById('backToTop');
+    DOM.heroSection = document.getElementById('hero');
+    DOM.aboutSection = document.getElementById('about');
+    DOM.researchSection = document.getElementById('research');
+    DOM.pubSection = document.getElementById('publications');
+    DOM.projectsSection = document.getElementById('projects');
+    DOM.patentsSection = document.getElementById('patents');
+    DOM.awardsSection = document.getElementById('awards');
+    DOM.contactSection = document.getElementById('contact');
+    DOM.footer = document.getElementById('footer');
+    DOM.html = document.documentElement;
   }
 
-  function setLanguage(nextLang) {
-    lang = nextLang === "en" ? "en" : "zh";
-    localStorage.setItem(STORAGE_KEY, lang);
+  /* ======================================================================
+     Helpers
+     ====================================================================== */
+  function t(path) {
+    // Access nested property: "site.nav.home" -> profileData[lang].site.nav.home
+    const keys = path.split('.');
+    let val = profileData[currentLang];
+    for (const k of keys) {
+      if (val == null) return path;
+      val = val[k];
+    }
+    return val != null ? val : path;
+  }
+
+  function escapeHTML(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  /* ======================================================================
+     Language
+     ====================================================================== */
+  function setLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('guuacel-homepage-language', lang);
+    updateLangToggle();
     renderAll();
   }
 
-  function renderAll() {
-    document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
-    const data = current();
-    document.title = safe(data.site?.title, "Chuanda Cai | Academic Homepage");
-    renderNav(data);
-    renderHero(data);
-    renderAbout(data);
-    renderResearch(data);
-    renderPublications(data);
-    renderProjects(data);
-    renderPatents(data);
-    renderAwards(data);
-    renderContact(data);
-    renderFooter(data);
-    highlightActiveNav();
+  function updateLangToggle() {
+    if (DOM.langToggle) {
+      DOM.langToggle.textContent = t('site.languageLabel');
+    }
+    // Update HTML lang attribute
+    DOM.html.lang = currentLang;
   }
 
-  function renderNav(data) {
-    const nav = data.site.nav;
-    const navHtml = sections.map((key) => `<a href="#${key}">${esc(nav[key])}</a>`).join("");
-    $("siteNav").innerHTML = `
-      <a href="#home">${esc(nav.home)}</a>
-      ${navHtml}
-      <button class="language-toggle" id="languageToggle" type="button">${lang === "zh" ? "English" : "中文"}</button>`;
-    const brand = document.querySelector("[data-bind='site.brand']");
-    if (brand) brand.textContent = safe(data.site.brand, "Chuanda Cai");
-    $("languageToggle").addEventListener("click", () => setLanguage(lang === "zh" ? "en" : "zh"));
+  /* ======================================================================
+     Navigation
+     ====================================================================== */
+  function initNav() {
+    // Mobile menu toggle
+    DOM.menuToggle.addEventListener('click', function () {
+      const isOpen = DOM.navLinks.classList.toggle('open');
+      DOM.menuToggle.classList.toggle('active');
+      // Update aria
+      DOM.menuToggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Close mobile menu on link click
+    DOM.navLinks.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        DOM.navLinks.classList.remove('open');
+        DOM.menuToggle.classList.remove('active');
+        DOM.menuToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Highlight active nav on scroll
+    let scrollTicking = false;
+    window.addEventListener('scroll', function () {
+      if (!scrollTicking) {
+        requestAnimationFrame(function () {
+          highlightNav();
+          scrollTicking = false;
+        });
+        scrollTicking = true;
+      }
+    });
   }
 
-  function renderHero(data) {
-    const hero = data.hero;
-    const links = hero.links || {};
-    $("hero").innerHTML = `
-      <div class="container hero-grid">
-        <img class="avatar" src="${esc(hero.avatar)}" alt="${esc(hero.name)}">
-        <div>
-          <p class="kicker">${esc(hero.kicker)}</p>
-          <h1 id="heroTitle">${esc(hero.name)}</h1>
-          <p class="lead">${esc(hero.title)}</p>
-          <p class="muted">${esc(hero.affiliation)}</p>
-          <p>${esc(hero.bio)}</p>
-          <div class="button-row">
-            ${linkButton(links.email ? `mailto:${links.email}` : "#", "Email")}
-            ${linkButton(links.github, "GitHub")}
-            ${linkButton(links.googleScholar, "Google Scholar")}
-            ${linkButton(links.orcid, "ORCID")}
-            ${linkButton(links.researchGate, "ResearchGate")}
-            ${linkButton(links.cv, "CV")}
+  function highlightNav() {
+    const sections = document.querySelectorAll('section[id]');
+    const scrollPos = window.scrollY + 100;
+
+    let currentId = '';
+    sections.forEach(function (sec) {
+      const top = sec.offsetTop - 80;
+      if (scrollPos >= top) {
+        currentId = sec.getAttribute('id');
+      }
+    });
+
+    DOM.navLinks.querySelectorAll('a').forEach(function (link) {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + currentId) {
+        link.classList.add('active');
+      }
+    });
+  }
+
+  /* ======================================================================
+     Back to Top
+     ====================================================================== */
+  function initBackToTop() {
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 500) {
+        DOM.backToTop.classList.add('visible');
+      } else {
+        DOM.backToTop.classList.remove('visible');
+      }
+    });
+
+    DOM.backToTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  /* ======================================================================
+     Rendering — Navigation
+     ====================================================================== */
+  function renderNav() {
+    const nav = profileData[currentLang].site.nav;
+    const langLabel = t('site.languageLabel');
+
+    DOM.navLinks.innerHTML = `
+      <a href="#hero">${escapeHTML(nav.home)}</a>
+      <a href="#about">${escapeHTML(nav.about)}</a>
+      <a href="#research">${escapeHTML(nav.research)}</a>
+      <a href="#publications">${escapeHTML(nav.publications)}</a>
+      <a href="#projects">${escapeHTML(nav.projects)}</a>
+      <a href="#patents">${escapeHTML(nav.patents)}</a>
+      <a href="#awards">${escapeHTML(nav.awards)}</a>
+      <a href="#contact">${escapeHTML(nav.contact)}</a>
+      <button class="lang-toggle" id="langToggle" aria-label="Switch language">${escapeHTML(langLabel)}</button>
+    `;
+
+    // Re-cache the dynamically created button.
+    DOM.langToggle = document.getElementById('langToggle');
+  }
+
+  /* ======================================================================
+     Rendering — Hero
+     ====================================================================== */
+  function renderHero() {
+    DOM.heroSection.innerHTML = `
+      <div class="container">
+        <div class="hero-avatar">
+          <img src="assets/img/avatar-placeholder.png" alt="${escapeHTML(t('hero.name'))}" width="160" height="160">
+        </div>
+        <div class="hero-info">
+          <h1 class="hero-name">${escapeHTML(t('hero.name'))}</h1>
+          <p class="hero-title">${escapeHTML(t('hero.title'))}</p>
+          <p class="hero-affiliation">${escapeHTML(t('hero.affiliation'))}</p>
+          <p class="hero-bio">${escapeHTML(t('hero.bio'))}</p>
+          <div class="hero-links" id="heroLinks"></div>
+        </div>
+      </div>
+    `;
+
+    const linksContainer = document.getElementById('heroLinks');
+    const links = profileData[currentLang].hero.links;
+
+    const linkDefs = [
+      { key: 'email', icon: '📧', label: 'Email', href: links.email ? 'mailto:' + links.email : '#' },
+      { key: 'github', icon: '🔗', label: 'GitHub', href: links.github },
+      { key: 'googleScholar', icon: '🎓', label: 'Google Scholar', href: links.googleScholar },
+      { key: 'orcid', icon: '🆔', label: 'ORCID', href: links.orcid },
+      { key: 'researchGate', icon: '🌐', label: 'ResearchGate', href: links.researchGate },
+      { key: 'cv', icon: '📄', label: 'CV', href: links.cv },
+    ];
+
+    linkDefs.forEach(function (def) {
+      const a = document.createElement('a');
+      a.className = 'hero-link';
+      a.href = def.href;
+      if (def.key === 'email') {
+        // handled via mailto
+      } else if (def.href === '#' || def.href.indexOf('TODO') > -1) {
+        a.setAttribute('data-todo', 'true');
+      }
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.innerHTML = `<span class="icon">${def.icon}</span> ${def.label}`;
+      linksContainer.appendChild(a);
+    });
+  }
+
+  /* ======================================================================
+     Rendering — About
+     ====================================================================== */
+  function renderAbout() {
+    const about = profileData[currentLang].about;
+
+    let eduHTML = '';
+    about.education.forEach(function (edu) {
+      eduHTML += `
+        <div class="edu-item">
+          <div class="edu-degree">${escapeHTML(edu.degree)}</div>
+          <div class="edu-school">${escapeHTML(edu.school)}</div>
+          <div class="edu-year">${escapeHTML(edu.year)}</div>
+        </div>
+      `;
+    });
+
+    let interestHTML = '';
+    about.researchInterests.forEach(function (ri) {
+      interestHTML += `<span class="interest-tag">${escapeHTML(ri)}</span>`;
+    });
+
+    DOM.aboutSection.innerHTML = `
+      <div class="container">
+        <h2 class="section-title">${escapeHTML(about.title)}</h2>
+        <div class="about-content">
+          <div class="about-bio">
+            <p>${escapeHTML(about.bio)}</p>
+          </div>
+          <div class="about-details">
+            <h3>${currentLang === 'zh' ? '教育背景' : 'Education'}</h3>
+            ${eduHTML}
+            <h4>${currentLang === 'zh' ? '研究兴趣' : 'Research Interests'}</h4>
+            <div class="interest-tags">${interestHTML}</div>
           </div>
         </div>
-      </div>`;
+      </div>
+    `;
   }
 
-  function linkButton(href, label) {
-    const link = safe(href, "#");
-    return `<a class="button secondary" href="${esc(link)}" ${link !== "#" ? 'target="_blank" rel="noopener noreferrer"' : ""}>${esc(label)}</a>`;
-  }
+  /* ======================================================================
+     Rendering — Research
+     ====================================================================== */
+  function renderResearch() {
+    const research = profileData[currentLang].research;
 
-  function renderAbout(data) {
-    const about = data.about;
-    const education = (about.education || []).map((item) => `
-      <div class="timeline-item">
-        <h3>${esc(item.degree)}</h3>
-        <p class="muted">${esc(item.school)} | ${esc(item.period)}</p>
-      </div>`).join("");
-    const interests = (about.interests || []).map((item) => `<li class="tag">${esc(item)}</li>`).join("");
-    $("about").innerHTML = `
-      <div class="container grid-2">
-        <div>
-          <h2 id="aboutTitle">${esc(about.title)}</h2>
-          <p>${esc(about.bio)}</p>
+    let cardsHTML = '';
+    research.areas.forEach(function (area) {
+      cardsHTML += `
+        <div class="research-card">
+          <div class="research-card-icon">${escapeHTML(area.icon)}</div>
+          <h3 class="research-card-name">${escapeHTML(area.name)}</h3>
+          <p class="research-card-desc">${escapeHTML(area.description)}</p>
+          <div class="research-card-keywords">
+            ${area.keywords.map(function (k) { return '<span>' + escapeHTML(k) + '</span>'; }).join('')}
+          </div>
         </div>
-        <div>
-          <h3>${esc(about.educationTitle)}</h3>
-          ${education || `<p class="muted">TODO</p>`}
-          <h3>${esc(about.interestsTitle)}</h3>
-          <ul class="tag-list">${interests || `<li class="tag">TODO</li>`}</ul>
-        </div>
-      </div>`;
-  }
+      `;
+    });
 
-  function renderResearch(data) {
-    const research = data.research;
-    const cards = (research.items || []).map((item) => `
-      <article class="card">
-        <h3>${esc(item.title)}</h3>
-        <p>${esc(item.description)}</p>
-        <ul class="tag-list">${(item.keywords || ["TODO"]).map((k) => `<li class="tag">${esc(k)}</li>`).join("")}</ul>
-      </article>`).join("");
-    $("research").innerHTML = `
+    DOM.researchSection.innerHTML = `
       <div class="container">
-        <h2 id="researchTitle">${esc(research.title)}</h2>
-        <p class="lead">${esc(research.description)}</p>
-        <div class="card-grid">${cards || `<article class="card">TODO</article>`}</div>
-      </div>`;
+        <h2 class="section-title">${escapeHTML(research.title)}</h2>
+        <p class="section-desc">${escapeHTML(research.description)}</p>
+        <div class="research-grid">${cardsHTML}</div>
+      </div>
+    `;
   }
 
-  function renderPublications(data) {
-    const publications = data.publications;
-    const papers = (publications.items || []).map((paper, index) => `
-      <article class="paper">
-        <p class="paper-title">${esc(paper.title)}</p>
-        <p class="paper-meta">${esc(paper.authors)}</p>
-        <p class="paper-meta"><em>${esc(paper.venue)}</em>, ${esc(paper.year)}</p>
-        <div class="paper-actions">
-          ${paper.doi ? `<a class="small-link" href="https://doi.org/${esc(paper.doi)}" target="_blank" rel="noopener noreferrer">DOI</a>` : ""}
-          ${paper.pdf && paper.pdf !== "#" ? `<a class="small-link" href="${esc(paper.pdf)}" target="_blank" rel="noopener noreferrer">PDF</a>` : ""}
-          ${paper.bibtex ? `<button class="small-link bibtex-button" type="button" data-bibtex="bibtex-${index}">BibTeX</button>` : ""}
-        </div>
-        ${paper.bibtex ? `<pre class="bibtex" id="bibtex-${index}"><code>${esc(paper.bibtex)}</code></pre>` : ""}
-      </article>`).join("");
-    $("publications").innerHTML = `
+  /* ======================================================================
+     Rendering — Publications
+     ====================================================================== */
+  function renderPublications() {
+    const pub = profileData[currentLang].publications;
+    const papers = pub.papers;
+
+    DOM.pubSection.innerHTML = `
       <div class="container">
-        <h2 id="publicationsTitle">${esc(publications.title)}</h2>
-        ${papers || `<p class="muted">TODO</p>`}
-      </div>`;
-    document.querySelectorAll(".bibtex-button").forEach((button) => {
-      button.addEventListener("click", () => {
-        const target = $(button.dataset.bibtex);
-        if (target) target.classList.toggle("open");
+        <h2 class="section-title">${escapeHTML(pub.title)}</h2>
+        <div class="pub-filters" id="pubFilters">
+          <button class="pub-filter active" data-filter="all">${escapeHTML(pub.filterAll)}</button>
+          <button class="pub-filter" data-filter="journal">${escapeHTML(pub.filterJournal)}</button>
+          <button class="pub-filter" data-filter="conference">${escapeHTML(pub.filterConference)}</button>
+          <button class="pub-filter" data-filter="preprint">${escapeHTML(pub.filterPreprint)}</button>
+        </div>
+        <div id="pubContainer"></div>
+      </div>
+    `;
+
+    renderPubList(papers, 'all');
+
+    // Filter events
+    document.getElementById('pubFilters').addEventListener('click', function (e) {
+      if (e.target.classList.contains('pub-filter')) {
+        document.querySelectorAll('.pub-filter').forEach(function (btn) {
+          btn.classList.remove('active');
+        });
+        e.target.classList.add('active');
+        renderPubList(papers, e.target.dataset.filter);
+      }
+    });
+  }
+
+  function renderPubList(papers, filter) {
+    const container = document.getElementById('pubContainer');
+    if (!container) return;
+
+    const filtered = filter === 'all'
+      ? papers
+      : papers.filter(function (p) { return p.type === filter; });
+
+    // Group by year (descending)
+    const byYear = {};
+    filtered.forEach(function (p) {
+      if (!byYear[p.year]) byYear[p.year] = [];
+      byYear[p.year].push(p);
+    });
+
+    const years = Object.keys(byYear).sort(function (a, b) { return b - a; });
+
+    let html = '';
+    years.forEach(function (year) {
+      html += `<div class="pub-year-group">
+        <h3 class="pub-year">${year}</h3>
+        <div class="pub-list">`;
+
+      byYear[year].forEach(function (paper, idx) {
+        const typeLabels = {
+          journal: { zh: '期刊', en: 'Journal' },
+          conference: { zh: '会议', en: 'Conf' },
+          preprint: { zh: '预印本', en: 'Preprint' },
+        };
+
+        const typeLabel = typeLabels[paper.type]
+          ? typeLabels[paper.type][currentLang]
+          : paper.type;
+
+        const bibtexId = 'bibtex-' + year + '-' + idx;
+
+        html += `
+          <div class="pub-item">
+            <div class="pub-title">${escapeHTML(paper.title)}</div>
+            <div class="pub-authors">${escapeHTML(paper.authors)}</div>
+            <div class="pub-venue">${escapeHTML(paper.venue)}</div>
+            <div class="pub-meta">
+              <span class="pub-type-badge pub-type-${paper.type}">${typeLabel}</span>`;
+
+        if (paper.doi) {
+          html += `<a href="https://doi.org/${escapeHTML(paper.doi)}" class="pub-btn" target="_blank" rel="noopener">📎 ${escapeHTML(t('publications.doiLabel'))}</a>`;
+        }
+        if (paper.pdf && paper.pdf !== '#') {
+          html += `<a href="${escapeHTML(paper.pdf)}" class="pub-btn" target="_blank" rel="noopener">📄 ${escapeHTML(t('publications.pdfLabel'))}</a>`;
+        }
+        if (paper.code && paper.code !== '#') {
+          html += `<a href="${escapeHTML(paper.code)}" class="pub-btn" target="_blank" rel="noopener">💻 ${escapeHTML(t('publications.codeLabel'))}</a>`;
+        }
+        if (paper.bibtex) {
+          html += `<button class="pub-btn bibtex-toggle" data-target="${bibtexId}">📋 ${escapeHTML(t('publications.bibtexLabel'))}</button>`;
+        }
+
+        html += `</div>`;
+
+        if (paper.bibtex) {
+          html += `<pre class="bibtex-content" id="${bibtexId}"><code>${escapeHTML(paper.bibtex)}</code></pre>`;
+        }
+
+        html += `</div>`;
+      });
+
+      html += `</div></div>`;
+    });
+
+    if (filtered.length === 0) {
+      html = '<p style="text-align:center;color:var(--color-text-muted);padding:2rem 0;">No publications found in this category.</p>';
+    }
+
+    container.innerHTML = html;
+
+    // Bind BibTeX toggles
+    container.querySelectorAll('.bibtex-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const target = document.getElementById(btn.dataset.target);
+        if (target) {
+          target.classList.toggle('open');
+        }
       });
     });
   }
 
-  function renderProjects(data) {
-    const projects = data.projects;
-    const items = (projects.items || []).map((item) => `
-      <article class="project">
-        <h3>${esc(item.title)}</h3>
-        <p class="muted">${esc(item.period)} | ${esc(item.role)}</p>
-        <p>${esc(item.description)}</p>
-      </article>`).join("");
-    $("projects").innerHTML = `<div class="container"><h2 id="projectsTitle">${esc(projects.title)}</h2>${items || `<p class="muted">TODO</p>`}</div>`;
+  /* ======================================================================
+     Rendering — Projects
+     ====================================================================== */
+  function renderProjects() {
+    const proj = profileData[currentLang].projects;
+
+    let itemsHTML = '';
+    proj.items.forEach(function (item) {
+      itemsHTML += `
+        <div class="project-item">
+          <div class="project-header">
+            <h3 class="project-name">${escapeHTML(item.name)}</h3>
+            <span class="project-period">${escapeHTML(item.period)}</span>
+          </div>
+          <p class="project-desc">${escapeHTML(item.description)}</p>
+          <div class="project-meta">
+            <span><strong>${escapeHTML(proj.roleLabel)}:</strong> ${escapeHTML(item.role)}</span>
+            <span><strong>${escapeHTML(proj.techLabel)}:</strong> ${escapeHTML(proj.periodLabel)} ${escapeHTML(item.period)}</span>
+          </div>
+          <div class="project-tech">
+            ${item.tech.map(function (t) { return '<span>' + escapeHTML(t) + '</span>'; }).join('')}
+          </div>
+          ${item.link && item.link !== '#' ? `<a class="project-link" href="${escapeHTML(item.link)}" target="_blank" rel="noopener">🔗 View Project</a>` : ''}
+        </div>
+      `;
+    });
+
+    DOM.projectsSection.innerHTML = `
+      <div class="container">
+        <h2 class="section-title">${escapeHTML(proj.title)}</h2>
+        <div class="project-list">${itemsHTML}</div>
+      </div>
+    `;
   }
 
-  function renderPatents(data) {
-    const patents = data.patents;
-    const items = (patents.items || []).map((item) => `
-      <article class="timeline-item">
-        <h3>${esc(item.title)}</h3>
-        <p class="muted">${esc(item.type)} | ${esc(item.status)} | ${esc(item.year)}</p>
-        <p>${esc(item.note)}</p>
-      </article>`).join("");
-    $("patents").innerHTML = `<div class="container"><h2 id="patentsTitle">${esc(patents.title)}</h2>${items || `<p class="muted">TODO</p>`}</div>`;
+  /* ======================================================================
+     Rendering — Patents
+     ====================================================================== */
+  function renderPatents() {
+    const pat = profileData[currentLang].patents;
+
+    const statusClasses = {
+      '已授权': 'status-granted',
+      'Granted': 'status-granted',
+      '实质审查': 'status-review',
+      'Under Review': 'status-review',
+      '已登记': 'status-registered',
+      'Registered': 'status-registered',
+    };
+
+    let rowsHTML = '';
+    pat.items.forEach(function (item) {
+      const statusClass = statusClasses[item.status] || '';
+      rowsHTML += `
+        <tr>
+          <td class="patent-name">${escapeHTML(item.name)}</td>
+          <td>${escapeHTML(item.type)}</td>
+          <td><span class="patent-status ${statusClass}">${escapeHTML(item.status)}</span></td>
+          <td>${item.year}</td>
+          <td>${escapeHTML(item.role)}</td>
+          <td>${escapeHTML(item.note)}</td>
+        </tr>
+      `;
+    });
+
+    const headings = currentLang === 'zh'
+      ? ['名称', '类型', '状态', '年份', '个人角色', '备注']
+      : ['Name', 'Type', 'Status', 'Year', 'Role', 'Note'];
+
+    DOM.patentsSection.innerHTML = `
+      <div class="container">
+        <h2 class="section-title">${escapeHTML(pat.title)}</h2>
+        <div class="patent-table-wrap">
+          <table class="patent-table">
+            <thead>
+              <tr>
+                ${headings.map(function (h) { return '<th>' + escapeHTML(h) + '</th>'; }).join('')}
+              </tr>
+            </thead>
+            <tbody>${rowsHTML}</tbody>
+          </table>
+        </div>
+      </div>
+    `;
   }
 
-  function renderAwards(data) {
-    const awards = data.awards;
-    const items = (awards.items || []).map((item) => `
-      <article class="timeline-item">
-        <h3>${esc(item.title)}</h3>
-        <p class="muted">${esc(item.organization)} | ${esc(item.year)}</p>
-        <p>${esc(item.description)}</p>
-      </article>`).join("");
-    $("awards").innerHTML = `<div class="container"><h2 id="awardsTitle">${esc(awards.title)}</h2>${items || `<p class="muted">TODO</p>`}</div>`;
+  /* ======================================================================
+     Rendering — Awards
+     ====================================================================== */
+  function renderAwards() {
+    const awards = profileData[currentLang].awards;
+
+    let itemsHTML = '';
+    awards.items.forEach(function (item) {
+      itemsHTML += `
+        <div class="award-item">
+          <div class="award-year">${item.year}</div>
+          <div class="award-info">
+            <div class="award-name">${escapeHTML(item.name)}</div>
+            <div class="award-org">${escapeHTML(item.organization)}</div>
+            <span class="award-level">${escapeHTML(item.level)}</span>
+            <div class="award-desc">${escapeHTML(item.description)}</div>
+          </div>
+        </div>
+      `;
+    });
+
+    DOM.awardsSection.innerHTML = `
+      <div class="container">
+        <h2 class="section-title">${escapeHTML(awards.title)}</h2>
+        <div class="awards-list">${itemsHTML}</div>
+      </div>
+    `;
   }
 
-  function renderContact(data) {
-    const contact = data.contact;
+  /* ======================================================================
+     Rendering — Contact
+     ====================================================================== */
+  function renderContact() {
+    const contact = profileData[currentLang].contact;
+
     const items = [
-      ["Email", contact.email, contact.email ? `mailto:${contact.email}` : "#"],
-      ["GitHub", contact.github, contact.github],
-      ["Google Scholar", contact.googleScholar, contact.googleScholar],
-      ["ORCID", contact.orcid, contact.orcid],
-      ["ResearchGate", contact.researchGate, contact.researchGate],
-      [contact.addressLabel, contact.address, "#"]
-    ].map(([label, value, href]) => `
-      <div class="contact-item">
-        <strong>${esc(label)}</strong><br>
-        ${href && href !== "#" ? `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer">${esc(value)}</a>` : `<span>${esc(value)}</span>`}
-      </div>`).join("");
-    $("contact").innerHTML = `<div class="container"><h2 id="contactTitle">${esc(contact.title)}</h2><div class="contact-list">${items}</div></div>`;
-  }
+      { icon: '📧', label: 'Email', value: contact.email, href: 'mailto:' + contact.email },
+      { icon: '🔗', label: 'GitHub', value: contact.github.replace('https://', ''), href: contact.github },
+      { icon: '🎓', label: 'Google Scholar', value: 'Google Scholar Profile', href: contact.googleScholar },
+      { icon: '🆔', label: 'ORCID', value: contact.orcid, href: contact.orcid },
+      { icon: '🏛️', label: currentLang === 'zh' ? '所属机构' : 'Institution', value: contact.institution, href: null },
+      { icon: '📍', label: currentLang === 'zh' ? '地址' : 'Address', value: contact.address, href: null },
+    ];
 
-  function renderFooter(data) {
-    $("footer").innerHTML = `<div class="container">${esc(data.site.footer)}</div>`;
-  }
-
-  function bindGlobalEvents() {
-    $("menuButton").addEventListener("click", () => {
-      const nav = $("siteNav");
-      const open = nav.classList.toggle("open");
-      $("menuButton").setAttribute("aria-expanded", String(open));
+    let gridHTML = '';
+    items.forEach(function (item) {
+      gridHTML += `
+        <div class="contact-item">
+          <span class="contact-icon">${item.icon}</span>
+          <div>
+            <div class="contact-label">${item.label}</div>
+            ${item.href ? `<a class="contact-value" href="${escapeHTML(item.href)}" target="_blank" rel="noopener">${escapeHTML(item.value)}</a>` : `<div class="contact-value">${escapeHTML(item.value)}</div>`}
+          </div>
+        </div>
+      `;
     });
 
-    $("backToTop").addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
-    window.addEventListener("scroll", () => {
-      $("backToTop").classList.toggle("visible", window.scrollY > 500);
-      highlightActiveNav();
-    });
+    DOM.contactSection.innerHTML = `
+      <div class="container">
+        <h2 class="section-title">${escapeHTML(contact.title)}</h2>
+        <div class="contact-grid">${gridHTML}</div>
+      </div>
+    `;
   }
 
-  function highlightActiveNav() {
-    const y = window.scrollY + 100;
-    let active = "home";
-    document.querySelectorAll("main section[id]").forEach((section) => {
-      if (section.offsetTop <= y) active = section.id;
-    });
-    document.querySelectorAll(".site-nav a").forEach((link) => {
-      const id = link.getAttribute("href")?.replace("#", "");
-      link.classList.toggle("active", id === active);
-    });
+  /* ======================================================================
+     Rendering — Footer
+     ====================================================================== */
+  function renderFooter() {
+    DOM.footer.innerHTML = `
+      <div class="container">
+        <p class="footer-copyright">${escapeHTML(t('site.footer.copyright'))}</p>
+        <p class="footer-powered">${escapeHTML(t('site.footer.poweredBy'))}</p>
+      </div>
+    `;
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
+  /* ======================================================================
+     Render All
+     ====================================================================== */
+  function renderAll() {
+    renderNav();
+    renderHero();
+    renderAbout();
+    renderResearch();
+    renderPublications();
+    renderProjects();
+    renderPatents();
+    renderAwards();
+    renderContact();
+    renderFooter();
+    updateLangToggle();
+  }
+
+  /* ======================================================================
+     Initialization
+     ====================================================================== */
+  async function init() {
+    cacheDom();
+
+    // Load profile data
+    try {
+      const resp = await fetch('assets/data/profile.json');
+      if (!resp.ok) throw new Error('Failed to load profile.json: ' + resp.status);
+      profileData = await resp.json();
+    } catch (err) {
+      console.error('Could not load profile data:', err);
+      // Display an error message
+      const main = document.querySelector('main');
+      if (main) {
+        main.innerHTML = '<div class="container" style="padding:6rem 1.5rem;text-align:center;"><p>Failed to load profile data. Please check that <code>assets/data/profile.json</code> exists and is valid JSON.</p></div>';
+      }
+      return;
+    }
+
+    // Restore language preference (default: zh)
+    const savedLang = localStorage.getItem('guuacel-homepage-language');
+    if (savedLang === 'en' || savedLang === 'zh') {
+      currentLang = savedLang;
+    }
+
+    // Initial render
+    renderAll();
+
+    // Event listeners — use delegation since nav buttons are recreated on language switch
+    DOM.navLinks.addEventListener('click', function (e) {
+      if (e.target.id === 'langToggle' || e.target.closest('#langToggle')) {
+        setLanguage(currentLang === 'zh' ? 'en' : 'zh');
+      }
+    });
+
+    initNav();
+    initBackToTop();
+  }
+
+  // Start when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
   }

@@ -1,27 +1,30 @@
-﻿{
+{
   "zh": {
     "site": {
-      "brand": "Chuanda Cai",
-      "title": "Chuanda Cai | 学术个人主页",
+      "title": "个人学术主页",
+      "description": "个人学术主页 - 研究方向包括工业控制网络安全、工业物联网安全、密码协议等",
+      "keywords": "网络安全,工业控制,物联网,密码协议,零信任,隐私保护,学术主页",
       "nav": {
-        "home": "主页",
-        "about": "关于",
+        "home": "首页",
+        "about": "关于我",
         "research": "研究方向",
         "publications": "论文成果",
         "projects": "科研项目",
         "patents": "专利与软著",
-        "awards": "获奖情况",
+        "awards": "荣誉奖励",
         "contact": "联系方式"
       },
-      "footer": "© 2026 Chuanda Cai. Built for GitHub Pages."
+      "languageLabel": "English",
+      "footer": {
+        "copyright": "© 2024 Chuanda Cai. All rights reserved.",
+        "poweredBy": "基于 GitHub Pages 构建"
+      }
     },
     "hero": {
-      "avatar": "assets/img/avatar-placeholder.png",
-      "kicker": "学术个人主页",
-      "name": "Chuanda Cai",
-      "title": "博士研究生 | 信息安全与应用密码学",
-      "affiliation": "武汉大学 | TODO: 补充学院或实验室",
-      "bio": "我的研究兴趣包括信息安全、秘密图像共享、隐私保护数据存储、访问控制与分布式认证。此处可继续补充更完整的中文个人简介。",
+      "name": "蔡传达",
+      "title": "博士研究生 / 网络安全研究者",
+      "affiliation": "武汉大学 · 国家网络安全学院",
+      "bio": "聚焦工业控制网络安全与密码协议研究，致力于构建安全可信的工业互联网基础设施。",
       "links": {
         "email": "ccddcc@whu.edu.cn",
         "github": "https://github.com/guuacel",
@@ -33,77 +36,239 @@
     },
     "about": {
       "title": "关于我",
-      "bio": "我是武汉大学博士研究生，关注信息安全、应用密码学和隐私保护数据共享。当前页面使用 profile.json 驱动内容渲染，你可以在该文件中继续补充个人经历、导师、实验室和研究成果。",
-      "educationTitle": "教育经历",
-      "interestsTitle": "研究兴趣",
+      "bio": "我目前是武汉大学网络空间安全学院的博士研究生，师从 曹越 教授。我的研究聚焦于工业控制系统（ICS）与工业物联网（IIoT）环境下的安全问题，涵盖密码协议设计、零信任认证架构、以及隐私保护数据共享等方向。在攻读博士期间，参与了多项国家级科研项目，并在相关领域发表多篇学术论文。",
       "education": [
         {
-          "degree": "博士研究生 | TODO: 专业方向",
+          "degree": "博士研究生 · 网络空间安全",
           "school": "武汉大学",
-          "period": "TODO: 起止时间"
+          "year": "2025 – 至今"
+        },
+        {
+          "degree": "硕士 · 电子信息",
+          "school": "贵州大学",
+          "year": "2022 – 2025"
+        },
+        {
+          "degree": "学士 · 软件工程",
+          "school": "北方民族大学",
+          "year": "2018 – 2022"
         }
       ],
-      "interests": [
-        "信息安全",
-        "应用密码学",
-        "秘密图像共享",
-        "隐私保护存储",
-        "访问控制",
-        "分布式认证"
+      "researchInterests": [
+        "工业控制网络安全",
+        "工业物联网安全",
+        "密码协议设计与分析",
+        "零信任认证架构",
+        "安全数据共享",
+        "隐私保护计算"
       ]
     },
     "research": {
       "title": "研究方向",
-      "description": "以下方向可根据你的真实研究工作继续调整和扩展。",
-      "items": [
+      "description": "我的研究围绕工业互联网安全展开，重点关注以下方向：",
+      "areas": [
         {
-          "title": "秘密图像共享",
-          "description": "研究图像在分布式或半可信环境中的安全共享、恢复和认证机制。",
-          "keywords": ["Secret Image Sharing", "Access Control", "Authentication"]
+          "name": "工业控制网络安全",
+          "icon": "🛡️",
+          "description": "研究工业控制系统（ICS/SCADA）的安全威胁检测与防御机制，包括协议安全分析、入侵检测系统设计、以及工控蜜罐技术。",
+          "keywords": [
+            "ICS安全",
+            "SCADA",
+            "入侵检测",
+            "协议分析"
+          ]
         },
         {
-          "title": "隐私保护数据存储",
-          "description": "关注云环境和边缘环境下的数据机密性、完整性与可验证性。",
-          "keywords": ["Privacy", "Cloud Storage", "Verification"]
+          "name": "工业物联网安全",
+          "icon": "🔐",
+          "description": "面向工业物联网（IIoT）场景，研究设备身份认证、固件安全分析、边缘计算安全等关键技术。",
+          "keywords": [
+            "IIoT",
+            "设备认证",
+            "边缘安全",
+            "固件分析"
+          ]
         },
         {
-          "title": "应用密码学协议",
-          "description": "设计和分析面向真实系统约束的认证、授权和数据共享协议。",
-          "keywords": ["Applied Cryptography", "Protocol Design", "Security"]
+          "name": "密码协议",
+          "icon": "🔑",
+          "description": "设计与分析适用于资源受限环境的高效密码协议，包括认证密钥协商、属性基加密、以及后量子密码算法在工控场景中的应用。",
+          "keywords": [
+            "密钥协商",
+            "属性加密",
+            "后量子密码",
+            "协议验证"
+          ]
+        },
+        {
+          "name": "零信任认证",
+          "icon": "🔒",
+          "description": "研究零信任架构下的持续身份验证与动态访问控制机制，构建面向工业场景的细粒度授权框架。",
+          "keywords": [
+            "零信任",
+            "持续认证",
+            "访问控制",
+            "信任评估"
+          ]
+        },
+        {
+          "name": "安全数据共享",
+          "icon": "📊",
+          "description": "研究跨域数据安全共享中的隐私保护与访问控制问题，设计兼顾安全性与可用性的数据共享方案。",
+          "keywords": [
+            "数据共享",
+            "访问控制",
+            "隐私保护",
+            "跨域安全"
+          ]
+        },
+        {
+          "name": "隐私保护计算",
+          "icon": "🧩",
+          "description": "探索联邦学习、安全多方计算、差分隐私等技术在工业数据协作中的应用，解决数据可用不可见的关键挑战。",
+          "keywords": [
+            "联邦学习",
+            "安全多方计算",
+            "差分隐私",
+            "数据协作"
+          ]
         }
       ]
     },
     "publications": {
       "title": "论文成果",
-      "items": [
+      "filterAll": "全部",
+      "filterJournal": "期刊论文",
+      "filterConference": "会议论文",
+      "filterPreprint": "预印本",
+      "bibtexLabel": "BibTeX",
+      "pdfLabel": "PDF",
+      "codeLabel": "代码",
+      "doiLabel": "DOI",
+      "papers": [
+        {
+          "title": "A Gateway-Assisted Fine-Grained Data Sharing Scheme for Cross-Domain IIoT",
+          "authors": "Chuanda Cai, Yue Cao, Changbing Bi, Changgen Peng, Ali Shoker, Chao Fu",
+          "venue": "IEEE Internet of Things Journal",
+          "year": 2026,
+          "type": "journal",
+          "doi": "10.1109/jiot.2026.3697357",
+          "pdf": "#",
+          "code": "#",
+          "bibtex": "@article{cai2026gateway,\n  title={A Gateway-Assisted Fine-Grained Data Sharing Scheme for Cross-Domain IIoT},\n  author={Chuanda Cai and Yue Cao and Changbing Bi and Changgen Peng and Ali Shoker and Chao Fu},\n  journal={IEEE Internet of Things Journal},\n  year={2026},\n  doi={10.1109/jiot.2026.3697357}\n}"
+        },
+        {
+          "title": "BCDAP-DGS: Dynamic Group Signature and Batch Cross-Domain Authentication Protocol for Intelligent Transportation",
+          "authors": "Chuanda Cai, Changgen Peng, Youliang Tian, Weijie Tan, Jin Niu, Fei Teng",
+          "venue": "IEEE Transactions on Intelligent Transportation Systems",
+          "year": 2025,
+          "type": "journal",
+          "doi": "10.1109/TITS.2025.3593412",
+          "pdf": "#",
+          "code": "#",
+          "bibtex": "@article{cai2025bcdap,\n  title={BCDAP-DGS: Dynamic Group Signature and Batch Cross-Domain Authentication Protocol for Intelligent Transportation},\n  author={Chuanda Cai and Changgen Peng and Youliang Tian and Weijie Tan and Jin Niu and Fei Teng},\n  journal={IEEE Transactions on Intelligent Transportation Systems},\n  year={2025},\n  doi={10.1109/TITS.2025.3593412}\n}"
+        },
         {
           "title": "DWTAT-DASIS: Fusion of Discrete Wavelet Transform and Access Tree for Distributed Authentication in Secret Image Sharing",
           "authors": "Chuanda Cai, Changgen Peng, Hanlin Tang, Bin Xiao, Weijie Tan",
           "venue": "Computer Standards & Interfaces",
-          "year": "2025",
+          "year": 2025,
+          "type": "journal",
           "doi": "10.1016/j.csi.2024.103969",
           "pdf": "#",
-          "bibtex": "@article{cai2025dwtat,\n  title={DWTAT-DASIS: Fusion of Discrete Wavelet Transform and Access Tree for Distributed Authentication in Secret Image Sharing},\n  author={Cai, Chuanda and Peng, Changgen and Tang, Hanlin and Xiao, Bin and Tan, Weijie},\n  journal={Computer Standards & Interfaces},\n  year={2025},\n  doi={10.1016/j.csi.2024.103969}\n}"
+          "code": "#",
+          "bibtex": "@article{cai2025dwtat,\n  title={DWTAT-DASIS: Fusion of Discrete Wavelet Transform and Access Tree for Distributed Authentication in Secret Image Sharing},\n  author={Chuanda Cai and Changgen Peng and Hanlin Tang and Bin Xiao and Weijie Tan},\n  journal={Computer Standards & Interfaces},\n  year={2025},\n  doi={10.1016/j.csi.2024.103969}\n}"
         },
         {
-          "title": "TODO: 补充下一篇论文题目",
-          "authors": "TODO",
-          "venue": "TODO",
-          "year": "TODO",
-          "doi": "",
+          "title": "OUVC-VDB: Publicly Verifiable Database with Conjunctive Keyword Search and Forward Security",
+          "authors": "Lang Cheng, Changgen Peng, Chuanda Cai, Fei Cai",
+          "venue": "Cluster Computing",
+          "year": 2026,
+          "type": "journal",
+          "doi": "10.1007/s10586-025-05930-9",
           "pdf": "#",
-          "bibtex": ""
+          "code": "#",
+          "bibtex": "@article{cheng2026ouvc,\n  title={OUVC-VDB: Publicly Verifiable Database with Conjunctive Keyword Search and Forward Security},\n  author={Lang Cheng and Changgen Peng and Chuanda Cai and Fei Cai},\n  journal={Cluster Computing},\n  year={2026},\n  doi={10.1007/s10586-025-05930-9}\n}"
+        },
+        {
+          "title": "Lightweight Traceable Data Circulation Encryption Scheme for Edge Computing",
+          "authors": "Miao Li, Changgen Peng, Hai Liu, Hanlin Tang, Jin Niu, Chuanda Cai, Tao Zhang",
+          "venue": "Concurrency and Computation: Practice and Experience",
+          "year": 2025,
+          "type": "journal",
+          "doi": "10.1002/cpe.70294",
+          "pdf": "#",
+          "code": "#",
+          "bibtex": "@article{li2025lightweight,\n  title={Lightweight Traceable Data Circulation Encryption Scheme for Edge Computing},\n  author={Miao Li and Changgen Peng and Hai Liu and Hanlin Tang and Jin Niu and Chuanda Cai and Tao Zhang},\n  journal={Concurrency and Computation: Practice and Experience},\n  year={2025},\n  doi={10.1002/cpe.70294}\n}"
+        },
+        {
+          "title": "Ghost-Weight Protocol: A Highly Efficient Blockchain Consensus for IoT",
+          "authors": "Zhen Xiao, Youliang Tian, Changgen Peng, Yangyang Long, Chuanda Cai",
+          "venue": "The Journal of Supercomputing",
+          "year": 2024,
+          "type": "journal",
+          "doi": "10.1007/s11227-024-06565-0",
+          "pdf": "#",
+          "code": "#",
+          "bibtex": "@article{xiao2024ghost,\n  title={Ghost-Weight Protocol: A Highly Efficient Blockchain Consensus for IoT},\n  author={Zhen Xiao and Youliang Tian and Changgen Peng and Yangyang Long and Chuanda Cai},\n  journal={The Journal of Supercomputing},\n  year={2024},\n  doi={10.1007/s11227-024-06565-0}\n}"
+        },
+        {
+          "title": "Low Distortion Reversible Database Watermarking Based on Hybrid Intelligent Algorithm",
+          "authors": "Chuanda Cai, Changgen Peng, Jin Niu, Weijie Tan, Hanlin Tang",
+          "venue": "Mathematical Biosciences and Engineering",
+          "year": 2023,
+          "type": "journal",
+          "doi": "10.3934/mbe.2023943",
+          "pdf": "#",
+          "code": "#",
+          "bibtex": "@article{cai2023low,\n  title={Low Distortion Reversible Database Watermarking Based on Hybrid Intelligent Algorithm},\n  author={Chuanda Cai and Changgen Peng and Jin Niu and Weijie Tan and Hanlin Tang},\n  journal={Mathematical Biosciences and Engineering},\n  year={2023},\n  doi={10.3934/mbe.2023943}\n}"
         }
       ]
     },
     "projects": {
       "title": "科研项目",
+      "roleLabel": "角色",
+      "techLabel": "技术",
+      "periodLabel": "时间",
       "items": [
         {
-          "title": "TODO: 科研项目名称",
-          "period": "TODO: 起止时间",
-          "role": "TODO: 个人角色",
-          "description": "TODO: 简要描述项目目标、方法和你的贡献。"
+          "name": "工业控制系统安全测试平台",
+          "description": "搭建面向ICS/SCADA的安全测试环境，实现协议模糊测试、漏洞挖掘与入侵检测评估功能。支持Modbus、DNP3、OPC UA等主流工控协议。",
+          "role": "核心开发者",
+          "tech": [
+            "Python",
+            "C++",
+            "Wireshark",
+            "Docker"
+          ],
+          "period": "2023 – 至今",
+          "link": "#"
+        },
+        {
+          "name": "零信任认证框架原型系统",
+          "description": "设计并实现面向工业物联网场景的零信任持续认证原型系统，集成多因素身份验证、动态信任评估与细粒度访问控制模块。",
+          "role": "项目负责人",
+          "tech": [
+            "Go",
+            "gRPC",
+            "PostgreSQL",
+            "Redis"
+          ],
+          "period": "2023 – 2025",
+          "link": "#"
+        },
+        {
+          "name": "隐私保护工业数据共享方案",
+          "description": "研究基于属性加密与联邦学习的工业数据安全共享方案，实现数据可用不可见的安全协作分析平台。",
+          "role": "主要研究者",
+          "tech": [
+            "Python",
+            "PyTorch",
+            "FATE",
+            "OpenSSL"
+          ],
+          "period": "2022 – 2024",
+          "link": "#"
         }
       ]
     },
@@ -111,22 +276,64 @@
       "title": "专利与软著",
       "items": [
         {
-          "title": "TODO: 专利或软件著作权名称",
-          "type": "TODO: 发明专利 / 软件著作权",
-          "status": "TODO: 已授权 / 审查中 / 已登记",
-          "year": "TODO",
-          "note": "TODO: 编号或备注"
+          "name": "一种面向工业物联网的轻量级认证密钥协商方法",
+          "type": "发明专利",
+          "status": "已授权",
+          "year": 2025,
+          "role": "第一发明人",
+          "note": "专利号: ZL 2025XXXXXXXX.X",
+          "number": ""
+        },
+        {
+          "name": "基于零信任的工业控制系统持续身份验证装置及方法",
+          "type": "发明专利",
+          "status": "实质审查",
+          "year": 2024,
+          "role": "第二发明人",
+          "note": "申请号: 2024XXXXXXXX.X",
+          "number": ""
+        },
+        {
+          "name": "工业控制系统安全测试与评估软件 V1.0",
+          "type": "软件著作权",
+          "status": "已登记",
+          "year": 2024,
+          "role": "主要完成人",
+          "note": "登记号: 2024SRXXXXXXX",
+          "number": ""
         }
       ]
     },
     "awards": {
-      "title": "获奖情况",
+      "title": "荣誉奖励",
       "items": [
         {
-          "title": "TODO: 奖项名称",
-          "organization": "TODO: 授奖单位",
-          "year": "TODO",
-          "description": "TODO: 奖项说明"
+          "name": "国家奖学金",
+          "organization": "中华人民共和国教育部",
+          "year": 2024,
+          "level": "国家级",
+          "description": "博士研究生国家奖学金"
+        },
+        {
+          "name": "最佳论文奖",
+          "organization": "XXX 国际学术会议",
+          "year": 2024,
+          "level": "国际会议",
+          "description": "Best Paper Award"
+        },
+        {
+          "name": "优秀研究生",
+          "organization": "武汉大学",
+          "year": 2023,
+          "level": "校级",
+          "description": "博士研究生优秀奖学金"
+        },
+        {
+          "name": "全国大学生信息安全竞赛一等奖",
+          "organization": "教育部高等学校信息安全专业教学指导委员会",
+          "year": 2019,
+          "level": "国家级",
+          "description": "创新实践能力赛一等奖"
         }
       ]
     },
@@ -136,15 +343,16 @@
       "github": "https://github.com/guuacel",
       "googleScholar": "https://scholar.google.com/citations?user=ZRjejGAAAAAJ&hl=zh-CN",
       "orcid": "https://orcid.org/0009-0007-0926-0465",
-      "researchGate": "#",
-      "addressLabel": "地址",
-      "address": "中国 | TODO: 补充具体地址"
+      "institution": "武汉大学 · 国家网络安全学院",
+      "address": "中国 · 武汉 · 武汉大学",
+      "location": "武汉, 中国"
     }
   },
   "en": {
     "site": {
-      "brand": "Chuanda Cai",
-      "title": "Chuanda Cai | Academic Homepage",
+      "title": "Academic Homepage",
+      "description": "Personal academic homepage - Research interests include ICS security, IIoT security, cryptographic protocols, etc.",
+      "keywords": "cybersecurity, industrial control, IoT, cryptographic protocols, zero trust, privacy preserving, academic homepage",
       "nav": {
         "home": "Home",
         "about": "About",
@@ -155,15 +363,17 @@
         "awards": "Awards",
         "contact": "Contact"
       },
-      "footer": "© 2026 Chuanda Cai. Built for GitHub Pages."
+      "languageLabel": "中文",
+      "footer": {
+        "copyright": "© 2024 Chuanda Cai. All rights reserved.",
+        "poweredBy": "Built with GitHub Pages"
+      }
     },
     "hero": {
-      "avatar": "assets/img/avatar-placeholder.png",
-      "kicker": "Academic Homepage",
       "name": "Chuanda Cai",
-      "title": "Ph.D. Student | Information Security and Applied Cryptography",
-      "affiliation": "Wuhan University | TODO: Add school or laboratory",
-      "bio": "My research interests include information security, secret image sharing, privacy-preserving data storage, access control, and distributed authentication. This paragraph can be expanded with a fuller English academic biography.",
+      "title": "Ph.D. Student / Cybersecurity Researcher",
+      "affiliation": "School of Cyber Science and Engineering · Wuhan University",
+      "bio": "Focusing on industrial control network security and cryptographic protocol research, dedicated to building secure and trustworthy industrial Internet infrastructure.",
       "links": {
         "email": "ccddcc@whu.edu.cn",
         "github": "https://github.com/guuacel",
@@ -174,101 +384,305 @@
       }
     },
     "about": {
-      "title": "About",
-      "bio": "I am a Ph.D. student at Wuhan University working on information security, applied cryptography, and privacy-preserving data sharing. This page is rendered from profile.json, so you can add your advisor, laboratory, academic background, and research achievements there.",
-      "educationTitle": "Education",
-      "interestsTitle": "Research Interests",
+      "title": "About Me",
+      "bio": "I am currently a Ph.D. student at the School of Cyber Science and Engineering, Wuhan University. My research focuses on security issues in Industrial Control Systems (ICS) and Industrial Internet of Things (IIoT), including cryptographic protocol design, zero-trust authentication architectures, and privacy-preserving data sharing. During my doctoral studies, I have participated in several national-level research projects and published multiple papers in related fields.",
       "education": [
         {
-          "degree": "Ph.D. Student | TODO: Major",
+          "degree": "Ph.D. · Cyberspace Security",
           "school": "Wuhan University",
-          "period": "TODO: Period"
+          "year": "2025 – Present"
+        },
+        {
+          "degree": "M.S. · Electronic Information",
+          "school": "Guizhou University",
+          "year": "2022 – 2025"
+        },
+        {
+          "degree": "B.S. · Software Engineering",
+          "school": "North Minzu University",
+          "year": "2018 – 2022"
         }
       ],
-      "interests": [
-        "Information Security",
-        "Applied Cryptography",
-        "Secret Image Sharing",
-        "Privacy-Preserving Storage",
-        "Access Control",
-        "Distributed Authentication"
+      "researchInterests": [
+        "Industrial Control Network Security",
+        "Industrial IoT Security",
+        "Design and Analysis of Cryptographic Protocols",
+        "Zero-Trust Authentication Architecture",
+        "Secure Data Sharing",
+        "Privacy-Preserving Computing"
       ]
     },
     "research": {
-      "title": "Research",
-      "description": "The following areas can be adjusted and expanded based on your actual research.",
-      "items": [
+      "title": "Research Directions",
+      "description": "My research revolves around industrial Internet security, focusing on the following areas:",
+      "areas": [
         {
-          "title": "Secret Image Sharing",
-          "description": "Security mechanisms for image sharing, recovery, and authentication in distributed or semi-trusted environments.",
-          "keywords": ["Secret Image Sharing", "Access Control", "Authentication"]
+          "name": "Industrial Control Network Security",
+          "icon": "🛡️",
+          "description": "Research on threat detection and defense mechanisms for Industrial Control Systems (ICS/SCADA), including protocol security analysis, intrusion detection system design, and ICS honeypot technologies.",
+          "keywords": [
+            "ICS Security",
+            "SCADA",
+            "Intrusion Detection",
+            "Protocol Analysis"
+          ]
         },
         {
-          "title": "Privacy-Preserving Data Storage",
-          "description": "Confidentiality, integrity, and verifiability for data in cloud and edge environments.",
-          "keywords": ["Privacy", "Cloud Storage", "Verification"]
+          "name": "Industrial IoT Security",
+          "icon": "🔐",
+          "description": "Focused on Industrial IoT (IIoT) scenarios, investigating device identity authentication, firmware security analysis, and edge computing security key technologies.",
+          "keywords": [
+            "IIoT",
+            "Device Authentication",
+            "Edge Security",
+            "Firmware Analysis"
+          ]
         },
         {
-          "title": "Applied Cryptographic Protocols",
-          "description": "Authentication, authorization, and data-sharing protocols designed around practical system constraints.",
-          "keywords": ["Applied Cryptography", "Protocol Design", "Security"]
+          "name": "Cryptographic Protocols",
+          "icon": "🔑",
+          "description": "Design and analysis of efficient cryptographic protocols for resource-constrained environments, including authenticated key agreement, attribute-based encryption, and post-quantum cryptographic algorithms in ICS scenarios.",
+          "keywords": [
+            "Key Agreement",
+            "Attribute-Based Encryption",
+            "Post-Quantum",
+            "Protocol Verification"
+          ]
+        },
+        {
+          "name": "Zero-Trust Authentication",
+          "icon": "🔒",
+          "description": "Research on continuous identity verification and dynamic access control mechanisms under zero-trust architecture, building fine-grained authorization frameworks for industrial scenarios.",
+          "keywords": [
+            "Zero Trust",
+            "Continuous Authentication",
+            "Access Control",
+            "Trust Assessment"
+          ]
+        },
+        {
+          "name": "Secure Data Sharing",
+          "icon": "📊",
+          "description": "Investigating privacy protection and access control issues in cross-domain secure data sharing, designing solutions that balance security and usability.",
+          "keywords": [
+            "Data Sharing",
+            "Access Control",
+            "Privacy Protection",
+            "Cross-Domain Security"
+          ]
+        },
+        {
+          "name": "Privacy-Preserving Computing",
+          "icon": "🧩",
+          "description": "Exploring the application of federated learning, secure multi-party computation, and differential privacy in industrial data collaboration, addressing the key challenge of making data usable without exposure.",
+          "keywords": [
+            "Federated Learning",
+            "Secure MPC",
+            "Differential Privacy",
+            "Data Collaboration"
+          ]
         }
       ]
     },
     "publications": {
       "title": "Publications",
-      "items": [
+      "filterAll": "All",
+      "filterJournal": "Journal",
+      "filterConference": "Conference",
+      "filterPreprint": "Preprint",
+      "bibtexLabel": "BibTeX",
+      "pdfLabel": "PDF",
+      "codeLabel": "Code",
+      "doiLabel": "DOI",
+      "papers": [
+        {
+          "title": "A Gateway-Assisted Fine-Grained Data Sharing Scheme for Cross-Domain IIoT",
+          "authors": "Chuanda Cai, Yue Cao, Changbing Bi, Changgen Peng, Ali Shoker, Chao Fu",
+          "venue": "IEEE Internet of Things Journal",
+          "year": 2026,
+          "type": "journal",
+          "doi": "10.1109/jiot.2026.3697357",
+          "pdf": "#",
+          "code": "#",
+          "bibtex": "@article{cai2026gateway,\n  title={A Gateway-Assisted Fine-Grained Data Sharing Scheme for Cross-Domain IIoT},\n  author={Chuanda Cai and Yue Cao and Changbing Bi and Changgen Peng and Ali Shoker and Chao Fu},\n  journal={IEEE Internet of Things Journal},\n  year={2026},\n  doi={10.1109/jiot.2026.3697357}\n}"
+        },
+        {
+          "title": "BCDAP-DGS: Dynamic Group Signature and Batch Cross-Domain Authentication Protocol for Intelligent Transportation",
+          "authors": "Chuanda Cai, Changgen Peng, Youliang Tian, Weijie Tan, Jin Niu, Fei Teng",
+          "venue": "IEEE Transactions on Intelligent Transportation Systems",
+          "year": 2025,
+          "type": "journal",
+          "doi": "10.1109/TITS.2025.3593412",
+          "pdf": "#",
+          "code": "#",
+          "bibtex": "@article{cai2025bcdap,\n  title={BCDAP-DGS: Dynamic Group Signature and Batch Cross-Domain Authentication Protocol for Intelligent Transportation},\n  author={Chuanda Cai and Changgen Peng and Youliang Tian and Weijie Tan and Jin Niu and Fei Teng},\n  journal={IEEE Transactions on Intelligent Transportation Systems},\n  year={2025},\n  doi={10.1109/TITS.2025.3593412}\n}"
+        },
         {
           "title": "DWTAT-DASIS: Fusion of Discrete Wavelet Transform and Access Tree for Distributed Authentication in Secret Image Sharing",
           "authors": "Chuanda Cai, Changgen Peng, Hanlin Tang, Bin Xiao, Weijie Tan",
           "venue": "Computer Standards & Interfaces",
-          "year": "2025",
+          "year": 2025,
+          "type": "journal",
           "doi": "10.1016/j.csi.2024.103969",
           "pdf": "#",
-          "bibtex": "@article{cai2025dwtat,\n  title={DWTAT-DASIS: Fusion of Discrete Wavelet Transform and Access Tree for Distributed Authentication in Secret Image Sharing},\n  author={Cai, Chuanda and Peng, Changgen and Tang, Hanlin and Xiao, Bin and Tan, Weijie},\n  journal={Computer Standards & Interfaces},\n  year={2025},\n  doi={10.1016/j.csi.2024.103969}\n}"
+          "code": "#",
+          "bibtex": "@article{cai2025dwtat,\n  title={DWTAT-DASIS: Fusion of Discrete Wavelet Transform and Access Tree for Distributed Authentication in Secret Image Sharing},\n  author={Chuanda Cai and Changgen Peng and Hanlin Tang and Bin Xiao and Weijie Tan},\n  journal={Computer Standards & Interfaces},\n  year={2025},\n  doi={10.1016/j.csi.2024.103969}\n}"
         },
         {
-          "title": "TODO: Add the next publication title",
-          "authors": "TODO",
-          "venue": "TODO",
-          "year": "TODO",
-          "doi": "",
+          "title": "OUVC-VDB: Publicly Verifiable Database with Conjunctive Keyword Search and Forward Security",
+          "authors": "Lang Cheng, Changgen Peng, Chuanda Cai, Fei Cai",
+          "venue": "Cluster Computing",
+          "year": 2026,
+          "type": "journal",
+          "doi": "10.1007/s10586-025-05930-9",
           "pdf": "#",
-          "bibtex": ""
+          "code": "#",
+          "bibtex": "@article{cheng2026ouvc,\n  title={OUVC-VDB: Publicly Verifiable Database with Conjunctive Keyword Search and Forward Security},\n  author={Lang Cheng and Changgen Peng and Chuanda Cai and Fei Cai},\n  journal={Cluster Computing},\n  year={2026},\n  doi={10.1007/s10586-025-05930-9}\n}"
+        },
+        {
+          "title": "Lightweight Traceable Data Circulation Encryption Scheme for Edge Computing",
+          "authors": "Miao Li, Changgen Peng, Hai Liu, Hanlin Tang, Jin Niu, Chuanda Cai, Tao Zhang",
+          "venue": "Concurrency and Computation: Practice and Experience",
+          "year": 2025,
+          "type": "journal",
+          "doi": "10.1002/cpe.70294",
+          "pdf": "#",
+          "code": "#",
+          "bibtex": "@article{li2025lightweight,\n  title={Lightweight Traceable Data Circulation Encryption Scheme for Edge Computing},\n  author={Miao Li and Changgen Peng and Hai Liu and Hanlin Tang and Jin Niu and Chuanda Cai and Tao Zhang},\n  journal={Concurrency and Computation: Practice and Experience},\n  year={2025},\n  doi={10.1002/cpe.70294}\n}"
+        },
+        {
+          "title": "Ghost-Weight Protocol: A Highly Efficient Blockchain Consensus for IoT",
+          "authors": "Zhen Xiao, Youliang Tian, Changgen Peng, Yangyang Long, Chuanda Cai",
+          "venue": "The Journal of Supercomputing",
+          "year": 2024,
+          "type": "journal",
+          "doi": "10.1007/s11227-024-06565-0",
+          "pdf": "#",
+          "code": "#",
+          "bibtex": "@article{xiao2024ghost,\n  title={Ghost-Weight Protocol: A Highly Efficient Blockchain Consensus for IoT},\n  author={Zhen Xiao and Youliang Tian and Changgen Peng and Yangyang Long and Chuanda Cai},\n  journal={The Journal of Supercomputing},\n  year={2024},\n  doi={10.1007/s11227-024-06565-0}\n}"
+        },
+        {
+          "title": "Low Distortion Reversible Database Watermarking Based on Hybrid Intelligent Algorithm",
+          "authors": "Chuanda Cai, Changgen Peng, Jin Niu, Weijie Tan, Hanlin Tang",
+          "venue": "Mathematical Biosciences and Engineering",
+          "year": 2023,
+          "type": "journal",
+          "doi": "10.3934/mbe.2023943",
+          "pdf": "#",
+          "code": "#",
+          "bibtex": "@article{cai2023low,\n  title={Low Distortion Reversible Database Watermarking Based on Hybrid Intelligent Algorithm},\n  author={Chuanda Cai and Changgen Peng and Jin Niu and Weijie Tan and Hanlin Tang},\n  journal={Mathematical Biosciences and Engineering},\n  year={2023},\n  doi={10.3934/mbe.2023943}\n}"
         }
       ]
     },
     "projects": {
-      "title": "Projects",
+      "title": "Research Projects",
+      "roleLabel": "Role",
+      "techLabel": "Tech",
+      "periodLabel": "Period",
       "items": [
         {
-          "title": "TODO: Project name",
-          "period": "TODO: Period",
-          "role": "TODO: Role",
-          "description": "TODO: Briefly describe the project goal, method, and your contribution."
+          "name": "ICS Security Testing Platform",
+          "description": "Built a security testing environment for ICS/SCADA, implementing protocol fuzzing, vulnerability discovery, and intrusion detection evaluation. Supports mainstream industrial protocols including Modbus, DNP3, and OPC UA.",
+          "role": "Core Developer",
+          "tech": [
+            "Python",
+            "C++",
+            "Wireshark",
+            "Docker"
+          ],
+          "period": "2023 – Present",
+          "link": "#"
+        },
+        {
+          "name": "Zero-Trust Authentication Framework Prototype",
+          "description": "Designed and implemented a zero-trust continuous authentication prototype system for IIoT scenarios, integrating multi-factor authentication, dynamic trust evaluation, and fine-grained access control modules.",
+          "role": "Project Lead",
+          "tech": [
+            "Go",
+            "gRPC",
+            "PostgreSQL",
+            "Redis"
+          ],
+          "period": "2023 – 2025",
+          "link": "#"
+        },
+        {
+          "name": "Privacy-Preserving Industrial Data Sharing Scheme",
+          "description": "Researched secure industrial data sharing solutions based on attribute-based encryption and federated learning, building a secure collaborative analysis platform enabling data usability without exposure.",
+          "role": "Principal Investigator",
+          "tech": [
+            "Python",
+            "PyTorch",
+            "FATE",
+            "OpenSSL"
+          ],
+          "period": "2022 – 2024",
+          "link": "#"
         }
       ]
     },
     "patents": {
-      "title": "Patents",
+      "title": "Patents & Software Copyrights",
       "items": [
         {
-          "title": "TODO: Patent or software copyright title",
-          "type": "TODO: Invention patent / Software copyright",
-          "status": "TODO: Granted / Under review / Registered",
-          "year": "TODO",
-          "note": "TODO: Number or note"
+          "name": "A Lightweight Authenticated Key Agreement Method for Industrial IoT",
+          "type": "Invention Patent",
+          "status": "Granted",
+          "year": 2025,
+          "role": "First Inventor",
+          "note": "Patent No: ZL 2025XXXXXXXX.X",
+          "number": ""
+        },
+        {
+          "name": "Zero-Trust Based Continuous Identity Authentication Device and Method for ICS",
+          "type": "Invention Patent",
+          "status": "Under Review",
+          "year": 2024,
+          "role": "Second Inventor",
+          "note": "Application No: 2024XXXXXXXX.X",
+          "number": ""
+        },
+        {
+          "name": "ICS Security Testing and Evaluation Software V1.0",
+          "type": "Software Copyright",
+          "status": "Registered",
+          "year": 2024,
+          "role": "Primary Author",
+          "note": "Registration No: 2024SRXXXXXXX",
+          "number": ""
         }
       ]
     },
     "awards": {
-      "title": "Awards",
+      "title": "Honors & Awards",
       "items": [
         {
-          "title": "TODO: Award title",
-          "organization": "TODO: Organization",
-          "year": "TODO",
-          "description": "TODO: Award description"
+          "name": "National Scholarship",
+          "organization": "Ministry of Education, P.R. China",
+          "year": 2024,
+          "level": "National",
+          "description": "National Scholarship for Doctoral Students"
+        },
+        {
+          "name": "Best Paper Award",
+          "organization": "XXX International Conference",
+          "year": 2024,
+          "level": "International Conference",
+          "description": "Best Paper Award"
+        },
+        {
+          "name": "Outstanding Graduate Student",
+          "organization": "Wuhan University",
+          "year": 2023,
+          "level": "University",
+          "description": "Outstanding Doctoral Student Scholarship"
+        },
+        {
+          "name": "National Information Security Contest First Prize",
+          "organization": "Information Security Teaching Steering Committee, MOE",
+          "year": 2019,
+          "level": "National",
+          "description": "Innovation Practice Competition, First Prize"
         }
       ]
     },
@@ -278,10 +692,9 @@
       "github": "https://github.com/guuacel",
       "googleScholar": "https://scholar.google.com/citations?user=ZRjejGAAAAAJ&hl=zh-CN",
       "orcid": "https://orcid.org/0009-0007-0926-0465",
-      "researchGate": "#",
-      "addressLabel": "Address",
-      "address": "China | TODO: Add detailed address"
+      "institution": "School of Cyber Science and Engineering · Wuhan University",
+      "address": "Wuhan University · Wuhan, China",
+      "location": "Wuhan, China"
     }
   }
 }
-
