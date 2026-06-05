@@ -28,6 +28,7 @@
 
   function cacheDom() {
     DOM.navbar = document.getElementById('navbar');
+    DOM.navBrand = document.getElementById('navBrand');
     DOM.navLinks = document.getElementById('navLinks');
     DOM.menuToggle = document.getElementById('menuToggle');
     DOM.langToggle = document.getElementById('langToggle');
@@ -159,6 +160,12 @@
   function renderNav() {
     const nav = profileData[currentLang].site.nav;
     const langLabel = t('site.languageLabel');
+    const brand = t('hero.name');
+
+    if (DOM.navBrand) {
+      DOM.navBrand.textContent = brand;
+      DOM.navBrand.setAttribute('aria-label', nav.home);
+    }
 
     DOM.navLinks.innerHTML = `
       <a href="#hero">${escapeHTML(nav.home)}</a>
@@ -579,6 +586,8 @@
      Render All
      ====================================================================== */
   function renderAll() {
+    document.title = t('site.title');
+    DOM.html.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
     renderNav();
     renderHero();
     renderAbout();
@@ -626,6 +635,11 @@
     DOM.navLinks.addEventListener('click', function (e) {
       if (e.target.id === 'langToggle' || e.target.closest('#langToggle')) {
         setLanguage(currentLang === 'zh' ? 'en' : 'zh');
+      }
+      if (e.target.closest('a')) {
+        DOM.navLinks.classList.remove('open');
+        DOM.menuToggle.classList.remove('active');
+        DOM.menuToggle.setAttribute('aria-expanded', 'false');
       }
     });
 

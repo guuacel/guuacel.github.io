@@ -125,14 +125,11 @@ code, pre {
   transition: background-color var(--transition-base), border-color var(--transition-base);
 }
 
-[data-theme="dark"] .navbar {
-  background-color: rgba(26,32,44,0.92);
-}
-
 .navbar .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
   height: 100%;
 }
 
@@ -141,12 +138,16 @@ code, pre {
   font-weight: 700;
   color: var(--color-primary);
   white-space: nowrap;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
   gap: 0.25rem;
+  min-width: 0;
 }
 
 .nav-links a {
@@ -190,8 +191,13 @@ code, pre {
 .menu-toggle {
   display: none;
   flex-direction: column;
+  flex-shrink: 0;
   justify-content: center;
+  align-items: center;
   gap: 5px;
+  width: 44px;
+  height: 44px;
+  margin-left: auto;
   background: none;
   border: none;
   cursor: pointer;
@@ -620,21 +626,6 @@ code, pre {
   color: #c05621;
 }
 
-[data-theme="dark"] .pub-type-journal {
-  background-color: #1a365d;
-  color: #90cdf4;
-}
-
-[data-theme="dark"] .pub-type-conference {
-  background-color: #322659;
-  color: #b794f4;
-}
-
-[data-theme="dark"] .pub-type-preprint {
-  background-color: #3c2a1e;
-  color: #ed8936;
-}
-
 .pub-btn {
   display: inline-flex;
   align-items: center;
@@ -838,21 +829,6 @@ code, pre {
   color: #2b6cb0;
 }
 
-[data-theme="dark"] .status-granted {
-  background-color: #22543d;
-  color: #9ae6b4;
-}
-
-[data-theme="dark"] .status-review {
-  background-color: #3c2a1e;
-  color: #ed8936;
-}
-
-[data-theme="dark"] .status-registered {
-  background-color: #1a365d;
-  color: #90cdf4;
-}
-
 /* --------------------------------------------------------------------------
    Awards Section
    -------------------------------------------------------------------------- */
@@ -1047,11 +1023,7 @@ code, pre {
   }
 }
 
-@media (max-width: 768px) {
-  :root {
-    --section-padding: 3.5rem 1rem;
-  }
-
+@media (max-width: 980px) {
   .menu-toggle {
     display: flex;
   }
@@ -1076,10 +1048,6 @@ code, pre {
     z-index: 999;
   }
 
-  [data-theme="dark"] .nav-links {
-    background-color: rgba(26,32,44,0.97);
-  }
-
   .nav-links.open {
     opacity: 1;
     pointer-events: auto;
@@ -1094,6 +1062,12 @@ code, pre {
   .lang-toggle {
     align-self: center;
     margin: 0.35rem 0;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-padding: 3.5rem 1rem;
   }
 
   .research-grid {
