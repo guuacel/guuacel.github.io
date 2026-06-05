@@ -1,6 +1,6 @@
-# Customization Guide
+﻿# Customization Guide
 
-本指南说明如何维护 `ccddcc.github.io` 学术个人主页。站点内容主要由 `assets/data/profile.json` 驱动，页面结构位于 `index.html`，样式位于 `assets/css/style.css`，交互逻辑位于 `assets/js/main.js`。
+本指南说明如何维护 `guuacel.github.io` 学术个人主页。站点内容主要由 `assets/data/profile.json` 驱动，页面结构位于 `index.html`，样式位于 `assets/css/style.css`，交互逻辑位于 `assets/js/main.js`。
 
 ## 1. 修改个人基本信息
 
@@ -20,7 +20,7 @@ assets/data/profile.json
   "bio": "TODO: 补充个人简介",
   "links": {
     "email": "ccddcc@whu.edu.cn",
-    "github": "https://github.com/ccddcc",
+    "github": "https://github.com/guuacel",
     "googleScholar": "https://scholar.google.com/citations?user=ZRjejGAAAAAJ&hl=zh-CN",
     "orcid": "https://orcid.org/0009-0007-0926-0465",
     "researchGate": "#",
@@ -196,3 +196,4 @@ http://localhost:8000
 - `assets/img/avatar-placeholder.png` 或你的真实头像存在；
 - 没有 Windows 本地绝对路径；
 - GitHub Pages 设置为 `main` 分支和 `/root` 目录。
+

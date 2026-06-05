@@ -1,13 +1,13 @@
-# Deploy Check Report
+﻿# Deploy Check Report
 
 生成时间：2026-06-05  
-目标仓库目录：`ccddcc.github.io/`  
-目标 GitHub Pages 地址：`https://ccddcc.github.io`
+目标仓库目录：`guuacel.github.io/`  
+目标 GitHub Pages 地址：`https://guuacel.github.io`
 
 ## 1. 最终文件结构
 
 ```text
-ccddcc.github.io/
+guuacel.github.io/
 ├── index.html
 ├── README.md
 ├── .nojekyll
@@ -29,10 +29,10 @@ ccddcc.github.io/
 
 | 检查项 | 状态 | 说明 |
 |---|---:|---|
-| `index.html` 位于根目录 | 通过 | `ccddcc.github.io/index.html` 存在 |
+| `index.html` 位于根目录 | 通过 | `guuacel.github.io/index.html` 存在 |
 | `.nojekyll` 位于根目录 | 通过 | 文件存在且为空 |
 | `assets/` 位于根目录 | 通过 | CSS、JS、JSON、图片均在该目录 |
-| 无二级嵌套目录 | 通过 | 不存在 `ccddcc.github.io/ccddcc.github.io/index.html` |
+| 无二级嵌套目录 | 通过 | 不存在 `guuacel.github.io/guuacel.github.io/index.html` |
 | 未生成 zip | 通过 | 未创建压缩包 |
 
 ## 3. 资源路径检查
@@ -101,17 +101,17 @@ HTTP 本地静态服务器检查结果：
 |---|---:|---|
 | 本地 Git 仓库已初始化 | 通过 | 已执行 `git init` |
 | 默认分支设置为 `main` | 通过 | 已执行 `git branch -M main` |
-| 远程仓库已配置 | 通过 | `origin` 指向 `https://github.com/ccddcc/ccddcc.github.io.git` |
+| 远程仓库已配置 | 通过 | `origin` 指向 `https://github.com/guuacel/guuacel.github.io.git` |
 | 初始 commit | 通过 | 本报告随初始提交一起提交 |
-| 是否 push 到远程 | 失败 | 执行 `git push -u origin main` 时 GitHub 返回 Repository not found |
+| 是否 push 到远程 | 待重新尝试 | 目标已改为 `guuacel/guuacel.github.io` |
 
 ## 8. GitHub CLI
 
 | 检查项 | 状态 | 说明 |
 |---|---:|---|
 | `gh` 是否可用 | 未安装 | 当前环境未识别 `gh` 命令 |
-| GitHub 连接器账号 | 不匹配 | 当前连接器登录账号为 `guuacel`，不是目标账号 `ccddcc` |
-| 是否创建远程仓库 | 未执行 | 请使用 `ccddcc` 账号手动创建仓库，或安装并登录 GitHub CLI 后再创建 |
+| GitHub 连接器账号 | 匹配 | 当前目标账号已调整为 `guuacel` |
+| 是否创建远程仓库 | 未执行 | 本地将尝试 push 到已配置的 `origin` |
 
 ## 9. 仍需用户手动补充的 TODO
 
@@ -121,25 +121,23 @@ HTTP 本地静态服务器检查结果：
 4. 补充 ResearchGate 链接，或保持 `#`。
 5. 补充更多论文、PDF 链接和 BibTeX。
 6. 补充科研项目、专利软著、获奖信息。
-7. 在 GitHub 使用 `ccddcc` 账号创建远程仓库后执行 `git push -u origin main`。
+7. 确认 GitHub Pages 是否使用 `main` 分支作为部署来源。
 
-## 11. 部署尝试记录
+## 10. 部署尝试记录
 
-已尝试执行：
+目标已调整为：
+
+```text
+https://github.com/guuacel/guuacel.github.io.git
+```
+
+待重新执行：
 
 ```bash
 git push -u origin main
 ```
 
-失败原因：
-
-```text
-remote: Repository not found.
-fatal: repository 'https://github.com/ccddcc/ccddcc.github.io.git/' not found
-```
-
-判断：目标远程仓库尚未创建，或当前本机 Git 凭据没有 `ccddcc/ccddcc.github.io` 的访问权限。当前 GitHub 连接器登录账号为 `guuacel`，不能用于创建或部署到 `ccddcc` 账号。
-
-## 10. 结论
+## 11. 结论
 
 该目录已整理为可直接作为 GitHub Pages 仓库使用的静态站点版本。`index.html` 位于根目录，核心资源路径均为相对路径，`.nojekyll` 已创建，中英文切换功能由 `profile.json` 和 `main.js` 驱动。
+

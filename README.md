@@ -1,13 +1,13 @@
-# Chuanda Cai Academic Homepage
+﻿# Chuanda Cai Academic Homepage
 
 这是一个支持中文和英文切换的学术个人主页，适用于直接部署到 GitHub Pages。页面使用纯 HTML、CSS、JavaScript 和 JSON 构建，不依赖复杂框架。
 
 ## 仓库信息
 
 ```text
-GitHub username: ccddcc
-Repository name: ccddcc.github.io
-GitHub Pages URL: https://ccddcc.github.io
+GitHub username: guuacel
+Repository name: guuacel.github.io
+GitHub Pages URL: https://guuacel.github.io
 ```
 
 ## 文件结构说明
@@ -86,10 +86,10 @@ http://localhost:8000
 1. 在 GitHub 创建仓库：
 
 ```text
-ccddcc.github.io
+guuacel.github.io
 ```
 
-2. 将 `ccddcc.github.io/` 文件夹中的所有内容上传到该仓库根目录。
+2. 将 `guuacel.github.io/` 文件夹中的所有内容上传到该仓库根目录。
 
 3. 进入 GitHub 仓库设置：
 
@@ -108,18 +108,18 @@ Folder: /root
 5. 保存后访问：
 
 ```text
-https://ccddcc.github.io
+https://guuacel.github.io
 ```
 
 ## Git 命令上传方法
 
 ```bash
-cd ccddcc.github.io
+cd guuacel.github.io
 git init
 git add .
 git commit -m "Initial academic homepage"
 git branch -M main
-git remote add origin https://github.com/ccddcc/ccddcc.github.io.git
+git remote add origin https://github.com/guuacel/guuacel.github.io.git
 git push -u origin main
 ```
 
@@ -127,7 +127,7 @@ git push -u origin main
 
 ```bash
 git remote -v
-git remote set-url origin https://github.com/ccddcc/ccddcc.github.io.git
+git remote set-url origin https://github.com/guuacel/guuacel.github.io.git
 git push -u origin main
 ```
 
@@ -145,3 +145,4 @@ git push -u origin main
 ## 语言切换说明
 
 默认语言为中文。点击导航栏中的 `English` 后切换到英文；点击 `中文` 后切回中文。语言选择会保存到浏览器 `localStorage`，刷新页面后保持上次选择。
+

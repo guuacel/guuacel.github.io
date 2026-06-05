@@ -1,4 +1,4 @@
-{
+﻿{
   "zh": {
     "site": {
       "brand": "Chuanda Cai",
@@ -24,7 +24,7 @@
       "bio": "我的研究兴趣包括信息安全、秘密图像共享、隐私保护数据存储、访问控制与分布式认证。此处可继续补充更完整的中文个人简介。",
       "links": {
         "email": "ccddcc@whu.edu.cn",
-        "github": "https://github.com/ccddcc",
+        "github": "https://github.com/guuacel",
         "googleScholar": "https://scholar.google.com/citations?user=ZRjejGAAAAAJ&hl=zh-CN",
         "orcid": "https://orcid.org/0009-0007-0926-0465",
         "researchGate": "#",
@@ -133,7 +133,7 @@
     "contact": {
       "title": "联系方式",
       "email": "ccddcc@whu.edu.cn",
-      "github": "https://github.com/ccddcc",
+      "github": "https://github.com/guuacel",
       "googleScholar": "https://scholar.google.com/citations?user=ZRjejGAAAAAJ&hl=zh-CN",
       "orcid": "https://orcid.org/0009-0007-0926-0465",
       "researchGate": "#",
@@ -166,7 +166,7 @@
       "bio": "My research interests include information security, secret image sharing, privacy-preserving data storage, access control, and distributed authentication. This paragraph can be expanded with a fuller English academic biography.",
       "links": {
         "email": "ccddcc@whu.edu.cn",
-        "github": "https://github.com/ccddcc",
+        "github": "https://github.com/guuacel",
         "googleScholar": "https://scholar.google.com/citations?user=ZRjejGAAAAAJ&hl=zh-CN",
         "orcid": "https://orcid.org/0009-0007-0926-0465",
         "researchGate": "#",
@@ -275,7 +275,7 @@
     "contact": {
       "title": "Contact",
       "email": "ccddcc@whu.edu.cn",
-      "github": "https://github.com/ccddcc",
+      "github": "https://github.com/guuacel",
       "googleScholar": "https://scholar.google.com/citations?user=ZRjejGAAAAAJ&hl=zh-CN",
       "orcid": "https://orcid.org/0009-0007-0926-0465",
       "researchGate": "#",
@@ -284,3 +284,4 @@
     }
   }
 }
+
