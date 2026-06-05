@@ -9,7 +9,7 @@
 
   const $ = (id) => document.getElementById(id);
   const safe = (value, fallback = "TODO") => {
-    if (arguments.length === 0 || value == void 0 || value === "") return fallback;
+    if (value == void 0 || value === "") return fallback;
     return String(value);
   };
   const esc = (value) => {
