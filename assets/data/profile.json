@@ -1,0 +1,286 @@
+{
+  "zh": {
+    "site": {
+      "brand": "Chuanda Cai",
+      "title": "Chuanda Cai | 学术个人主页",
+      "nav": {
+        "home": "主页",
+        "about": "关于",
+        "research": "研究方向",
+        "publications": "论文成果",
+        "projects": "科研项目",
+        "patents": "专利与软著",
+        "awards": "获奖情况",
+        "contact": "联系方式"
+      },
+      "footer": "© 2026 Chuanda Cai. Built for GitHub Pages."
+    },
+    "hero": {
+      "avatar": "assets/img/avatar-placeholder.png",
+      "kicker": "学术个人主页",
+      "name": "Chuanda Cai",
+      "title": "博士研究生 | 信息安全与应用密码学",
+      "affiliation": "武汉大学 | TODO: 补充学院或实验室",
+      "bio": "我的研究兴趣包括信息安全、秘密图像共享、隐私保护数据存储、访问控制与分布式认证。此处可继续补充更完整的中文个人简介。",
+      "links": {
+        "email": "ccddcc@whu.edu.cn",
+        "github": "https://github.com/ccddcc",
+        "googleScholar": "https://scholar.google.com/citations?user=ZRjejGAAAAAJ&hl=zh-CN",
+        "orcid": "https://orcid.org/0009-0007-0926-0465",
+        "researchGate": "#",
+        "cv": "#"
+      }
+    },
+    "about": {
+      "title": "关于我",
+      "bio": "我是武汉大学博士研究生，关注信息安全、应用密码学和隐私保护数据共享。当前页面使用 profile.json 驱动内容渲染，你可以在该文件中继续补充个人经历、导师、实验室和研究成果。",
+      "educationTitle": "教育经历",
+      "interestsTitle": "研究兴趣",
+      "education": [
+        {
+          "degree": "博士研究生 | TODO: 专业方向",
+          "school": "武汉大学",
+          "period": "TODO: 起止时间"
+        }
+      ],
+      "interests": [
+        "信息安全",
+        "应用密码学",
+        "秘密图像共享",
+        "隐私保护存储",
+        "访问控制",
+        "分布式认证"
+      ]
+    },
+    "research": {
+      "title": "研究方向",
+      "description": "以下方向可根据你的真实研究工作继续调整和扩展。",
+      "items": [
+        {
+          "title": "秘密图像共享",
+          "description": "研究图像在分布式或半可信环境中的安全共享、恢复和认证机制。",
+          "keywords": ["Secret Image Sharing", "Access Control", "Authentication"]
+        },
+        {
+          "title": "隐私保护数据存储",
+          "description": "关注云环境和边缘环境下的数据机密性、完整性与可验证性。",
+          "keywords": ["Privacy", "Cloud Storage", "Verification"]
+        },
+        {
+          "title": "应用密码学协议",
+          "description": "设计和分析面向真实系统约束的认证、授权和数据共享协议。",
+          "keywords": ["Applied Cryptography", "Protocol Design", "Security"]
+        }
+      ]
+    },
+    "publications": {
+      "title": "论文成果",
+      "items": [
+        {
+          "title": "DWTAT-DASIS: Fusion of Discrete Wavelet Transform and Access Tree for Distributed Authentication in Secret Image Sharing",
+          "authors": "Chuanda Cai, Changgen Peng, Hanlin Tang, Bin Xiao, Weijie Tan",
+          "venue": "Computer Standards & Interfaces",
+          "year": "2025",
+          "doi": "10.1016/j.csi.2024.103969",
+          "pdf": "#",
+          "bibtex": "@article{cai2025dwtat,\n  title={DWTAT-DASIS: Fusion of Discrete Wavelet Transform and Access Tree for Distributed Authentication in Secret Image Sharing},\n  author={Cai, Chuanda and Peng, Changgen and Tang, Hanlin and Xiao, Bin and Tan, Weijie},\n  journal={Computer Standards & Interfaces},\n  year={2025},\n  doi={10.1016/j.csi.2024.103969}\n}"
+        },
+        {
+          "title": "TODO: 补充下一篇论文题目",
+          "authors": "TODO",
+          "venue": "TODO",
+          "year": "TODO",
+          "doi": "",
+          "pdf": "#",
+          "bibtex": ""
+        }
+      ]
+    },
+    "projects": {
+      "title": "科研项目",
+      "items": [
+        {
+          "title": "TODO: 科研项目名称",
+          "period": "TODO: 起止时间",
+          "role": "TODO: 个人角色",
+          "description": "TODO: 简要描述项目目标、方法和你的贡献。"
+        }
+      ]
+    },
+    "patents": {
+      "title": "专利与软著",
+      "items": [
+        {
+          "title": "TODO: 专利或软件著作权名称",
+          "type": "TODO: 发明专利 / 软件著作权",
+          "status": "TODO: 已授权 / 审查中 / 已登记",
+          "year": "TODO",
+          "note": "TODO: 编号或备注"
+        }
+      ]
+    },
+    "awards": {
+      "title": "获奖情况",
+      "items": [
+        {
+          "title": "TODO: 奖项名称",
+          "organization": "TODO: 授奖单位",
+          "year": "TODO",
+          "description": "TODO: 奖项说明"
+        }
+      ]
+    },
+    "contact": {
+      "title": "联系方式",
+      "email": "ccddcc@whu.edu.cn",
+      "github": "https://github.com/ccddcc",
+      "googleScholar": "https://scholar.google.com/citations?user=ZRjejGAAAAAJ&hl=zh-CN",
+      "orcid": "https://orcid.org/0009-0007-0926-0465",
+      "researchGate": "#",
+      "addressLabel": "地址",
+      "address": "中国 | TODO: 补充具体地址"
+    }
+  },
+  "en": {
+    "site": {
+      "brand": "Chuanda Cai",
+      "title": "Chuanda Cai | Academic Homepage",
+      "nav": {
+        "home": "Home",
+        "about": "About",
+        "research": "Research",
+        "publications": "Publications",
+        "projects": "Projects",
+        "patents": "Patents",
+        "awards": "Awards",
+        "contact": "Contact"
+      },
+      "footer": "© 2026 Chuanda Cai. Built for GitHub Pages."
+    },
+    "hero": {
+      "avatar": "assets/img/avatar-placeholder.png",
+      "kicker": "Academic Homepage",
+      "name": "Chuanda Cai",
+      "title": "Ph.D. Student | Information Security and Applied Cryptography",
+      "affiliation": "Wuhan University | TODO: Add school or laboratory",
+      "bio": "My research interests include information security, secret image sharing, privacy-preserving data storage, access control, and distributed authentication. This paragraph can be expanded with a fuller English academic biography.",
+      "links": {
+        "email": "ccddcc@whu.edu.cn",
+        "github": "https://github.com/ccddcc",
+        "googleScholar": "https://scholar.google.com/citations?user=ZRjejGAAAAAJ&hl=zh-CN",
+        "orcid": "https://orcid.org/0009-0007-0926-0465",
+        "researchGate": "#",
+        "cv": "#"
+      }
+    },
+    "about": {
+      "title": "About",
+      "bio": "I am a Ph.D. student at Wuhan University working on information security, applied cryptography, and privacy-preserving data sharing. This page is rendered from profile.json, so you can add your advisor, laboratory, academic background, and research achievements there.",
+      "educationTitle": "Education",
+      "interestsTitle": "Research Interests",
+      "education": [
+        {
+          "degree": "Ph.D. Student | TODO: Major",
+          "school": "Wuhan University",
+          "period": "TODO: Period"
+        }
+      ],
+      "interests": [
+        "Information Security",
+        "Applied Cryptography",
+        "Secret Image Sharing",
+        "Privacy-Preserving Storage",
+        "Access Control",
+        "Distributed Authentication"
+      ]
+    },
+    "research": {
+      "title": "Research",
+      "description": "The following areas can be adjusted and expanded based on your actual research.",
+      "items": [
+        {
+          "title": "Secret Image Sharing",
+          "description": "Security mechanisms for image sharing, recovery, and authentication in distributed or semi-trusted environments.",
+          "keywords": ["Secret Image Sharing", "Access Control", "Authentication"]
+        },
+        {
+          "title": "Privacy-Preserving Data Storage",
+          "description": "Confidentiality, integrity, and verifiability for data in cloud and edge environments.",
+          "keywords": ["Privacy", "Cloud Storage", "Verification"]
+        },
+        {
+          "title": "Applied Cryptographic Protocols",
+          "description": "Authentication, authorization, and data-sharing protocols designed around practical system constraints.",
+          "keywords": ["Applied Cryptography", "Protocol Design", "Security"]
+        }
+      ]
+    },
+    "publications": {
+      "title": "Publications",
+      "items": [
+        {
+          "title": "DWTAT-DASIS: Fusion of Discrete Wavelet Transform and Access Tree for Distributed Authentication in Secret Image Sharing",
+          "authors": "Chuanda Cai, Changgen Peng, Hanlin Tang, Bin Xiao, Weijie Tan",
+          "venue": "Computer Standards & Interfaces",
+          "year": "2025",
+          "doi": "10.1016/j.csi.2024.103969",
+          "pdf": "#",
+          "bibtex": "@article{cai2025dwtat,\n  title={DWTAT-DASIS: Fusion of Discrete Wavelet Transform and Access Tree for Distributed Authentication in Secret Image Sharing},\n  author={Cai, Chuanda and Peng, Changgen and Tang, Hanlin and Xiao, Bin and Tan, Weijie},\n  journal={Computer Standards & Interfaces},\n  year={2025},\n  doi={10.1016/j.csi.2024.103969}\n}"
+        },
+        {
+          "title": "TODO: Add the next publication title",
+          "authors": "TODO",
+          "venue": "TODO",
+          "year": "TODO",
+          "doi": "",
+          "pdf": "#",
+          "bibtex": ""
+        }
+      ]
+    },
+    "projects": {
+      "title": "Projects",
+      "items": [
+        {
+          "title": "TODO: Project name",
+          "period": "TODO: Period",
+          "role": "TODO: Role",
+          "description": "TODO: Briefly describe the project goal, method, and your contribution."
+        }
+      ]
+    },
+    "patents": {
+      "title": "Patents",
+      "items": [
+        {
+          "title": "TODO: Patent or software copyright title",
+          "type": "TODO: Invention patent / Software copyright",
+          "status": "TODO: Granted / Under review / Registered",
+          "year": "TODO",
+          "note": "TODO: Number or note"
+        }
+      ]
+    },
+    "awards": {
+      "title": "Awards",
+      "items": [
+        {
+          "title": "TODO: Award title",
+          "organization": "TODO: Organization",
+          "year": "TODO",
+          "description": "TODO: Award description"
+        }
+      ]
+    },
+    "contact": {
+      "title": "Contact",
+      "email": "ccddcc@whu.edu.cn",
+      "github": "https://github.com/ccddcc",
+      "googleScholar": "https://scholar.google.com/citations?user=ZRjejGAAAAAJ&hl=zh-CN",
+      "orcid": "https://orcid.org/0009-0007-0926-0465",
+      "researchGate": "#",
+      "addressLabel": "Address",
+      "address": "China | TODO: Add detailed address"
+    }
+  }
+}
