@@ -1293,10 +1293,84 @@ code, pre {
    Footer
    -------------------------------------------------------------------------- */
 .footer {
-  padding: 2rem 1.5rem;
+  padding: 2.25rem 1.5rem;
   text-align: center;
   background-color: var(--color-bg-alt);
   border-top: 1px solid var(--color-border);
+}
+
+.footer-stats {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 0.9rem;
+  max-width: 760px;
+  margin: 0 auto 1.35rem;
+  text-align: left;
+}
+
+.footer-stat-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  min-height: 74px;
+  padding: 0.9rem 1rem;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.footer-map-card {
+  align-items: stretch;
+}
+
+.footer-stat-label {
+  color: var(--color-primary);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.visitor-badge {
+  width: auto;
+  height: 22px;
+  max-width: 170px;
+}
+
+.footer-map-desc {
+  max-width: 330px;
+  margin-top: 0.22rem;
+  color: var(--color-text-muted);
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+.visitor-map-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  gap: 0.45rem;
+  min-height: 2.2rem;
+  padding: 0.35rem 0.7rem;
+  color: var(--color-accent);
+  background-color: var(--color-tag-bg);
+  border: 1px solid #c9ddf6;
+  border-radius: var(--radius-md);
+  font-size: 0.78rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.visitor-map-link:hover {
+  color: var(--color-accent-hover);
+  border-color: var(--color-accent);
+}
+
+.visitor-map-link img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
 
 .footer-copyright {
@@ -1370,6 +1444,10 @@ code, pre {
   }
 
   .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-stats {
     grid-template-columns: 1fr;
   }
 
@@ -1464,6 +1542,16 @@ code, pre {
     right: 1.25rem;
     width: 38px;
     height: 38px;
+  }
+
+  .footer-stat-card,
+  .footer-map-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .visitor-map-link {
+    width: 100%;
   }
 
   .guide-main {

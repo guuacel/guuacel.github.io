@@ -594,8 +594,48 @@
      Rendering — Footer
      ====================================================================== */
   function renderFooter() {
+    const labels = currentLang === 'zh'
+      ? {
+          statsTitle: '主页访问统计',
+          visitsLabel: '访问数量',
+          mapTitle: '访问来源地图',
+          mapDescription: '查看最近访问来源的地理分布。IP 来源由第三方服务根据访问请求估算。',
+          mapAction: '查看来源地图',
+          counterAlt: '主页访问数量',
+          mapAlt: '访问来源地图',
+        }
+      : {
+          statsTitle: 'Homepage Stats',
+          visitsLabel: 'Visit Count',
+          mapTitle: 'Visitor Source Map',
+          mapDescription: 'View the recent geographic distribution of visitors. Source locations are estimated by a third-party service.',
+          mapAction: 'View Source Map',
+          counterAlt: 'Homepage visit count',
+          mapAlt: 'Visitor source map',
+        };
     DOM.footer.innerHTML = `
       <div class="container">
+        <div class="footer-stats" aria-label="${escapeHTML(labels.statsTitle)}">
+          <div class="footer-stat-card">
+            <div class="footer-stat-label">${escapeHTML(labels.visitsLabel)}</div>
+            <img
+              class="visitor-badge"
+              src="https://visitor-badge.laobi.icu/badge?page_id=guuacel.github.io&left_text=visitors&left_color=%23595f72&right_color=%232c6faa&format=true"
+              alt="${escapeHTML(labels.counterAlt)}"
+              loading="lazy"
+            >
+          </div>
+          <div class="footer-stat-card footer-map-card">
+            <div>
+              <div class="footer-stat-label">${escapeHTML(labels.mapTitle)}</div>
+              <p class="footer-map-desc">${escapeHTML(labels.mapDescription)}</p>
+            </div>
+            <a class="visitor-map-link" href="https://www.ip2map.com" target="_blank" rel="noopener">
+              <img src="https://www.ip2map.com/ip2map.gif" alt="${escapeHTML(labels.mapAlt)}" loading="lazy">
+              <span>${escapeHTML(labels.mapAction)}</span>
+            </a>
+          </div>
+        </div>
         <p class="footer-copyright">${escapeHTML(t('site.footer.copyright'))}</p>
         <p class="footer-powered">${escapeHTML(t('site.footer.poweredBy'))}</p>
       </div>
