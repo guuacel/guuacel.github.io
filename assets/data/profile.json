@@ -366,11 +366,13 @@
       "title": "工具",
       "items": [
         {
-          "name": "论文代码",
-          "description": "集中整理论文相关代码占位目录，后续代码会上传到仓库 code 文件夹。",
-          "action": "打开代码目录",
-          "link": "https://github.com/guuacel/guuacel.github.io/tree/main/code",
-          "icon": "code"
+          "name": "Charm 库",
+          "description": "Windows + WSL2 + Ubuntu 环境下安装 Charm-Crypto 的完整步骤，包含 PBC、虚拟环境、测试脚本和常见错误处理。",
+          "action": "查看安装指南",
+          "link": "install_charm_windows_wsl.html",
+          "icon": "python",
+          "tags": ["Python"],
+          "target": "_self"
         },
         {
           "name": "Google Scholar",
@@ -758,11 +760,13 @@
       "title": "Tools",
       "items": [
         {
-          "name": "Paper Code",
-          "description": "Placeholder directories for publication code. Code will be uploaded under the repository code folder.",
-          "action": "Open Code Folder",
-          "link": "https://github.com/guuacel/guuacel.github.io/tree/main/code",
-          "icon": "code"
+          "name": "Charm Library",
+          "description": "A complete Windows + WSL2 + Ubuntu guide for installing Charm-Crypto, including PBC, a virtual environment, a test script, and troubleshooting.",
+          "action": "View Install Guide",
+          "link": "install_charm_windows_wsl.html",
+          "icon": "python",
+          "tags": ["Python"],
+          "target": "_self"
         },
         {
           "name": "Google Scholar",

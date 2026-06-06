@@ -522,16 +522,25 @@
     tools.items.forEach(function (item) {
       const iconMap = {
         code: '</>',
+        python: 'Py',
         scholar: 'GS',
         id: 'ID',
       };
+      const tagsHTML = Array.isArray(item.tags) && item.tags.length
+        ? `<div class="tool-tags">${item.tags.map(function (tag) { return `<span class="tool-tag">${escapeHTML(tag)}</span>`; }).join('')}</div>`
+        : '';
+      const target = item.target || '_blank';
+      const rel = target === '_blank' ? ' rel="noopener"' : '';
       itemsHTML += `
         <article class="tool-item">
           <div class="tool-icon">${escapeHTML(iconMap[item.icon] || item.icon || '↗')}</div>
           <div class="tool-info">
-            <h3 class="tool-name">${escapeHTML(item.name)}</h3>
+            <div class="tool-title-row">
+              <h3 class="tool-name">${escapeHTML(item.name)}</h3>
+              ${tagsHTML}
+            </div>
             <p class="tool-desc">${escapeHTML(item.description)}</p>
-            <a class="tool-link" href="${escapeHTML(item.link)}" target="_blank" rel="noopener">${escapeHTML(item.action)}</a>
+            <a class="tool-link" href="${escapeHTML(item.link)}" target="${escapeHTML(target)}"${rel}>${escapeHTML(item.action)}</a>
           </div>
         </article>
       `;

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charm-Crypto 安装指南 | Charm-Crypto Install Guide</title>
+  <meta name="description" content="Windows + WSL2 + Ubuntu 环境下安装 Charm-Crypto、PBC 1.0.0 和 Python 虚拟环境的中英文指南。">
+  <link rel="icon" type="image/png" href="assets/img/avatar-placeholder.png">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260606-charm-guide">
+</head>
+<body class="guide-body">
+  <header class="guide-nav">
+    <div class="container guide-nav-inner">
+      <a class="guide-brand" href="index.html#tools">Charm-Crypto Install Guide</a>
+      <div class="guide-actions">
+        <a class="guide-button" href="index.html#tools">返回主页 / Home</a>
+        <a class="guide-button" href="docs/install_charm_windows_wsl.md" target="_blank" rel="noopener">Markdown</a>
+        <button class="guide-button" id="guideLangToggle" type="button">English</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="guide-main">
+    <article class="guide-article is-active" data-guide-lang="zh">
+      <div class="container">
+        <section class="guide-hero">
+          <div class="guide-eyebrow">Charm 库 <span class="tool-tag">Python</span></div>
+          <h1 class="guide-title">Windows + WSL2 + Ubuntu 安装 Charm-Crypto 完整指南</h1>
+          <p class="guide-summary">本文给出从 WSL2、Ubuntu 依赖、PBC 1.0.0、Python 虚拟环境到 Charm-Crypto 测试脚本的完整安装路径。所有命令均可直接复制执行。</p>
+          <div class="guide-meta">
+            <span class="guide-pill">Windows</span>
+            <span class="guide-pill">WSL2</span>
+            <span class="guide-pill">Ubuntu</span>
+            <span class="guide-pill">PBC 1.0.0</span>
+          </div>
+        </section>
+
+        <div class="guide-layout">
+          <aside class="guide-toc">
+            <div class="guide-toc-title">目录</div>
+            <a href="#zh-goal">安装目标</a>
+            <a href="#zh-native">为什么不建议原生 Windows 安装</a>
+            <a href="#zh-wsl">安装 WSL2 和 Ubuntu</a>
+            <a href="#zh-deps">安装系统依赖</a>
+            <a href="#zh-pbc">安装 PBC</a>
+            <a href="#zh-venv">创建 Python 虚拟环境</a>
+            <a href="#zh-pip">安装 Charm-Crypto</a>
+            <a href="#zh-source">失败时的源码安装方案</a>
+            <a href="#zh-test">测试 Charm 是否安装成功</a>
+            <a href="#zh-errors">常见错误与解决方案</a>
+          </aside>
+
+          <div class="guide-content">
+            <section class="guide-section" id="zh-goal">
+              <h2>安装目标</h2>
+              <p>目标是在 Windows 主机中通过 WSL2 运行 Ubuntu，然后在 Ubuntu 环境里安装 Charm-Crypto 所需的系统依赖、PBC 1.0.0、Python 虚拟环境和 Charm-Crypto。最后使用 `PairingGroup('SS512')` 生成群元素并计算指数运算，验证安装是否成功。</p>
+            </section>
+
+            <section class="guide-section" id="zh-native">
+              <h2>为什么不建议原生 Windows 安装</h2>
+              <p>Charm-Crypto 依赖 C/C++ 编译链、Python 开发头文件、GMP、OpenSSL 和 PBC 等底层库。原生 Windows 环境下需要额外处理编译器、动态库路径和头文件路径，安装失败概率较高。WSL2 提供接近 Linux 的构建环境，因此 Windows 用户推荐使用 WSL2 + Ubuntu。</p>
+              <p class="guide-note">下面所有 Linux 命令都应在 Ubuntu / WSL2 终端中执行；只有 WSL 安装命令需要在管理员 PowerShell 中执行。</p>
+            </section>
+
+            <section class="guide-section" id="zh-wsl">
+              <h2>安装 WSL2 和 Ubuntu</h2>
+              <p>第一步是检查当前 Windows 是否已经安装 WSL2 和 Ubuntu。</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>PowerShell：检查 WSL 状态</span><button class="copy-code" data-copied="已复制" data-failed="复制失败">复制</button></div>
+                <pre><code>wsl --status
+wsl -l -v</code></pre>
+              </div>
+              <p>如果看不到 Ubuntu，或者 WSL 未安装，请以管理员身份打开 PowerShell，执行以下命令。该命令会安装 WSL，并指定安装 Ubuntu 发行版。</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>管理员 PowerShell：安装 Ubuntu</span><button class="copy-code" data-copied="已复制" data-failed="复制失败">复制</button></div>
+                <pre><code>wsl --install -d Ubuntu</code></pre>
+              </div>
+              <p>安装完成后按提示重启 Windows，再从开始菜单打开 Ubuntu，完成 Linux 用户名和密码初始化。建议随后更新 WSL 内核和 Ubuntu 软件源。</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>PowerShell + Ubuntu：更新环境</span><button class="copy-code" data-copied="已复制" data-failed="复制失败">复制</button></div>
+                <pre><code>wsl --update
+
+# 进入 Ubuntu 后执行
+sudo apt update
+sudo apt upgrade -y</code></pre>
+              </div>
+              <p>`wsl --update` 用于更新 WSL 内核；`apt update` 和 `apt upgrade` 用于刷新 Ubuntu 软件包索引并更新系统包。</p>
+            </section>
+
+            <section class="guide-section" id="zh-deps">
+              <h2>安装系统依赖</h2>
+              <p>Charm-Crypto 和 PBC 都需要编译工具、词法/语法生成工具、Python 开发头文件、GMP、OpenSSL 等依赖。`git` 用于后续源码安装时克隆 Charm 仓库。</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Ubuntu：安装依赖</span><button class="copy-code" data-copied="已复制" data-failed="复制失败">复制</button></div>
+                <pre><code>sudo apt update
+sudo apt install -y build-essential flex bison wget m4 python3 python3-dev python3-pip python3-setuptools python3-venv libgmp-dev libssl-dev git</code></pre>
+              </div>
+              <p>`build-essential` 提供 gcc、g++、make 等基础编译工具；`python3-dev` 提供 Python C 扩展编译所需头文件；`libgmp-dev` 和 `libssl-dev` 分别提供 GMP 与 OpenSSL 开发库。</p>
+            </section>
+
+            <section class="guide-section" id="zh-pbc">
+              <h2>安装 PBC</h2>
+              <p>PBC 是 Pairing-Based Cryptography Library，Charm-Crypto 的 pairing group 功能会用到它。以下命令下载、解压、编译并安装 PBC 1.0.0。</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Ubuntu：安装 PBC 1.0.0</span><button class="copy-code" data-copied="已复制" data-failed="复制失败">复制</button></div>
+                <pre><code>cd ~
+wget https://crypto.stanford.edu/pbc/files/pbc-1.0.0.tar.gz
+tar -xzf pbc-1.0.0.tar.gz
+cd pbc-1.0.0
+./configure
+make
+sudo make install
+sudo ldconfig</code></pre>
+              </div>
+              <p>`./configure` 检查系统依赖并生成 Makefile；`make` 编译源码；`sudo make install` 将头文件和库安装到系统目录；`sudo ldconfig` 刷新动态链接库缓存，避免运行时找不到 `libpbc.so`。</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Ubuntu：检查 PBC 安装结果</span><button class="copy-code" data-copied="已复制" data-failed="复制失败">复制</button></div>
+                <pre><code>ls /usr/local/include/pbc.h
+ldconfig -p | grep libpbc</code></pre>
+              </div>
+            </section>
+
+            <section class="guide-section" id="zh-venv">
+              <h2>创建 Python 虚拟环境</h2>
+              <p>使用独立虚拟环境可以避免 Charm-Crypto 的依赖影响系统 Python。虚拟环境名称按要求设为 `charm-venv`。</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Ubuntu：创建并激活虚拟环境</span><button class="copy-code" data-copied="已复制" data-failed="复制失败">复制</button></div>
+                <pre><code>cd ~
+python3 -m venv charm-venv
+source charm-venv/bin/activate
+python -m pip install --upgrade pip setuptools wheel
+python -m pip install "pyparsing&gt;=3.1.0,&lt;4.0" pytest hypothesis</code></pre>
+              </div>
+              <p>`pip setuptools wheel` 用于构建和安装 Python 包；`pyparsing`、`pytest` 和 `hypothesis` 是 Charm 安装和测试中常见的 Python 依赖。</p>
+            </section>
+
+            <section class="guide-section" id="zh-pip">
+              <h2>安装 Charm-Crypto</h2>
+              <p>优先尝试通过 pip 安装 Charm-Crypto。执行前确认虚拟环境提示符中已经出现 `charm-venv`。</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Ubuntu：pip 安装</span><button class="copy-code" data-copied="已复制" data-failed="复制失败">复制</button></div>
+                <pre><code>source ~/charm-venv/bin/activate
+pip install charm-crypto-framework</code></pre>
+              </div>
+              <p>如果 pip 可以找到与你的 Python 版本和系统环境匹配的包，这一步会直接完成安装。如果失败，继续使用下一节的源码安装方案。</p>
+            </section>
+
+            <section class="guide-section" id="zh-source">
+              <h2>失败时的源码安装方案</h2>
+              <p>如果 `pip install charm-crypto-framework` 失败，建议从 JHUISI 的 Charm 源码仓库编译安装。该方式更适合需要本地编译 C 扩展和链接 PBC 的环境。</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Ubuntu：源码安装 Charm</span><button class="copy-code" data-copied="已复制" data-failed="复制失败">复制</button></div>
+                <pre><code>cd ~
+source ~/charm-venv/bin/activate
+git clone https://github.com/JHUISI/charm.git
+cd charm
+./configure.sh
+make
+sudo make install
+sudo ldconfig</code></pre>
+              </div>
+              <p>`./configure.sh` 检查 Charm 构建环境；`make` 编译 Charm；`sudo make install` 安装编译产物；`sudo ldconfig` 重新加载动态库缓存。</p>
+            </section>
+
+            <section class="guide-section" id="zh-test">
+              <h2>测试 Charm 是否安装成功</h2>
+              <p>创建 `test_charm.py`，导入 `PairingGroup`，使用 `SS512` 参数生成 G1 群元素和 ZR 指数，并计算 `g^x`。</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Ubuntu：写入测试脚本</span><button class="copy-code" data-copied="已复制" data-failed="复制失败">复制</button></div>
+                <pre><code>cd ~
+source charm-venv/bin/activate
+cat &gt; test_charm.py &lt;&lt;'PY'
+from charm.toolbox.pairinggroup import PairingGroup, G1, ZR
+
+group = PairingGroup('SS512')
+g = group.random(G1)
+x = group.random(ZR)
+y = g ** x
+
+print("g =", g)
+print("x =", x)
+print("g^x =", y)
+print("Charm-Crypto installed successfully.")
+PY
+
+python test_charm.py</code></pre>
+              </div>
+              <p>如果终端输出 `Charm-Crypto installed successfully.`，并且没有 ImportError 或动态库错误，说明 Charm-Crypto 已经可用。</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>推荐的最终运行方式</span><button class="copy-code" data-copied="已复制" data-failed="复制失败">复制</button></div>
+                <pre><code>source charm-venv/bin/activate
+python test_charm.py</code></pre>
+              </div>
+            </section>
+
+            <section class="guide-section" id="zh-errors">
+              <h2>常见错误与解决方案</h2>
+              <h3>找不到 pbc.h</h3>
+              <p>说明 PBC 头文件未安装，或安装路径没有被编译器找到。先确认文件是否存在，再重新安装 PBC。</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>修复 pbc.h</span><button class="copy-code" data-copied="已复制" data-failed="复制失败">复制</button></div>
+                <pre><code>ls /usr/local/include/pbc.h
+cd ~/pbc-1.0.0
+sudo make install</code></pre>
+              </div>
+              <h3>找不到 libpbc.so</h3>
+              <p>说明动态库缓存或库路径未更新。优先执行 `ldconfig`，必要时临时设置 `LD_LIBRARY_PATH`。</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>修复 libpbc.so</span><button class="copy-code" data-copied="已复制" data-failed="复制失败">复制</button></div>
+                <pre><code>sudo ldconfig
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+python test_charm.py</code></pre>
+              </div>
+              <h3>ImportError</h3>
+              <p>确认已经激活虚拟环境，并且 Charm 安装到了当前 Python 环境。</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>检查 Python 环境</span><button class="copy-code" data-copied="已复制" data-failed="复制失败">复制</button></div>
+                <pre><code>source ~/charm-venv/bin/activate
+which python
+python -c "import charm; print(charm)"</code></pre>
+              </div>
+              <h3>pip install charm-crypto 失败</h3>
+              <p>旧包名或当前 Python 版本可能没有可用构建。请先尝试 `charm-crypto-framework`，仍失败则使用源码安装。</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>替代安装路径</span><button class="copy-code" data-copied="已复制" data-failed="复制失败">复制</button></div>
+                <pre><code>pip install charm-crypto-framework
+# 如果失败，执行源码安装：
+cd ~
+git clone https://github.com/JHUISI/charm.git</code></pre>
+              </div>
+              <h3>Python 版本不兼容</h3>
+              <p>如果遇到 pyparsing 或 C 扩展编译错误，建议使用 Ubuntu LTS 自带的 Python 3.10 / 3.11，或安装兼容的 `pyparsing` 版本。</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>检查 Python 与 pyparsing</span><button class="copy-code" data-copied="已复制" data-failed="复制失败">复制</button></div>
+                <pre><code>python --version
+python -m pip install "pyparsing&gt;=3.1.0,&lt;4.0"</code></pre>
+              </div>
+              <h3>WSL 中没有安装 gcc/make</h3>
+              <p>说明 `build-essential` 未安装或安装失败，重新安装系统依赖即可。</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>补齐编译工具</span><button class="copy-code" data-copied="已复制" data-failed="复制失败">复制</button></div>
+                <pre><code>sudo apt update
+sudo apt install -y build-essential
+gcc --version
+make --version</code></pre>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="guide-article" data-guide-lang="en">
+      <div class="container">
+        <section class="guide-hero">
+          <div class="guide-eyebrow">Charm Library <span class="tool-tag">Python</span></div>
+          <h1 class="guide-title">Complete Charm-Crypto Installation Guide for Windows + WSL2 + Ubuntu</h1>
+          <p class="guide-summary">This guide walks through WSL2, Ubuntu dependencies, PBC 1.0.0, a Python virtual environment, Charm-Crypto installation, and a verification script. All commands are copy-ready.</p>
+          <div class="guide-meta">
+            <span class="guide-pill">Windows</span>
+            <span class="guide-pill">WSL2</span>
+            <span class="guide-pill">Ubuntu</span>
+            <span class="guide-pill">PBC 1.0.0</span>
+          </div>
+        </section>
+
+        <div class="guide-layout">
+          <aside class="guide-toc">
+            <div class="guide-toc-title">Contents</div>
+            <a href="#en-goal">Installation Goal</a>
+            <a href="#en-native">Why Native Windows Is Not Recommended</a>
+            <a href="#en-wsl">Install WSL2 and Ubuntu</a>
+            <a href="#en-deps">Install System Dependencies</a>
+            <a href="#en-pbc">Install PBC</a>
+            <a href="#en-venv">Create a Python Virtual Environment</a>
+            <a href="#en-pip">Install Charm-Crypto</a>
+            <a href="#en-source">Source Installation Fallback</a>
+            <a href="#en-test">Verify the Installation</a>
+            <a href="#en-errors">Common Errors and Fixes</a>
+          </aside>
+
+          <div class="guide-content">
+            <section class="guide-section" id="en-goal">
+              <h2>Installation Goal</h2>
+              <p>The goal is to run Ubuntu through WSL2 on Windows, install the required system dependencies, build PBC 1.0.0, create a Python virtual environment, install Charm-Crypto, and verify the installation with `PairingGroup('SS512')`.</p>
+            </section>
+
+            <section class="guide-section" id="en-native">
+              <h2>Why Native Windows Is Not Recommended</h2>
+              <p>Charm-Crypto depends on a C/C++ toolchain, Python development headers, GMP, OpenSSL, and PBC. Native Windows builds often fail because compiler, header, and shared-library paths must be handled manually. WSL2 provides a Linux-compatible build environment, so WSL2 + Ubuntu is the recommended Windows route.</p>
+              <p class="guide-note">Run Linux commands inside the Ubuntu / WSL2 terminal. Only the WSL installation command should be run in Administrator PowerShell.</p>
+            </section>
+
+            <section class="guide-section" id="en-wsl">
+              <h2>Install WSL2 and Ubuntu</h2>
+              <p>First check whether WSL2 and Ubuntu are already installed.</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>PowerShell: check WSL</span><button class="copy-code" data-copied="Copied" data-failed="Failed">Copy</button></div>
+                <pre><code>wsl --status
+wsl -l -v</code></pre>
+              </div>
+              <p>If Ubuntu is missing, open PowerShell as Administrator and run the following command. It installs WSL and selects Ubuntu as the Linux distribution.</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Administrator PowerShell: install Ubuntu</span><button class="copy-code" data-copied="Copied" data-failed="Failed">Copy</button></div>
+                <pre><code>wsl --install -d Ubuntu</code></pre>
+              </div>
+              <p>Restart Windows if prompted, open Ubuntu from the Start menu, and create your Linux username and password. Then update WSL and Ubuntu packages.</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>PowerShell + Ubuntu: update environment</span><button class="copy-code" data-copied="Copied" data-failed="Failed">Copy</button></div>
+                <pre><code>wsl --update
+
+# Run inside Ubuntu
+sudo apt update
+sudo apt upgrade -y</code></pre>
+              </div>
+            </section>
+
+            <section class="guide-section" id="en-deps">
+              <h2>Install System Dependencies</h2>
+              <p>Charm-Crypto and PBC need build tools, parser generators, Python development headers, GMP, OpenSSL, and related utilities. `git` is included for the source-install fallback.</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Ubuntu: install dependencies</span><button class="copy-code" data-copied="Copied" data-failed="Failed">Copy</button></div>
+                <pre><code>sudo apt update
+sudo apt install -y build-essential flex bison wget m4 python3 python3-dev python3-pip python3-setuptools python3-venv libgmp-dev libssl-dev git</code></pre>
+              </div>
+            </section>
+
+            <section class="guide-section" id="en-pbc">
+              <h2>Install PBC</h2>
+              <p>PBC is the Pairing-Based Cryptography Library. Charm-Crypto uses it for pairing groups. The commands below download, unpack, build, and install PBC 1.0.0.</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Ubuntu: install PBC 1.0.0</span><button class="copy-code" data-copied="Copied" data-failed="Failed">Copy</button></div>
+                <pre><code>cd ~
+wget https://crypto.stanford.edu/pbc/files/pbc-1.0.0.tar.gz
+tar -xzf pbc-1.0.0.tar.gz
+cd pbc-1.0.0
+./configure
+make
+sudo make install
+sudo ldconfig</code></pre>
+              </div>
+              <p>`./configure` prepares the build, `make` compiles the source, `sudo make install` installs headers and libraries, and `sudo ldconfig` refreshes the runtime library cache.</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Ubuntu: verify PBC</span><button class="copy-code" data-copied="Copied" data-failed="Failed">Copy</button></div>
+                <pre><code>ls /usr/local/include/pbc.h
+ldconfig -p | grep libpbc</code></pre>
+              </div>
+            </section>
+
+            <section class="guide-section" id="en-venv">
+              <h2>Create a Python Virtual Environment</h2>
+              <p>A dedicated virtual environment keeps Charm-Crypto dependencies separate from system Python. The virtual environment name is `charm-venv`.</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Ubuntu: create and activate venv</span><button class="copy-code" data-copied="Copied" data-failed="Failed">Copy</button></div>
+                <pre><code>cd ~
+python3 -m venv charm-venv
+source charm-venv/bin/activate
+python -m pip install --upgrade pip setuptools wheel
+python -m pip install "pyparsing&gt;=3.1.0,&lt;4.0" pytest hypothesis</code></pre>
+              </div>
+            </section>
+
+            <section class="guide-section" id="en-pip">
+              <h2>Install Charm-Crypto</h2>
+              <p>Try pip first. Make sure the `charm-venv` prompt is active before running the command.</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Ubuntu: pip install</span><button class="copy-code" data-copied="Copied" data-failed="Failed">Copy</button></div>
+                <pre><code>source ~/charm-venv/bin/activate
+pip install charm-crypto-framework</code></pre>
+              </div>
+              <p>If pip finds a compatible build for your Python and system environment, the installation is complete. If it fails, use the source-install fallback below.</p>
+            </section>
+
+            <section class="guide-section" id="en-source">
+              <h2>Source Installation Fallback</h2>
+              <p>If `pip install charm-crypto-framework` fails, build Charm from the JHUISI source repository. This route is better when local C extensions must be compiled and linked against PBC.</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Ubuntu: install from source</span><button class="copy-code" data-copied="Copied" data-failed="Failed">Copy</button></div>
+                <pre><code>cd ~
+source ~/charm-venv/bin/activate
+git clone https://github.com/JHUISI/charm.git
+cd charm
+./configure.sh
+make
+sudo make install
+sudo ldconfig</code></pre>
+              </div>
+            </section>
+
+            <section class="guide-section" id="en-test">
+              <h2>Verify the Installation</h2>
+              <p>Create `test_charm.py`, import `PairingGroup`, use the `SS512` parameter set, generate a G1 element and a ZR exponent, and compute `g^x`.</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Ubuntu: create test script</span><button class="copy-code" data-copied="Copied" data-failed="Failed">Copy</button></div>
+                <pre><code>cd ~
+source charm-venv/bin/activate
+cat &gt; test_charm.py &lt;&lt;'PY'
+from charm.toolbox.pairinggroup import PairingGroup, G1, ZR
+
+group = PairingGroup('SS512')
+g = group.random(G1)
+x = group.random(ZR)
+y = g ** x
+
+print("g =", g)
+print("x =", x)
+print("g^x =", y)
+print("Charm-Crypto installed successfully.")
+PY
+
+python test_charm.py</code></pre>
+              </div>
+              <p>If the output includes `Charm-Crypto installed successfully.` and no ImportError or shared-library error appears, Charm-Crypto is working.</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Recommended final run</span><button class="copy-code" data-copied="Copied" data-failed="Failed">Copy</button></div>
+                <pre><code>source charm-venv/bin/activate
+python test_charm.py</code></pre>
+              </div>
+            </section>
+
+            <section class="guide-section" id="en-errors">
+              <h2>Common Errors and Fixes</h2>
+              <h3>pbc.h not found</h3>
+              <p>The PBC header was not installed, or the compiler cannot find it. Confirm the file exists and reinstall PBC if necessary.</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Fix pbc.h</span><button class="copy-code" data-copied="Copied" data-failed="Failed">Copy</button></div>
+                <pre><code>ls /usr/local/include/pbc.h
+cd ~/pbc-1.0.0
+sudo make install</code></pre>
+              </div>
+              <h3>libpbc.so not found</h3>
+              <p>The runtime library cache or library path is missing PBC. Run `ldconfig` first; set `LD_LIBRARY_PATH` if needed.</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Fix libpbc.so</span><button class="copy-code" data-copied="Copied" data-failed="Failed">Copy</button></div>
+                <pre><code>sudo ldconfig
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+python test_charm.py</code></pre>
+              </div>
+              <h3>ImportError</h3>
+              <p>Make sure the virtual environment is active and Charm was installed into the Python interpreter you are using.</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Check Python environment</span><button class="copy-code" data-copied="Copied" data-failed="Failed">Copy</button></div>
+                <pre><code>source ~/charm-venv/bin/activate
+which python
+python -c "import charm; print(charm)"</code></pre>
+              </div>
+              <h3>pip install charm-crypto fails</h3>
+              <p>The old package name or the current Python version may not have a compatible build. Try `charm-crypto-framework` first, then use the source install if pip still fails.</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Alternative path</span><button class="copy-code" data-copied="Copied" data-failed="Failed">Copy</button></div>
+                <pre><code>pip install charm-crypto-framework
+# If it fails, use source installation:
+cd ~
+git clone https://github.com/JHUISI/charm.git</code></pre>
+              </div>
+              <h3>Python version incompatibility</h3>
+              <p>If pyparsing or C-extension compilation fails, prefer the Python version shipped with Ubuntu LTS, such as Python 3.10 or 3.11, and keep pyparsing below 4.0.</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Check Python and pyparsing</span><button class="copy-code" data-copied="Copied" data-failed="Failed">Copy</button></div>
+                <pre><code>python --version
+python -m pip install "pyparsing&gt;=3.1.0,&lt;4.0"</code></pre>
+              </div>
+              <h3>gcc/make is missing in WSL</h3>
+              <p>Install `build-essential` again and confirm that gcc and make are available.</p>
+              <div class="code-panel">
+                <div class="code-panel-header"><span>Install build tools</span><button class="copy-code" data-copied="Copied" data-failed="Failed">Copy</button></div>
+                <pre><code>sudo apt update
+sudo apt install -y build-essential
+gcc --version
+make --version</code></pre>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <script src="assets/js/charm-guide.js?v=20260606-charm-guide"></script>
+</body>
+</html>
