@@ -599,19 +599,19 @@
           statsTitle: '主页访问统计',
           visitsLabel: '访问数量',
           mapTitle: '访问来源地图',
-          mapDescription: '查看最近访问来源的地理分布。IP 来源由第三方服务根据访问请求估算。',
-          mapAction: '查看来源地图',
+          mapDescription: '世界地图展示最近访问来源的地理分布。IP 来源由第三方服务根据访问请求估算。',
           counterAlt: '主页访问数量',
-          mapAlt: '访问来源地图',
+          mapAlt: '主页访问来源世界地图',
+          poweredBy: 'Visitor map by SmallCounter',
         }
       : {
           statsTitle: 'Homepage Stats',
           visitsLabel: 'Visit Count',
           mapTitle: 'Visitor Source Map',
-          mapDescription: 'View the recent geographic distribution of visitors. Source locations are estimated by a third-party service.',
-          mapAction: 'View Source Map',
+          mapDescription: 'A world map showing the recent geographic distribution of visitors. Source locations are estimated by a third-party service.',
           counterAlt: 'Homepage visit count',
-          mapAlt: 'Visitor source map',
+          mapAlt: 'Homepage visitor source world map',
+          poweredBy: 'Visitor map by SmallCounter',
         };
     DOM.footer.innerHTML = `
       <div class="container">
@@ -626,14 +626,19 @@
             >
           </div>
           <div class="footer-stat-card footer-map-card">
-            <div>
+            <div class="footer-map-copy">
               <div class="footer-stat-label">${escapeHTML(labels.mapTitle)}</div>
               <p class="footer-map-desc">${escapeHTML(labels.mapDescription)}</p>
             </div>
-            <a class="visitor-map-link" href="https://www.ip2map.com" target="_blank" rel="noopener">
-              <img src="https://www.ip2map.com/ip2map.gif" alt="${escapeHTML(labels.mapAlt)}" loading="lazy">
-              <span>${escapeHTML(labels.mapAction)}</span>
-            </a>
+            <div class="visitor-map-frame">
+              <img
+                class="visitor-world-map"
+                src="https://smallcounter.com/map/view.php?type=250&id=1780722537"
+                alt="${escapeHTML(labels.mapAlt)}"
+                loading="lazy"
+              >
+            </div>
+            <a class="visitor-map-credit" href="https://smallcounter.com/map/" target="_blank" rel="noopener">${escapeHTML(labels.poweredBy)}</a>
           </div>
         </div>
         <p class="footer-copyright">${escapeHTML(t('site.footer.copyright'))}</p>

@@ -1301,9 +1301,9 @@ code, pre {
 
 .footer-stats {
   display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.45fr);
   gap: 0.9rem;
-  max-width: 760px;
+  max-width: 920px;
   margin: 0 auto 1.35rem;
   text-align: left;
 }
@@ -1322,7 +1322,10 @@ code, pre {
 }
 
 .footer-map-card {
-  align-items: stretch;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 300px);
+  align-items: center;
+  position: relative;
 }
 
 .footer-stat-label {
@@ -1337,40 +1340,48 @@ code, pre {
   max-width: 170px;
 }
 
+.footer-map-copy {
+  min-width: 0;
+}
+
 .footer-map-desc {
-  max-width: 330px;
+  max-width: 360px;
   margin-top: 0.22rem;
   color: var(--color-text-muted);
   font-size: 0.76rem;
   line-height: 1.45;
 }
 
-.visitor-map-link {
-  display: inline-flex;
+.visitor-map-frame {
+  display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  gap: 0.45rem;
-  min-height: 2.2rem;
-  padding: 0.35rem 0.7rem;
-  color: var(--color-accent);
-  background-color: var(--color-tag-bg);
-  border: 1px solid #c9ddf6;
+  min-height: 142px;
+  padding: 0.45rem;
+  background-color: #f8fbff;
+  border: 1px solid var(--color-border-light);
   border-radius: var(--radius-md);
-  font-size: 0.78rem;
-  font-weight: 800;
-  white-space: nowrap;
 }
 
-.visitor-map-link:hover {
+.visitor-world-map {
+  width: min(100%, 250px);
+  height: auto;
+  image-rendering: auto;
+  border: 1px solid #d8e3f2;
+  border-radius: var(--radius-sm);
+}
+
+.visitor-map-credit {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.45rem;
+  color: var(--color-text-muted);
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.visitor-map-credit:hover {
   color: var(--color-accent-hover);
-  border-color: var(--color-accent);
-}
-
-.visitor-map-link img {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
 }
 
 .footer-copyright {
@@ -1449,6 +1460,10 @@ code, pre {
 
   .footer-stats {
     grid-template-columns: 1fr;
+  }
+
+  .footer-map-card {
+    grid-template-columns: minmax(0, 1fr) minmax(250px, 300px);
   }
 
   .guide-layout {
@@ -1550,8 +1565,19 @@ code, pre {
     flex-direction: column;
   }
 
-  .visitor-map-link {
+  .footer-map-card {
+    display: flex;
     width: 100%;
+    padding-bottom: 1.8rem;
+  }
+
+  .visitor-map-frame {
+    width: 100%;
+  }
+
+  .visitor-map-credit {
+    left: 1rem;
+    right: auto;
   }
 
   .guide-main {
