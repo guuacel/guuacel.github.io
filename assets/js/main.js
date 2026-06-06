@@ -35,6 +35,7 @@
     DOM.backToTop = document.getElementById('backToTop');
     DOM.heroSection = document.getElementById('hero');
     DOM.aboutSection = document.getElementById('about');
+    DOM.researchSection = document.getElementById('research');
     DOM.pubSection = document.getElementById('publications');
     DOM.projectsSection = document.getElementById('projects');
     DOM.patentsSection = document.getElementById('patents');
@@ -169,6 +170,7 @@
     DOM.navLinks.innerHTML = `
       <a href="#hero">${escapeHTML(nav.home)}</a>
       <a href="#about">${escapeHTML(nav.about)}</a>
+      <a href="#research">${escapeHTML(nav.research)}</a>
       <a href="#publications">${escapeHTML(nav.publications)}</a>
       <a href="#projects">${escapeHTML(nav.projects)}</a>
       <a href="#patents">${escapeHTML(nav.patents)}</a>
@@ -233,7 +235,6 @@
      ====================================================================== */
   function renderAbout() {
     const about = profileData[currentLang].about;
-    const research = profileData[currentLang].research;
 
     let eduHTML = '';
     about.education.forEach(function (edu) {
@@ -251,20 +252,6 @@
       interestHTML += `<span class="interest-tag">${escapeHTML(ri)}</span>`;
     });
 
-    let researchHTML = '';
-    research.areas.forEach(function (area) {
-      const keywords = Array.isArray(area.keywords) && area.keywords.length
-        ? `<span class="about-research-keywords">${escapeHTML(currentLang === 'zh' ? '关键词：' : 'Keywords: ')}${escapeHTML(area.keywords.join(currentLang === 'zh' ? '、' : ', '))}</span>`
-        : '';
-      researchHTML += `
-        <li class="about-research-item">
-          <strong>${escapeHTML(area.name)}</strong>
-          <span>${escapeHTML(area.description)}</span>
-          ${keywords}
-        </li>
-      `;
-    });
-
     DOM.aboutSection.innerHTML = `
       <div class="container">
         <h2 class="section-title">${escapeHTML(about.title)}</h2>
@@ -279,11 +266,35 @@
             <div class="interest-tags">${interestHTML}</div>
           </div>
         </div>
-        <div class="about-research">
-          <h3>${escapeHTML(research.title)}</h3>
-          <p>${escapeHTML(research.description)}</p>
-          <ul>${researchHTML}</ul>
+      </div>
+    `;
+  }
+
+  /* ======================================================================
+     Rendering — Research
+     ====================================================================== */
+  function renderResearch() {
+    const research = profileData[currentLang].research;
+
+    let cardsHTML = '';
+    research.areas.forEach(function (area) {
+      cardsHTML += `
+        <div class="research-card">
+          <div class="research-card-icon">${escapeHTML(area.icon)}</div>
+          <h3 class="research-card-name">${escapeHTML(area.name)}</h3>
+          <p class="research-card-desc">${escapeHTML(area.description)}</p>
+          <div class="research-card-keywords">
+            ${area.keywords.map(function (k) { return '<span>' + escapeHTML(k) + '</span>'; }).join('')}
+          </div>
         </div>
+      `;
+    });
+
+    DOM.researchSection.innerHTML = `
+      <div class="container">
+        <h2 class="section-title">${escapeHTML(research.title)}</h2>
+        <p class="section-desc">${escapeHTML(research.description)}</p>
+        <div class="research-grid">${cardsHTML}</div>
       </div>
     `;
   }
@@ -645,6 +656,7 @@
     renderNav();
     renderHero();
     renderAbout();
+    renderResearch();
     renderPublications();
     renderProjects();
     renderPatents();
