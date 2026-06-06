@@ -30,7 +30,7 @@
 
   /* Spacing */
   --max-width: 1100px;
-  --section-padding: 5rem 1.5rem;
+  --section-padding: 3.6rem 1.5rem;
   --nav-height: 60px;
 
   /* Shadows */
@@ -230,8 +230,8 @@ code, pre {
    Hero Section
    -------------------------------------------------------------------------- */
 .hero {
-  padding-top: calc(var(--nav-height) + 4rem);
-  padding-bottom: 4rem;
+  padding-top: calc(var(--nav-height) + 2.8rem);
+  padding-bottom: 2.8rem;
   background-color: var(--color-hero-bg);
   border-bottom: 1px solid var(--color-border);
   transition: background-color var(--transition-base), border-color var(--transition-base);
@@ -240,7 +240,7 @@ code, pre {
 .hero .container {
   display: flex;
   align-items: center;
-  gap: 3.5rem;
+  gap: 2.5rem;
 }
 
 .hero-avatar {
@@ -290,7 +290,7 @@ code, pre {
   color: var(--color-text-light);
   line-height: 1.75;
   max-width: 620px;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.95rem;
 }
 
 /* Hero links */
@@ -347,7 +347,7 @@ code, pre {
   font-size: 1.65rem;
   font-weight: 700;
   color: var(--color-primary);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.45rem;
   position: relative;
 }
 
@@ -364,7 +364,7 @@ code, pre {
 .section-desc {
   font-size: 0.95rem;
   color: var(--color-text-muted);
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.6rem;
   max-width: 700px;
 }
 
@@ -374,7 +374,7 @@ code, pre {
 .about-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  gap: 2rem;
 }
 
 .about-bio {
@@ -391,7 +391,7 @@ code, pre {
   font-size: 1.05rem;
   font-weight: 600;
   color: var(--color-primary);
-  margin-bottom: 1rem;
+  margin-bottom: 0.7rem;
 }
 
 .about-details h4 {
@@ -400,12 +400,12 @@ code, pre {
   color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   margin-bottom: 0.5rem;
 }
 
 .edu-item {
-  padding: 0.75rem 0;
+  padding: 0.55rem 0;
   border-bottom: 1px solid var(--color-border-light);
   transition: border-color var(--transition-base);
 }
@@ -448,62 +448,52 @@ code, pre {
   border-radius: var(--radius-full);
 }
 
-/* --------------------------------------------------------------------------
-   Research Section
-   -------------------------------------------------------------------------- */
-.research-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-  gap: 1.5rem;
+.about-research {
+  margin-top: 1.8rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--color-border-light);
 }
 
-.research-card {
-  background-color: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 1.5rem;
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--transition-base), transform var(--transition-base), border-color var(--transition-base);
-}
-
-.research-card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-}
-
-.research-card-icon {
-  font-size: 2rem;
-  margin-bottom: 0.75rem;
-}
-
-.research-card-name {
-  font-size: 1.05rem;
-  font-weight: 600;
+.about-research h3 {
   color: var(--color-primary);
-  margin-bottom: 0.6rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
 }
 
-.research-card-desc {
-  font-size: 0.88rem;
+.about-research > p {
+  max-width: 760px;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.8rem;
+}
+
+.about-research ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem 1.4rem;
+  list-style: none;
+}
+
+.about-research-item {
   color: var(--color-text-light);
-  line-height: 1.7;
-  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.65;
 }
 
-.research-card-keywords {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
+.about-research-item strong {
+  display: block;
+  color: var(--color-text);
+  font-weight: 700;
 }
 
-.research-card-keywords span {
-  display: inline-block;
-  padding: 0.2rem 0.5rem;
-  font-size: 0.72rem;
-  font-weight: 500;
-  color: var(--color-tag-text);
-  background-color: var(--color-tag-bg);
-  border-radius: var(--radius-sm);
+.about-research-item span {
+  display: block;
+}
+
+.about-research-keywords {
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
 }
 
 /* --------------------------------------------------------------------------
@@ -1451,7 +1441,11 @@ code, pre {
 
   .about-content {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.4rem;
+  }
+
+  .about-research ul {
+    grid-template-columns: 1fr;
   }
 
   .contact-grid {
@@ -1519,11 +1513,7 @@ code, pre {
 
 @media (max-width: 768px) {
   :root {
-    --section-padding: 3.5rem 1rem;
-  }
-
-  .research-grid {
-    grid-template-columns: 1fr;
+    --section-padding: 2.8rem 1rem;
   }
 
   .tools-grid {
