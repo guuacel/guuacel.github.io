@@ -648,6 +648,36 @@ code, pre {
   text-decoration: none;
 }
 
+.pub-btn-code {
+  color: #22543d;
+  border-color: #9ae6b4;
+  background-color: #f0fff4;
+}
+
+.pub-btn-code:hover {
+  color: #fff;
+  border-color: #276749;
+  background-color: #276749;
+}
+
+.pub-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.65rem;
+}
+
+.pub-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.18rem 0.55rem;
+  color: #92400e;
+  background-color: #fef3c7;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 650;
+}
+
 /* BibTeX expand */
 .bibtex-content {
   display: none;
@@ -830,67 +860,71 @@ code, pre {
 }
 
 /* --------------------------------------------------------------------------
-   Awards Section
+   Tools Section
    -------------------------------------------------------------------------- */
-.awards-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
 }
 
-.award-item {
-  display: flex;
-  align-items: baseline;
-  gap: 1.5rem;
-  padding: 1rem 1.25rem;
+.tool-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 0.9rem;
+  padding: 1.2rem;
   background-color: var(--color-bg-card);
   border: 1px solid var(--color-border-light);
   border-radius: var(--radius-md);
-  transition: box-shadow var(--transition-base);
-}
-
-.award-item:hover {
   box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
 }
 
-.award-year {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--color-accent);
-  min-width: 55px;
+.tool-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-md);
 }
 
-.award-info {
-  flex: 1;
-}
-
-.award-name {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--color-text);
-  margin-bottom: 0.25rem;
-}
-
-.award-org {
-  font-size: 0.82rem;
-  color: var(--color-text-muted);
-}
-
-.award-level {
-  display: inline-block;
-  padding: 0.15rem 0.5rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--color-tag-text);
+.tool-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  color: var(--color-primary);
   background-color: var(--color-tag-bg);
-  border-radius: var(--radius-sm);
-  margin-top: 0.3rem;
+  border-radius: var(--radius-md);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
 }
 
-.award-desc {
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-  margin-top: 0.2rem;
+.tool-name {
+  color: var(--color-primary);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+.tool-desc {
+  color: var(--color-text-light);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  margin-bottom: 0.7rem;
+}
+
+.tool-link {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-accent);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.tool-link:hover {
+  color: var(--color-accent-hover);
 }
 
 /* --------------------------------------------------------------------------
@@ -1074,9 +1108,8 @@ code, pre {
     grid-template-columns: 1fr;
   }
 
-  .award-item {
-    flex-direction: column;
-    gap: 0.4rem;
+  .tools-grid {
+    grid-template-columns: 1fr;
   }
 
   .hero-avatar {

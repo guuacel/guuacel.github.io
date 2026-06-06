@@ -21,6 +21,16 @@ guuacel.github.io/
 │   │   └── profile.json
 │   └── img/
 │       └── avatar-placeholder.png
+├── code/
+│   ├── README.md
+│   ├── gateway-assisted-fine-grained-data-sharing/
+│   ├── bcdap-dgs/
+│   ├── keyword-semantic-ciphertext-retrieval/
+│   ├── dwtat-dasis/
+│   ├── ouvc-vdb/
+│   ├── lightweight-traceable-data-circulation/
+│   ├── ghost-weight-protocol/
+│   └── low-distortion-reversible-database-watermarking/
 └── docs/
     └── customization-guide.md
 ```
@@ -32,6 +42,7 @@ guuacel.github.io/
 | `index.html` 位于根目录 | 通过 | `guuacel.github.io/index.html` 存在 |
 | `.nojekyll` 位于根目录 | 通过 | 文件存在且为空 |
 | `assets/` 位于根目录 | 通过 | CSS、JS、JSON、图片均在该目录 |
+| `code/` 位于根目录 | 通过 | 每篇论文均已有代码占位目录 |
 | 无二级嵌套目录 | 通过 | 不存在 `guuacel.github.io/guuacel.github.io/index.html` |
 | 未生成 zip | 通过 | 未创建压缩包 |
 
@@ -64,7 +75,7 @@ HTTP 本地静态服务器检查结果：
 | 文件名大小写 | 通过 | HTML、CSS、JS、JSON、PNG 引用大小写一致 |
 | 无效本地资源 | 通过 | 核心本地资源 HTTP 检查均返回 200 |
 | 外部链接 | 通过 | GitHub、Google Scholar、ORCID 为真实 URL |
-| 占位链接 | 需用户补充 | ResearchGate、CV、PDF、Code、部分专利编号和会议名仍使用占位 |
+| 占位链接 | 需用户补充 | ResearchGate、CV、PDF、部分专利编号和会议名仍使用占位 |
 
 ## 5. 中英文切换检查
 
@@ -75,10 +86,10 @@ HTTP 本地静态服务器检查结果：
 | 中文按钮切回中文 | 通过 | 导航栏按钮切换为 `zh` |
 | 使用 `localStorage` 保存语言 | 通过 | key 为 `guuacel-homepage-language` |
 | 刷新后语言保持 | 通过 | 初始化时读取 `localStorage` |
-| 首页、导航栏、About、Research、Publications、Projects、Patents、Awards、Contact 均可切换 | 通过 | `profile.json` 中 `zh` 与 `en` 字段完整 |
+| 首页、导航栏、About、Research、Publications、Projects、Patents、Tools、Contact 均可切换 | 通过 | `profile.json` 中 `zh` 与 `en` 字段完整 |
 | 页面输出空值占位词 | 通过 | 源码扫描未发现相关空值字面量，渲染函数也有 fallback |
 | `profile.json` 合法性 | 通过 | 已通过 UTF-8 JSON 解析 |
-| 原始数据恢复 | 通过 | 已从上一层项目恢复完整论文、科研项目、专利软著、获奖等数据 |
+| 原始数据恢复 | 通过 | 已从上一层项目恢复完整论文、科研项目、专利软著等数据，荣誉奖励数据已归档 |
 
 ## 6. README 和文档
 
@@ -120,7 +131,7 @@ HTTP 本地静态服务器检查结果：
 2. 替换 `assets/img/avatar-placeholder.png` 为真实头像。
 3. 补充 CV 文件并更新 `profile.json` 中的 `cv` 链接。
 4. 补充 ResearchGate 链接，或保持 `#`。
-5. 补充论文 PDF、Code 链接。
+5. 补充论文 PDF 链接；Code 链接已指向 `code/` 下的对应占位目录。
 6. 核实专利编号、申请号、软著登记号和部分奖项会议名。
 7. GitHub Pages 首次部署可能需要等待数分钟；如果页面未更新，请稍后刷新或清理浏览器缓存。
 

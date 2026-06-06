@@ -39,7 +39,7 @@
     DOM.pubSection = document.getElementById('publications');
     DOM.projectsSection = document.getElementById('projects');
     DOM.patentsSection = document.getElementById('patents');
-    DOM.awardsSection = document.getElementById('awards');
+    DOM.toolsSection = document.getElementById('tools');
     DOM.contactSection = document.getElementById('contact');
     DOM.footer = document.getElementById('footer');
     DOM.html = document.documentElement;
@@ -174,7 +174,7 @@
       <a href="#publications">${escapeHTML(nav.publications)}</a>
       <a href="#projects">${escapeHTML(nav.projects)}</a>
       <a href="#patents">${escapeHTML(nav.patents)}</a>
-      <a href="#awards">${escapeHTML(nav.awards)}</a>
+      <a href="#tools">${escapeHTML(nav.tools)}</a>
       <a href="#contact">${escapeHTML(nav.contact)}</a>
       <button class="lang-toggle" id="langToggle" aria-label="Switch language">${escapeHTML(langLabel)}</button>
     `;
@@ -384,13 +384,20 @@
           html += `<a href="${escapeHTML(paper.pdf)}" class="pub-btn" target="_blank" rel="noopener">📄 ${escapeHTML(t('publications.pdfLabel'))}</a>`;
         }
         if (paper.code && paper.code !== '#') {
-          html += `<a href="${escapeHTML(paper.code)}" class="pub-btn" target="_blank" rel="noopener">💻 ${escapeHTML(t('publications.codeLabel'))}</a>`;
+          const codeTitle = currentLang === 'zh' ? '下载代码' : 'Download code';
+          html += `<a href="${escapeHTML(paper.code)}" class="pub-btn pub-btn-code" target="_blank" rel="noopener" title="${escapeHTML(codeTitle)}">💻 ${escapeHTML(t('publications.codeLabel'))}</a>`;
         }
         if (paper.bibtex) {
           html += `<button class="pub-btn bibtex-toggle" data-target="${bibtexId}">📋 ${escapeHTML(t('publications.bibtexLabel'))}</button>`;
         }
 
         html += `</div>`;
+
+        if (Array.isArray(paper.tags) && paper.tags.length) {
+          html += `<div class="pub-tags">${paper.tags.map(function (tag) {
+            return '<span class="pub-tag">' + escapeHTML(tag) + '</span>';
+          }).join('')}</div>`;
+        }
 
         if (paper.bibtex) {
           html += `<pre class="bibtex-content" id="${bibtexId}"><code>${escapeHTML(paper.bibtex)}</code></pre>`;
@@ -506,30 +513,34 @@
   }
 
   /* ======================================================================
-     Rendering — Awards
+     Rendering — Tools
      ====================================================================== */
-  function renderAwards() {
-    const awards = profileData[currentLang].awards;
+  function renderTools() {
+    const tools = profileData[currentLang].tools;
 
     let itemsHTML = '';
-    awards.items.forEach(function (item) {
+    tools.items.forEach(function (item) {
+      const iconMap = {
+        code: '</>',
+        scholar: 'GS',
+        id: 'ID',
+      };
       itemsHTML += `
-        <div class="award-item">
-          <div class="award-year">${item.year}</div>
-          <div class="award-info">
-            <div class="award-name">${escapeHTML(item.name)}</div>
-            <div class="award-org">${escapeHTML(item.organization)}</div>
-            <span class="award-level">${escapeHTML(item.level)}</span>
-            <div class="award-desc">${escapeHTML(item.description)}</div>
+        <article class="tool-item">
+          <div class="tool-icon">${escapeHTML(iconMap[item.icon] || item.icon || '↗')}</div>
+          <div class="tool-info">
+            <h3 class="tool-name">${escapeHTML(item.name)}</h3>
+            <p class="tool-desc">${escapeHTML(item.description)}</p>
+            <a class="tool-link" href="${escapeHTML(item.link)}" target="_blank" rel="noopener">${escapeHTML(item.action)}</a>
           </div>
-        </div>
+        </article>
       `;
     });
 
-    DOM.awardsSection.innerHTML = `
+    DOM.toolsSection.innerHTML = `
       <div class="container">
-        <h2 class="section-title">${escapeHTML(awards.title)}</h2>
-        <div class="awards-list">${itemsHTML}</div>
+        <h2 class="section-title">${escapeHTML(tools.title)}</h2>
+        <div class="tools-grid">${itemsHTML}</div>
       </div>
     `;
   }
@@ -595,7 +606,7 @@
     renderPublications();
     renderProjects();
     renderPatents();
-    renderAwards();
+    renderTools();
     renderContact();
     renderFooter();
     updateLangToggle();

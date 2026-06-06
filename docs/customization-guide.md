@@ -67,8 +67,8 @@ en.research.items
 修改：
 
 ```text
-zh.publications.items
-en.publications.items
+zh.publications.papers
+en.publications.papers
 ```
 
 每篇论文结构如下：
@@ -89,6 +89,7 @@ en.publications.items
 
 - `doi` 只填写 DOI 字符串，页面会自动生成 `https://doi.org/...` 链接。
 - 没有 PDF 时填写 `#`。
+- `code` 填写对应论文代码目录的 GitHub 链接，例如 `https://github.com/guuacel/guuacel.github.io/tree/main/code/dwtat-dasis`。
 - 没有 BibTeX 时填写空字符串 `""`。
 - 不要在 JSON 中添加注释或尾随逗号。
 
@@ -108,7 +109,9 @@ en.projects.items
   "title": "项目名称",
   "period": "起止时间",
   "role": "个人角色",
-  "description": "项目说明"
+  "description": "项目说明",
+  "tech": ["Python", "Docker"],
+  "link": "#"
 }
 ```
 
@@ -125,7 +128,7 @@ en.patents.items
 
 ```json
 {
-  "title": "专利或软著名称",
+  "name": "专利或软著名称",
   "type": "发明专利 / 软件著作权",
   "status": "已授权 / 审查中 / 已登记",
   "year": "2025",
@@ -133,25 +136,28 @@ en.patents.items
 }
 ```
 
-## 7. 更新获奖情况
+## 7. 更新工具
 
 修改：
 
 ```text
-zh.awards.items
-en.awards.items
+zh.tools.items
+en.tools.items
 ```
 
 结构：
 
 ```json
 {
-  "title": "奖项名称",
-  "organization": "授奖单位",
-  "year": "2025",
-  "description": "奖项说明"
+  "name": "工具名称",
+  "description": "工具说明",
+  "action": "按钮文字",
+  "link": "https://github.com/guuacel/guuacel.github.io/tree/main/code",
+  "icon": "code"
 }
 ```
+
+荣誉奖励数据已保留在 `awardsArchive` 中，但页面不再渲染该模块。
 
 ## 8. 调整颜色和版式
 

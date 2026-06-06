@@ -11,8 +11,8 @@
         "publications": "论文成果",
         "projects": "科研项目",
         "patents": "专利与软著",
-        "awards": "荣誉奖励",
-        "contact": "联系方式"
+        "contact": "联系方式",
+        "tools": "工具"
       },
       "languageLabel": "English",
       "footer": {
@@ -143,7 +143,7 @@
       "filterPreprint": "预印本",
       "bibtexLabel": "BibTeX",
       "pdfLabel": "PDF",
-      "codeLabel": "代码",
+      "codeLabel": "Code",
       "doiLabel": "DOI",
       "papers": [
         {
@@ -154,7 +154,7 @@
           "type": "journal",
           "doi": "10.1109/jiot.2026.3697357",
           "pdf": "#",
-          "code": "#",
+          "code": "https://github.com/guuacel/guuacel.github.io/tree/main/code/gateway-assisted-fine-grained-data-sharing",
           "bibtex": "@article{cai2026gateway,\n  title={A Gateway-Assisted Fine-Grained Data Sharing Scheme for Cross-Domain IIoT},\n  author={Chuanda Cai and Yue Cao and Changbing Bi and Changgen Peng and Ali Shoker and Chao Fu},\n  journal={IEEE Internet of Things Journal},\n  year={2026},\n  doi={10.1109/jiot.2026.3697357}\n}"
         },
         {
@@ -165,8 +165,25 @@
           "type": "journal",
           "doi": "10.1109/TITS.2025.3593412",
           "pdf": "#",
-          "code": "#",
+          "code": "https://github.com/guuacel/guuacel.github.io/tree/main/code/bcdap-dgs",
           "bibtex": "@article{cai2025bcdap,\n  title={BCDAP-DGS: Dynamic Group Signature and Batch Cross-Domain Authentication Protocol for Intelligent Transportation},\n  author={Chuanda Cai and Changgen Peng and Youliang Tian and Weijie Tan and Jin Niu and Fei Teng},\n  journal={IEEE Transactions on Intelligent Transportation Systems},\n  year={2025},\n  doi={10.1109/TITS.2025.3593412}\n}"
+        },
+        {
+          "title": "关键字与语义融合的高效密文检索方案",
+          "authors": "张东, 彭长根, 谭伟杰, 蔡传达",
+          "venue": "计算机工程",
+          "year": 2025,
+          "type": "journal",
+          "doi": "",
+          "pdf": "#",
+          "code": "https://github.com/guuacel/guuacel.github.io/tree/main/code/keyword-semantic-ciphertext-retrieval",
+          "tags": [
+            "北大中文核心",
+            "CSCD 核心库",
+            "SWJTU B",
+            "网络首发"
+          ],
+          "bibtex": "@article{zhang2025keywordsemantic,\n  title={关键字与语义融合的高效密文检索方案},\n  author={张东 and 彭长根 and 谭伟杰 and 蔡传达},\n  journal={计算机工程},\n  year={2025},\n  note={网络首发}\n}"
         },
         {
           "title": "DWTAT-DASIS: Fusion of Discrete Wavelet Transform and Access Tree for Distributed Authentication in Secret Image Sharing",
@@ -176,7 +193,7 @@
           "type": "journal",
           "doi": "10.1016/j.csi.2024.103969",
           "pdf": "#",
-          "code": "#",
+          "code": "https://github.com/guuacel/guuacel.github.io/tree/main/code/dwtat-dasis",
           "bibtex": "@article{cai2025dwtat,\n  title={DWTAT-DASIS: Fusion of Discrete Wavelet Transform and Access Tree for Distributed Authentication in Secret Image Sharing},\n  author={Chuanda Cai and Changgen Peng and Hanlin Tang and Bin Xiao and Weijie Tan},\n  journal={Computer Standards & Interfaces},\n  year={2025},\n  doi={10.1016/j.csi.2024.103969}\n}"
         },
         {
@@ -187,7 +204,7 @@
           "type": "journal",
           "doi": "10.1007/s10586-025-05930-9",
           "pdf": "#",
-          "code": "#",
+          "code": "https://github.com/guuacel/guuacel.github.io/tree/main/code/ouvc-vdb",
           "bibtex": "@article{cheng2026ouvc,\n  title={OUVC-VDB: Publicly Verifiable Database with Conjunctive Keyword Search and Forward Security},\n  author={Lang Cheng and Changgen Peng and Chuanda Cai and Fei Cai},\n  journal={Cluster Computing},\n  year={2026},\n  doi={10.1007/s10586-025-05930-9}\n}"
         },
         {
@@ -198,7 +215,7 @@
           "type": "journal",
           "doi": "10.1002/cpe.70294",
           "pdf": "#",
-          "code": "#",
+          "code": "https://github.com/guuacel/guuacel.github.io/tree/main/code/lightweight-traceable-data-circulation",
           "bibtex": "@article{li2025lightweight,\n  title={Lightweight Traceable Data Circulation Encryption Scheme for Edge Computing},\n  author={Miao Li and Changgen Peng and Hai Liu and Hanlin Tang and Jin Niu and Chuanda Cai and Tao Zhang},\n  journal={Concurrency and Computation: Practice and Experience},\n  year={2025},\n  doi={10.1002/cpe.70294}\n}"
         },
         {
@@ -209,7 +226,7 @@
           "type": "journal",
           "doi": "10.1007/s11227-024-06565-0",
           "pdf": "#",
-          "code": "#",
+          "code": "https://github.com/guuacel/guuacel.github.io/tree/main/code/ghost-weight-protocol",
           "bibtex": "@article{xiao2024ghost,\n  title={Ghost-Weight Protocol: A Highly Efficient Blockchain Consensus for IoT},\n  author={Zhen Xiao and Youliang Tian and Changgen Peng and Yangyang Long and Chuanda Cai},\n  journal={The Journal of Supercomputing},\n  year={2024},\n  doi={10.1007/s11227-024-06565-0}\n}"
         },
         {
@@ -220,7 +237,7 @@
           "type": "journal",
           "doi": "10.3934/mbe.2023943",
           "pdf": "#",
-          "code": "#",
+          "code": "https://github.com/guuacel/guuacel.github.io/tree/main/code/low-distortion-reversible-database-watermarking",
           "bibtex": "@article{cai2023low,\n  title={Low Distortion Reversible Database Watermarking Based on Hybrid Intelligent Algorithm},\n  author={Chuanda Cai and Changgen Peng and Jin Niu and Weijie Tan and Hanlin Tang},\n  journal={Mathematical Biosciences and Engineering},\n  year={2023},\n  doi={10.3934/mbe.2023943}\n}"
         }
       ]
@@ -304,7 +321,17 @@
         }
       ]
     },
-    "awards": {
+    "contact": {
+      "title": "联系方式",
+      "email": "ccddcc@whu.edu.cn",
+      "github": "https://github.com/guuacel",
+      "googleScholar": "https://scholar.google.com/citations?user=ZRjejGAAAAAJ&hl=zh-CN",
+      "orcid": "https://orcid.org/0009-0007-0926-0465",
+      "institution": "武汉大学 · 国家网络安全学院",
+      "address": "中国 · 武汉 · 武汉大学",
+      "location": "武汉, 中国"
+    },
+    "awardsArchive": {
       "title": "荣誉奖励",
       "items": [
         {
@@ -337,15 +364,31 @@
         }
       ]
     },
-    "contact": {
-      "title": "联系方式",
-      "email": "ccddcc@whu.edu.cn",
-      "github": "https://github.com/guuacel",
-      "googleScholar": "https://scholar.google.com/citations?user=ZRjejGAAAAAJ&hl=zh-CN",
-      "orcid": "https://orcid.org/0009-0007-0926-0465",
-      "institution": "武汉大学 · 国家网络安全学院",
-      "address": "中国 · 武汉 · 武汉大学",
-      "location": "武汉, 中国"
+    "tools": {
+      "title": "工具",
+      "items": [
+        {
+          "name": "论文代码",
+          "description": "集中整理论文相关代码占位目录，后续代码会上传到仓库 code 文件夹。",
+          "action": "打开代码目录",
+          "link": "https://github.com/guuacel/guuacel.github.io/tree/main/code",
+          "icon": "code"
+        },
+        {
+          "name": "Google Scholar",
+          "description": "查看论文、引用和学术档案。",
+          "action": "打开 Scholar",
+          "link": "https://scholar.google.com/citations?user=ZRjejGAAAAAJ&hl=zh-CN",
+          "icon": "scholar"
+        },
+        {
+          "name": "ORCID",
+          "description": "研究者身份标识和学术记录入口。",
+          "action": "打开 ORCID",
+          "link": "https://orcid.org/0009-0007-0926-0465",
+          "icon": "id"
+        }
+      ]
     }
   },
   "en": {
@@ -360,8 +403,8 @@
         "publications": "Publications",
         "projects": "Projects",
         "patents": "Patents",
-        "awards": "Awards",
-        "contact": "Contact"
+        "contact": "Contact",
+        "tools": "Tools"
       },
       "languageLabel": "中文",
       "footer": {
@@ -503,7 +546,7 @@
           "type": "journal",
           "doi": "10.1109/jiot.2026.3697357",
           "pdf": "#",
-          "code": "#",
+          "code": "https://github.com/guuacel/guuacel.github.io/tree/main/code/gateway-assisted-fine-grained-data-sharing",
           "bibtex": "@article{cai2026gateway,\n  title={A Gateway-Assisted Fine-Grained Data Sharing Scheme for Cross-Domain IIoT},\n  author={Chuanda Cai and Yue Cao and Changbing Bi and Changgen Peng and Ali Shoker and Chao Fu},\n  journal={IEEE Internet of Things Journal},\n  year={2026},\n  doi={10.1109/jiot.2026.3697357}\n}"
         },
         {
@@ -514,8 +557,25 @@
           "type": "journal",
           "doi": "10.1109/TITS.2025.3593412",
           "pdf": "#",
-          "code": "#",
+          "code": "https://github.com/guuacel/guuacel.github.io/tree/main/code/bcdap-dgs",
           "bibtex": "@article{cai2025bcdap,\n  title={BCDAP-DGS: Dynamic Group Signature and Batch Cross-Domain Authentication Protocol for Intelligent Transportation},\n  author={Chuanda Cai and Changgen Peng and Youliang Tian and Weijie Tan and Jin Niu and Fei Teng},\n  journal={IEEE Transactions on Intelligent Transportation Systems},\n  year={2025},\n  doi={10.1109/TITS.2025.3593412}\n}"
+        },
+        {
+          "title": "Efficient Ciphertext Retrieval Scheme Integrating Keywords and Semantics",
+          "authors": "Dong Zhang, Changgen Peng, Weijie Tan, Chuanda Cai",
+          "venue": "Computer Engineering",
+          "year": 2025,
+          "type": "journal",
+          "doi": "",
+          "pdf": "#",
+          "code": "https://github.com/guuacel/guuacel.github.io/tree/main/code/keyword-semantic-ciphertext-retrieval",
+          "tags": [
+            "PKU Core",
+            "CSCD Core",
+            "SWJTU B",
+            "Online First"
+          ],
+          "bibtex": "@article{zhang2025keywordsemantic,\n  title={Efficient Ciphertext Retrieval Scheme Integrating Keywords and Semantics},\n  author={Zhang, Dong and Peng, Changgen and Tan, Weijie and Cai, Chuanda},\n  journal={Computer Engineering},\n  year={2025},\n  note={Online First}\n}"
         },
         {
           "title": "DWTAT-DASIS: Fusion of Discrete Wavelet Transform and Access Tree for Distributed Authentication in Secret Image Sharing",
@@ -525,7 +585,7 @@
           "type": "journal",
           "doi": "10.1016/j.csi.2024.103969",
           "pdf": "#",
-          "code": "#",
+          "code": "https://github.com/guuacel/guuacel.github.io/tree/main/code/dwtat-dasis",
           "bibtex": "@article{cai2025dwtat,\n  title={DWTAT-DASIS: Fusion of Discrete Wavelet Transform and Access Tree for Distributed Authentication in Secret Image Sharing},\n  author={Chuanda Cai and Changgen Peng and Hanlin Tang and Bin Xiao and Weijie Tan},\n  journal={Computer Standards & Interfaces},\n  year={2025},\n  doi={10.1016/j.csi.2024.103969}\n}"
         },
         {
@@ -536,7 +596,7 @@
           "type": "journal",
           "doi": "10.1007/s10586-025-05930-9",
           "pdf": "#",
-          "code": "#",
+          "code": "https://github.com/guuacel/guuacel.github.io/tree/main/code/ouvc-vdb",
           "bibtex": "@article{cheng2026ouvc,\n  title={OUVC-VDB: Publicly Verifiable Database with Conjunctive Keyword Search and Forward Security},\n  author={Lang Cheng and Changgen Peng and Chuanda Cai and Fei Cai},\n  journal={Cluster Computing},\n  year={2026},\n  doi={10.1007/s10586-025-05930-9}\n}"
         },
         {
@@ -547,7 +607,7 @@
           "type": "journal",
           "doi": "10.1002/cpe.70294",
           "pdf": "#",
-          "code": "#",
+          "code": "https://github.com/guuacel/guuacel.github.io/tree/main/code/lightweight-traceable-data-circulation",
           "bibtex": "@article{li2025lightweight,\n  title={Lightweight Traceable Data Circulation Encryption Scheme for Edge Computing},\n  author={Miao Li and Changgen Peng and Hai Liu and Hanlin Tang and Jin Niu and Chuanda Cai and Tao Zhang},\n  journal={Concurrency and Computation: Practice and Experience},\n  year={2025},\n  doi={10.1002/cpe.70294}\n}"
         },
         {
@@ -558,7 +618,7 @@
           "type": "journal",
           "doi": "10.1007/s11227-024-06565-0",
           "pdf": "#",
-          "code": "#",
+          "code": "https://github.com/guuacel/guuacel.github.io/tree/main/code/ghost-weight-protocol",
           "bibtex": "@article{xiao2024ghost,\n  title={Ghost-Weight Protocol: A Highly Efficient Blockchain Consensus for IoT},\n  author={Zhen Xiao and Youliang Tian and Changgen Peng and Yangyang Long and Chuanda Cai},\n  journal={The Journal of Supercomputing},\n  year={2024},\n  doi={10.1007/s11227-024-06565-0}\n}"
         },
         {
@@ -569,7 +629,7 @@
           "type": "journal",
           "doi": "10.3934/mbe.2023943",
           "pdf": "#",
-          "code": "#",
+          "code": "https://github.com/guuacel/guuacel.github.io/tree/main/code/low-distortion-reversible-database-watermarking",
           "bibtex": "@article{cai2023low,\n  title={Low Distortion Reversible Database Watermarking Based on Hybrid Intelligent Algorithm},\n  author={Chuanda Cai and Changgen Peng and Jin Niu and Weijie Tan and Hanlin Tang},\n  journal={Mathematical Biosciences and Engineering},\n  year={2023},\n  doi={10.3934/mbe.2023943}\n}"
         }
       ]
@@ -653,7 +713,17 @@
         }
       ]
     },
-    "awards": {
+    "contact": {
+      "title": "Contact",
+      "email": "ccddcc@whu.edu.cn",
+      "github": "https://github.com/guuacel",
+      "googleScholar": "https://scholar.google.com/citations?user=ZRjejGAAAAAJ&hl=zh-CN",
+      "orcid": "https://orcid.org/0009-0007-0926-0465",
+      "institution": "School of Cyber Science and Engineering · Wuhan University",
+      "address": "Wuhan University · Wuhan, China",
+      "location": "Wuhan, China"
+    },
+    "awardsArchive": {
       "title": "Honors & Awards",
       "items": [
         {
@@ -686,15 +756,31 @@
         }
       ]
     },
-    "contact": {
-      "title": "Contact",
-      "email": "ccddcc@whu.edu.cn",
-      "github": "https://github.com/guuacel",
-      "googleScholar": "https://scholar.google.com/citations?user=ZRjejGAAAAAJ&hl=zh-CN",
-      "orcid": "https://orcid.org/0009-0007-0926-0465",
-      "institution": "School of Cyber Science and Engineering · Wuhan University",
-      "address": "Wuhan University · Wuhan, China",
-      "location": "Wuhan, China"
+    "tools": {
+      "title": "Tools",
+      "items": [
+        {
+          "name": "Paper Code",
+          "description": "Placeholder directories for publication code. Code will be uploaded under the repository code folder.",
+          "action": "Open Code Folder",
+          "link": "https://github.com/guuacel/guuacel.github.io/tree/main/code",
+          "icon": "code"
+        },
+        {
+          "name": "Google Scholar",
+          "description": "Publication, citation, and academic profile entry.",
+          "action": "Open Scholar",
+          "link": "https://scholar.google.com/citations?user=ZRjejGAAAAAJ&hl=zh-CN",
+          "icon": "scholar"
+        },
+        {
+          "name": "ORCID",
+          "description": "Researcher identifier and academic record entry.",
+          "action": "Open ORCID",
+          "link": "https://orcid.org/0009-0007-0926-0465",
+          "icon": "id"
+        }
+      ]
     }
   }
 }
