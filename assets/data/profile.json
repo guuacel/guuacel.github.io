@@ -179,9 +179,7 @@
           "code": "https://github.com/guuacel/guuacel.github.io/tree/main/code/keyword-semantic-ciphertext-retrieval",
           "tags": [
             "北大中文核心",
-            "CSCD 核心库",
-            "SWJTU B",
-            "网络首发"
+            "CSCD 核心库"
           ],
           "bibtex": "@article{zhang2025keywordsemantic,\n  title={关键字与语义融合的高效密文检索方案},\n  author={张东 and 彭长根 and 谭伟杰 and 蔡传达},\n  journal={计算机工程},\n  year={2025},\n  note={网络首发}\n}"
         },
