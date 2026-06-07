@@ -20,6 +20,7 @@
      ====================================================================== */
   let profileData = null;
   let currentLang = 'zh';
+  const ASSET_VERSION = '20260607-remove-hero-links';
 
   /* ======================================================================
      DOM References
@@ -668,7 +669,7 @@
 
     // Load profile data
     try {
-      const resp = await fetch('assets/data/profile.json');
+      const resp = await fetch('assets/data/profile.json?v=' + ASSET_VERSION);
       if (!resp.ok) throw new Error('Failed to load profile.json: ' + resp.status);
       profileData = await resp.json();
     } catch (err) {
