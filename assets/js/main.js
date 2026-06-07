@@ -235,8 +235,6 @@
       { key: 'github', icon: '🔗', label: 'GitHub', href: links.github },
       { key: 'googleScholar', icon: '🎓', label: 'Google Scholar', href: links.googleScholar },
       { key: 'orcid', icon: '🆔', label: 'ORCID', href: links.orcid },
-      { key: 'researchGate', icon: '🌐', label: 'ResearchGate', href: links.researchGate },
-      { key: 'cv', icon: '📄', label: 'CV', href: links.cv },
     ];
 
     linkDefs.forEach(function (def) {
