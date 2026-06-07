@@ -975,6 +975,110 @@ code, pre {
 }
 
 /* --------------------------------------------------------------------------
+   Paper Implementations Section
+   -------------------------------------------------------------------------- */
+.implementation-intro {
+  max-width: 760px;
+  margin: -0.45rem 0 1.1rem;
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.implementation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.implementation-list.is-scrollable {
+  max-height: 43rem;
+  overflow-y: auto;
+  padding-right: 0.35rem;
+}
+
+.implementation-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  min-height: 5rem;
+  padding: 1rem 1.1rem;
+  color: inherit;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.implementation-card:hover {
+  color: inherit;
+  text-decoration: none;
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.implementation-label {
+  margin-bottom: 0.25rem;
+  color: var(--color-accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.implementation-title {
+  color: var(--color-primary);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.implementation-venue {
+  margin-top: 0.35rem;
+  color: var(--color-text-light);
+  font-size: 0.86rem;
+}
+
+.implementation-venue span {
+  color: var(--color-text-muted);
+  font-weight: 700;
+}
+
+.implementation-card-side {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35rem;
+}
+
+.implementation-year,
+.implementation-action {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-full);
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.implementation-year {
+  padding: 0.15rem 0.5rem;
+  color: #596170;
+  background-color: #eceff4;
+  border: 1px solid #d4dae4;
+}
+
+.implementation-action {
+  color: var(--color-accent);
+}
+
+.implementation-empty {
+  margin: 0;
+  padding: 1.2rem 0;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+/* --------------------------------------------------------------------------
    Charm Install Guide Page
    -------------------------------------------------------------------------- */
 .guide-body {
@@ -1538,6 +1642,16 @@ code, pre {
 
   .tools-grid {
     grid-template-columns: 1fr;
+  }
+
+  .implementation-card {
+    grid-template-columns: 1fr;
+  }
+
+  .implementation-card-side {
+    align-items: flex-start;
+    flex-direction: row;
+    justify-content: space-between;
   }
 
   .hero-avatar {

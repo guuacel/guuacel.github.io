@@ -157,7 +157,44 @@ en.tools.items
 
 荣誉奖励数据已保留在 `awardsArchive` 中，但页面不再渲染该模块。
 
-## 8. 调整颜色和版式
+## 8. 更新论文实现
+
+修改：
+
+```text
+zh.implementations.items
+en.implementations.items
+```
+
+每个论文实现条目使用同一个 `id`，中英文内容分别写在 `zh` 和 `en` 下。主页面最多直接显示 8 个条目，超过 8 个后该区域会出现滚动条。点击条目会进入：
+
+```text
+paper_implementation.html?id=你的论文实现ID
+```
+
+结构：
+
+```json
+{
+  "id": "paper-implementation-id",
+  "title": "论文名称",
+  "venue": "期刊名称",
+  "year": 2026,
+  "abstract": "摘要介绍",
+  "algorithmSteps": [
+    "步骤 1：说明核心输入、输出和初始化。",
+    "步骤 2：说明算法主体流程。"
+  ],
+  "code": {
+    "language": "python",
+    "content": "def algorithm():\n    pass"
+  }
+}
+```
+
+详情页导航只保留“返回主页”和语言切换按钮，正文包含摘要介绍、目录、算法详细步骤和算法代码。
+
+## 9. 调整颜色和版式
 
 打开：
 
@@ -175,7 +212,7 @@ assets/css/style.css
 }
 ```
 
-## 9. 本地调试
+## 10. 本地调试
 
 在仓库根目录运行：
 
@@ -189,7 +226,7 @@ python -m http.server 8000
 http://localhost:8000
 ```
 
-## 10. 部署检查
+## 11. 部署检查
 
 部署前确认：
 

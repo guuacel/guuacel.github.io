@@ -12,7 +12,8 @@
         "projects": "科研项目",
         "patents": "专利与软著",
         "contact": "联系方式",
-        "tools": "工具"
+        "tools": "工具",
+        "implementations": "论文实现"
       },
       "languageLabel": "English",
       "footer": {
@@ -331,6 +332,15 @@
           "icon": "id"
         }
       ]
+    },
+    "implementations": {
+      "title": "论文实现",
+      "intro": "记录阅读论文后的核心算法复现、实现步骤和代码片段。",
+      "paperLabel": "论文",
+      "venueLabel": "期刊",
+      "actionLabel": "查看实现",
+      "emptyMessage": "暂无论文实现。后续在 profile.json 的 implementations.items 中补充后会显示在这里。",
+      "items": []
     }
   },
   "en": {
@@ -346,7 +356,8 @@
         "projects": "Projects",
         "patents": "Patents",
         "contact": "Contact",
-        "tools": "Tools"
+        "tools": "Tools",
+        "implementations": "Paper Implementations"
       },
       "languageLabel": "中文",
       "footer": {
@@ -668,6 +679,15 @@
           "icon": "id"
         }
       ]
+    },
+    "implementations": {
+      "title": "Paper Implementations",
+      "intro": "Notes on implemented papers, including core algorithm reproduction, detailed steps, and code snippets.",
+      "paperLabel": "Paper",
+      "venueLabel": "Journal",
+      "actionLabel": "View Implementation",
+      "emptyMessage": "No paper implementations yet. Add entries under implementations.items in profile.json to show them here.",
+      "items": []
     }
   }
 }

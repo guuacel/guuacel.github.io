@@ -20,7 +20,7 @@
      ====================================================================== */
   let profileData = null;
   let currentLang = 'zh';
-  const ASSET_VERSION = '20260607-results-tabs';
+  const ASSET_VERSION = '20260607-paper-implementations';
 
   /* ======================================================================
      DOM References
@@ -40,6 +40,7 @@
     DOM.projectsSection = document.getElementById('projects');
     DOM.patentsSection = document.getElementById('patents');
     DOM.toolsSection = document.getElementById('tools');
+    DOM.implementationsSection = document.getElementById('implementations');
     DOM.contactSection = document.getElementById('contact');
     DOM.footer = document.getElementById('footer');
     DOM.html = document.documentElement;
@@ -199,6 +200,7 @@
       <a href="#about">${escapeHTML(nav.about)}</a>
       <a href="#publications">${escapeHTML(nav.publications)}</a>
       <a href="#tools">${escapeHTML(nav.tools)}</a>
+      <a href="#implementations">${escapeHTML(nav.implementations)}</a>
       <a href="#contact">${escapeHTML(nav.contact)}</a>
       <button class="lang-toggle" id="langToggle" aria-label="Switch language">${escapeHTML(langLabel)}</button>
     `;
@@ -571,6 +573,51 @@
   }
 
   /* ======================================================================
+     Rendering — Paper Implementations
+     ====================================================================== */
+  function renderImplementations() {
+    const implementations = profileData[currentLang].implementations;
+    const items = implementations && Array.isArray(implementations.items) ? implementations.items : [];
+
+    let contentHTML = '';
+    if (items.length) {
+      const scrollClass = items.length > 8 ? ' is-scrollable' : '';
+      const itemsHTML = items.map(function (item) {
+        const href = item.id ? 'paper_implementation.html?id=' + encodeURIComponent(item.id) : '#';
+        const yearHTML = item.year ? `<span class="implementation-year">${escapeHTML(item.year)}</span>` : '';
+        return `
+          <a class="implementation-card" href="${href}">
+            <div class="implementation-card-main">
+              <div class="implementation-label">${escapeHTML(implementations.paperLabel)}</div>
+              <h3 class="implementation-title">${escapeHTML(item.title || '')}</h3>
+              <div class="implementation-venue">
+                <span>${escapeHTML(implementations.venueLabel)}:</span>
+                ${escapeHTML(item.venue || '')}
+              </div>
+            </div>
+            <div class="implementation-card-side">
+              ${yearHTML}
+              <span class="implementation-action">${escapeHTML(implementations.actionLabel)}</span>
+            </div>
+          </a>
+        `;
+      }).join('');
+
+      contentHTML = `<div class="implementation-list${scrollClass}">${itemsHTML}</div>`;
+    } else {
+      contentHTML = `<p class="implementation-empty">${escapeHTML(implementations.emptyMessage)}</p>`;
+    }
+
+    DOM.implementationsSection.innerHTML = `
+      <div class="container">
+        <h2 class="section-title">${escapeHTML(implementations.title)}</h2>
+        <p class="implementation-intro">${escapeHTML(implementations.intro)}</p>
+        ${contentHTML}
+      </div>
+    `;
+  }
+
+  /* ======================================================================
      Rendering — Contact
      ====================================================================== */
   function renderContact() {
@@ -676,6 +723,7 @@
     renderProjects();
     renderPatents();
     renderTools();
+    renderImplementations();
     renderContact();
     renderFooter();
     updateLangToggle();
