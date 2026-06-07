@@ -64,6 +64,33 @@
     return div.innerHTML;
   }
 
+  function getPublicationTagClass(tag) {
+    const normalized = String(tag || '').toLowerCase().replace(/\s+/g, '');
+    const classes = ['pub-tag'];
+
+    if (/中科院|cas|xinrui|新锐/.test(normalized)) {
+      if (/1区|q1/.test(normalized)) classes.push('pub-tag-cas-q1');
+      if (/2区|q2/.test(normalized)) classes.push('pub-tag-cas-q2');
+      if (/3区|q3/.test(normalized)) classes.push('pub-tag-cas-q3');
+      if (/4区|q4/.test(normalized)) classes.push('pub-tag-cas-q4');
+      if (/top/.test(normalized)) classes.push('pub-tag-cas-top');
+    } else if (/ccf/.test(normalized)) {
+      if (/ccfa|a类/.test(normalized)) classes.push('pub-tag-ccf-a');
+      if (/ccfb|b类/.test(normalized)) classes.push('pub-tag-ccf-b');
+      if (/ccfc|c类/.test(normalized)) classes.push('pub-tag-ccf-c');
+    } else if (/北大|pku/.test(normalized)) {
+      classes.push('pub-tag-pku');
+    } else if (/cscd/.test(normalized)) {
+      classes.push('pub-tag-cscd');
+    } else if (/swjtu|西南交大|西南交通/.test(normalized)) {
+      classes.push('pub-tag-swjtu');
+    } else if (/online|网络首发/.test(normalized)) {
+      classes.push('pub-tag-online');
+    }
+
+    return classes.join(' ');
+  }
+
   /* ======================================================================
      Language
      ====================================================================== */
@@ -365,7 +392,7 @@
 
         if (Array.isArray(paper.tags) && paper.tags.length) {
           html += `<div class="pub-tags">${paper.tags.map(function (tag) {
-            return '<span class="pub-tag">' + escapeHTML(tag) + '</span>';
+            return '<span class="' + getPublicationTagClass(tag) + '">' + escapeHTML(tag) + '</span>';
           }).join('')}</div>`;
         }
 
