@@ -35,7 +35,6 @@
     DOM.backToTop = document.getElementById('backToTop');
     DOM.heroSection = document.getElementById('hero');
     DOM.aboutSection = document.getElementById('about');
-    DOM.researchSection = document.getElementById('research');
     DOM.pubSection = document.getElementById('publications');
     DOM.projectsSection = document.getElementById('projects');
     DOM.patentsSection = document.getElementById('patents');
@@ -170,7 +169,6 @@
     DOM.navLinks.innerHTML = `
       <a href="#hero">${escapeHTML(nav.home)}</a>
       <a href="#about">${escapeHTML(nav.about)}</a>
-      <a href="#research">${escapeHTML(nav.research)}</a>
       <a href="#publications">${escapeHTML(nav.publications)}</a>
       <a href="#projects">${escapeHTML(nav.projects)}</a>
       <a href="#patents">${escapeHTML(nav.patents)}</a>
@@ -235,6 +233,10 @@
      ====================================================================== */
   function renderAbout() {
     const about = profileData[currentLang].about;
+    const researchLabel = currentLang === 'zh' ? '研究方向' : 'Research Directions';
+    const researchText = currentLang === 'zh'
+      ? '应用密码学、工业物联网安全、车联网安全等。'
+      : 'Applied cryptography, Industrial IoT security, Internet of Vehicles security, etc.';
 
     let eduHTML = '';
     about.education.forEach(function (edu) {
@@ -247,54 +249,22 @@
       `;
     });
 
-    let interestHTML = '';
-    about.researchInterests.forEach(function (ri) {
-      interestHTML += `<span class="interest-tag">${escapeHTML(ri)}</span>`;
-    });
-
     DOM.aboutSection.innerHTML = `
       <div class="container">
         <h2 class="section-title">${escapeHTML(about.title)}</h2>
         <div class="about-content">
           <div class="about-bio">
             <p>${escapeHTML(about.bio)}</p>
+            <div class="about-research-text">
+              <h3>${escapeHTML(researchLabel)}</h3>
+              <p>${escapeHTML(researchText)}</p>
+            </div>
           </div>
           <div class="about-details">
             <h3>${currentLang === 'zh' ? '教育背景' : 'Education'}</h3>
             ${eduHTML}
-            <h4>${currentLang === 'zh' ? '研究兴趣' : 'Research Interests'}</h4>
-            <div class="interest-tags">${interestHTML}</div>
           </div>
         </div>
-      </div>
-    `;
-  }
-
-  /* ======================================================================
-     Rendering — Research
-     ====================================================================== */
-  function renderResearch() {
-    const research = profileData[currentLang].research;
-
-    let cardsHTML = '';
-    research.areas.forEach(function (area) {
-      cardsHTML += `
-        <div class="research-card">
-          <div class="research-card-icon">${escapeHTML(area.icon)}</div>
-          <h3 class="research-card-name">${escapeHTML(area.name)}</h3>
-          <p class="research-card-desc">${escapeHTML(area.description)}</p>
-          <div class="research-card-keywords">
-            ${area.keywords.map(function (k) { return '<span>' + escapeHTML(k) + '</span>'; }).join('')}
-          </div>
-        </div>
-      `;
-    });
-
-    DOM.researchSection.innerHTML = `
-      <div class="container">
-        <h2 class="section-title">${escapeHTML(research.title)}</h2>
-        <p class="section-desc">${escapeHTML(research.description)}</p>
-        <div class="research-grid">${cardsHTML}</div>
       </div>
     `;
   }
@@ -656,7 +626,6 @@
     renderNav();
     renderHero();
     renderAbout();
-    renderResearch();
     renderPublications();
     renderProjects();
     renderPatents();
