@@ -30,8 +30,12 @@
       notFoundTitle: '未找到论文实现',
       notFoundText: '请返回主页，在“论文实现”栏目中选择已有条目；或者在 profile.json 中补充 implementations.items。',
       paper: '论文',
+      authors: '作者',
       venue: '期刊',
       year: '年份',
+      volume: '卷期',
+      pages: '页码',
+      doi: 'DOI',
       codePlaceholder: '// 请在 profile.json 的 implementation.code.content 中补充算法代码。',
       stepPlaceholder: '请在 profile.json 的 implementation.algorithmSteps 中补充算法详细步骤。'
     },
@@ -49,8 +53,12 @@
       notFoundTitle: 'Paper Implementation Not Found',
       notFoundText: 'Return to the homepage and choose an existing item under Paper Implementations, or add entries to implementations.items in profile.json.',
       paper: 'Paper',
+      authors: 'Authors',
       venue: 'Journal',
       year: 'Year',
+      volume: 'Volume',
+      pages: 'Pages',
+      doi: 'DOI',
       codePlaceholder: '// Add algorithm code in implementation.code.content in profile.json.',
       stepPlaceholder: 'Add detailed algorithm steps in implementation.algorithmSteps in profile.json.'
     }
@@ -104,9 +112,9 @@
   function renderItem(item) {
     const text = labels[currentLang];
     const abstractText = item.abstract || '';
-    const steps = Array.isArray(item.algorithmSteps) && item.algorithmSteps.length
-      ? item.algorithmSteps
-      : [text.stepPlaceholder];
+    const sections = Array.isArray(item.algorithmSections) && item.algorithmSections.length
+      ? item.algorithmSections
+      : [{ title: text.steps, steps: Array.isArray(item.algorithmSteps) && item.algorithmSteps.length ? item.algorithmSteps : [text.stepPlaceholder] }];
     const code = getCode(item);
 
     app.innerHTML = `
@@ -117,8 +125,12 @@
             <h1 class="guide-title">${escapeHTML(item.title || text.notFoundTitle)}</h1>
             <p class="guide-summary">${escapeHTML(abstractText)}</p>
             <div class="guide-meta">
+              ${item.authors ? `<span class="guide-pill">${escapeHTML(text.authors)}: ${escapeHTML(item.authors)}</span>` : ''}
               ${item.venue ? `<span class="guide-pill">${escapeHTML(text.venue)}: ${escapeHTML(item.venue)}</span>` : ''}
               ${item.year ? `<span class="guide-pill">${escapeHTML(text.year)}: ${escapeHTML(item.year)}</span>` : ''}
+              ${item.volume ? `<span class="guide-pill">${escapeHTML(text.volume)}: ${escapeHTML(item.volume)}</span>` : ''}
+              ${item.pages ? `<span class="guide-pill">${escapeHTML(text.pages)}: ${escapeHTML(item.pages)}</span>` : ''}
+              ${item.doi ? `<a class="guide-pill" href="https://doi.org/${escapeHTML(item.doi)}" target="_blank" rel="noopener">${escapeHTML(text.doi)}: ${escapeHTML(item.doi)}</a>` : ''}
             </div>
           </section>
 
@@ -137,9 +149,15 @@
 
               <section class="guide-section" id="implementation-steps">
                 <h2>${escapeHTML(text.steps)}</h2>
-                <ol>
-                  ${steps.map(function (step) { return '<li>' + escapeHTML(step) + '</li>'; }).join('')}
-                </ol>
+                ${sections.map(function (section) {
+                  const steps = Array.isArray(section.steps) && section.steps.length ? section.steps : [text.stepPlaceholder];
+                  return `
+                    <h3>${escapeHTML(section.title || '')}</h3>
+                    <ol>
+                      ${steps.map(function (step) { return '<li>' + escapeHTML(step) + '</li>'; }).join('')}
+                    </ol>
+                  `;
+                }).join('')}
               </section>
 
               <section class="guide-section" id="implementation-code">

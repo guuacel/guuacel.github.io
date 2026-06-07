@@ -992,7 +992,7 @@ code, pre {
 }
 
 .implementation-list.is-scrollable {
-  max-height: 43rem;
+  max-height: 46rem;
   overflow-y: auto;
   padding-right: 0.35rem;
 }

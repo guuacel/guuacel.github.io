@@ -181,9 +181,14 @@ paper_implementation.html?id=你的论文实现ID
   "venue": "期刊名称",
   "year": 2026,
   "abstract": "摘要介绍",
-  "algorithmSteps": [
-    "步骤 1：说明核心输入、输出和初始化。",
-    "步骤 2：说明算法主体流程。"
+  "algorithmSections": [
+    {
+      "title": "算法名称或阶段",
+      "steps": [
+        "步骤 1：说明核心输入、输出和初始化。",
+        "步骤 2：说明算法主体流程。"
+      ]
+    }
   ],
   "code": {
     "language": "python",
