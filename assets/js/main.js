@@ -20,7 +20,7 @@
      ====================================================================== */
   let profileData = null;
   let currentLang = 'zh';
-  const ASSET_VERSION = '20260607-remove-projects-patents';
+  const ASSET_VERSION = '20260607-results-tabs';
 
   /* ======================================================================
      DOM References
@@ -188,10 +188,6 @@
     const nav = profileData[currentLang].site.nav;
     const langLabel = t('site.languageLabel');
     const brand = t('hero.name');
-    const projects = profileData[currentLang].projects;
-    const patents = profileData[currentLang].patents;
-    const hasProjects = projects && Array.isArray(projects.items) && projects.items.length > 0;
-    const hasPatents = patents && Array.isArray(patents.items) && patents.items.length > 0;
 
     if (DOM.navBrand) {
       DOM.navBrand.textContent = brand;
@@ -202,8 +198,6 @@
       <a href="#hero">${escapeHTML(nav.home)}</a>
       <a href="#about">${escapeHTML(nav.about)}</a>
       <a href="#publications">${escapeHTML(nav.publications)}</a>
-      ${hasProjects ? `<a href="#projects">${escapeHTML(nav.projects)}</a>` : ''}
-      ${hasPatents ? `<a href="#patents">${escapeHTML(nav.patents)}</a>` : ''}
       <a href="#tools">${escapeHTML(nav.tools)}</a>
       <a href="#contact">${escapeHTML(nav.contact)}</a>
       <button class="lang-toggle" id="langToggle" aria-label="Switch language">${escapeHTML(langLabel)}</button>
@@ -304,22 +298,21 @@
      ====================================================================== */
   function renderPublications() {
     const pub = profileData[currentLang].publications;
-    const papers = pub.papers;
 
     DOM.pubSection.innerHTML = `
       <div class="container">
         <h2 class="section-title">${escapeHTML(pub.title)}</h2>
         <div class="pub-filters" id="pubFilters">
-          <button class="pub-filter active" data-filter="all">${escapeHTML(pub.filterAll)}</button>
-          <button class="pub-filter" data-filter="journal">${escapeHTML(pub.filterJournal)}</button>
+          <button class="pub-filter active" data-filter="journal">${escapeHTML(pub.filterJournal)}</button>
           <button class="pub-filter" data-filter="conference">${escapeHTML(pub.filterConference)}</button>
-          <button class="pub-filter" data-filter="preprint">${escapeHTML(pub.filterPreprint)}</button>
+          <button class="pub-filter" data-filter="patents">${escapeHTML(pub.filterPatents)}</button>
+          <button class="pub-filter" data-filter="projects">${escapeHTML(pub.filterProjects)}</button>
         </div>
         <div id="pubContainer"></div>
       </div>
     `;
 
-    renderPubList(papers, 'all');
+    renderResultList('journal');
 
     // Filter events
     document.getElementById('pubFilters').addEventListener('click', function (e) {
@@ -328,18 +321,28 @@
           btn.classList.remove('active');
         });
         e.target.classList.add('active');
-        renderPubList(papers, e.target.dataset.filter);
+        renderResultList(e.target.dataset.filter);
       }
     });
   }
 
-  function renderPubList(papers, filter) {
+  function renderResultList(filter) {
     const container = document.getElementById('pubContainer');
     if (!container) return;
 
-    const filtered = filter === 'all'
-      ? papers
-      : papers.filter(function (p) { return p.type === filter; });
+    if (filter === 'patents') {
+      renderPatentResults(container);
+      return;
+    }
+
+    if (filter === 'projects') {
+      renderProjectResults(container);
+      return;
+    }
+
+    const pub = profileData[currentLang].publications;
+    const papers = Array.isArray(pub.papers) ? pub.papers : [];
+    const filtered = papers.filter(function (p) { return p.type === filter; });
 
     // Group by year (descending)
     const byYear = {};
@@ -360,7 +363,6 @@
         const typeLabels = {
           journal: { zh: '期刊', en: 'Journal' },
           conference: { zh: '会议', en: 'Conf' },
-          preprint: { zh: '预印本', en: 'Preprint' },
         };
 
         const typeLabel = typeLabels[paper.type]
@@ -409,9 +411,7 @@
       html += `</div></div>`;
     });
 
-    if (filtered.length === 0) {
-      html = '<p style="text-align:center;color:var(--color-text-muted);padding:2rem 0;">No publications found in this category.</p>';
-    }
+    if (filtered.length === 0) html = renderEmptyResult();
 
     container.innerHTML = html;
 
@@ -426,22 +426,21 @@
     });
   }
 
-  /* ======================================================================
-     Rendering — Projects
-     ====================================================================== */
-  function renderProjects() {
-    const proj = profileData[currentLang].projects;
+  function renderEmptyResult() {
+    return '<p class="result-empty">' + escapeHTML(t('publications.emptyMessage')) + '</p>';
+  }
 
-    if (!proj || !Array.isArray(proj.items) || proj.items.length === 0) {
-      DOM.projectsSection.hidden = true;
-      DOM.projectsSection.innerHTML = '';
+  function renderProjectResults(container) {
+    const proj = profileData[currentLang].projects;
+    const items = proj && Array.isArray(proj.items) ? proj.items : [];
+
+    if (!items.length) {
+      container.innerHTML = renderEmptyResult();
       return;
     }
 
-    DOM.projectsSection.hidden = false;
-
     let itemsHTML = '';
-    proj.items.forEach(function (item) {
+    items.forEach(function (item) {
       itemsHTML += `
         <div class="project-item">
           <div class="project-header">
@@ -451,37 +450,27 @@
           <p class="project-desc">${escapeHTML(item.description)}</p>
           <div class="project-meta">
             <span><strong>${escapeHTML(proj.roleLabel)}:</strong> ${escapeHTML(item.role)}</span>
-            <span><strong>${escapeHTML(proj.techLabel)}:</strong> ${escapeHTML(proj.periodLabel)} ${escapeHTML(item.period)}</span>
+            <span><strong>${escapeHTML(proj.techLabel)}:</strong> ${(item.tech || []).map(escapeHTML).join(', ')}</span>
           </div>
           <div class="project-tech">
-            ${item.tech.map(function (t) { return '<span>' + escapeHTML(t) + '</span>'; }).join('')}
+            ${(item.tech || []).map(function (tech) { return '<span>' + escapeHTML(tech) + '</span>'; }).join('')}
           </div>
           ${item.link && item.link !== '#' ? `<a class="project-link" href="${escapeHTML(item.link)}" target="_blank" rel="noopener">🔗 View Project</a>` : ''}
         </div>
       `;
     });
 
-    DOM.projectsSection.innerHTML = `
-      <div class="container">
-        <h2 class="section-title">${escapeHTML(proj.title)}</h2>
-        <div class="project-list">${itemsHTML}</div>
-      </div>
-    `;
+    container.innerHTML = `<div class="project-list">${itemsHTML}</div>`;
   }
 
-  /* ======================================================================
-     Rendering — Patents
-     ====================================================================== */
-  function renderPatents() {
+  function renderPatentResults(container) {
     const pat = profileData[currentLang].patents;
+    const items = pat && Array.isArray(pat.items) ? pat.items : [];
 
-    if (!pat || !Array.isArray(pat.items) || pat.items.length === 0) {
-      DOM.patentsSection.hidden = true;
-      DOM.patentsSection.innerHTML = '';
+    if (!items.length) {
+      container.innerHTML = renderEmptyResult();
       return;
     }
-
-    DOM.patentsSection.hidden = false;
 
     const statusClasses = {
       '已授权': 'status-granted',
@@ -492,8 +481,12 @@
       'Registered': 'status-registered',
     };
 
+    const headings = currentLang === 'zh'
+      ? ['名称', '类型', '状态', '年份', '个人角色', '备注']
+      : ['Name', 'Type', 'Status', 'Year', 'Role', 'Note'];
+
     let rowsHTML = '';
-    pat.items.forEach(function (item) {
+    items.forEach(function (item) {
       const statusClass = statusClasses[item.status] || '';
       rowsHTML += `
         <tr>
@@ -507,25 +500,32 @@
       `;
     });
 
-    const headings = currentLang === 'zh'
-      ? ['名称', '类型', '状态', '年份', '个人角色', '备注']
-      : ['Name', 'Type', 'Status', 'Year', 'Role', 'Note'];
-
-    DOM.patentsSection.innerHTML = `
-      <div class="container">
-        <h2 class="section-title">${escapeHTML(pat.title)}</h2>
-        <div class="patent-table-wrap">
-          <table class="patent-table">
-            <thead>
-              <tr>
-                ${headings.map(function (h) { return '<th>' + escapeHTML(h) + '</th>'; }).join('')}
-              </tr>
-            </thead>
-            <tbody>${rowsHTML}</tbody>
-          </table>
-        </div>
+    container.innerHTML = `
+      <div class="patent-table-wrap">
+        <table class="patent-table">
+          <thead>
+            <tr>${headings.map(function (h) { return '<th>' + escapeHTML(h) + '</th>'; }).join('')}</tr>
+          </thead>
+          <tbody>${rowsHTML}</tbody>
+        </table>
       </div>
     `;
+  }
+
+  /* ======================================================================
+     Rendering — Projects
+     ====================================================================== */
+  function renderProjects() {
+    DOM.projectsSection.hidden = true;
+    DOM.projectsSection.innerHTML = '';
+  }
+
+  /* ======================================================================
+     Rendering — Patents
+     ====================================================================== */
+  function renderPatents() {
+    DOM.patentsSection.hidden = true;
+    DOM.patentsSection.innerHTML = '';
   }
 
   /* ======================================================================
