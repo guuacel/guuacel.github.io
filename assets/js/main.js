@@ -20,7 +20,7 @@
      ====================================================================== */
   let profileData = null;
   let currentLang = 'zh';
-  const ASSET_VERSION = '20260607-remove-hero-links';
+  const ASSET_VERSION = '20260607-remove-projects-patents';
 
   /* ======================================================================
      DOM References
@@ -188,6 +188,10 @@
     const nav = profileData[currentLang].site.nav;
     const langLabel = t('site.languageLabel');
     const brand = t('hero.name');
+    const projects = profileData[currentLang].projects;
+    const patents = profileData[currentLang].patents;
+    const hasProjects = projects && Array.isArray(projects.items) && projects.items.length > 0;
+    const hasPatents = patents && Array.isArray(patents.items) && patents.items.length > 0;
 
     if (DOM.navBrand) {
       DOM.navBrand.textContent = brand;
@@ -198,8 +202,8 @@
       <a href="#hero">${escapeHTML(nav.home)}</a>
       <a href="#about">${escapeHTML(nav.about)}</a>
       <a href="#publications">${escapeHTML(nav.publications)}</a>
-      <a href="#projects">${escapeHTML(nav.projects)}</a>
-      <a href="#patents">${escapeHTML(nav.patents)}</a>
+      ${hasProjects ? `<a href="#projects">${escapeHTML(nav.projects)}</a>` : ''}
+      ${hasPatents ? `<a href="#patents">${escapeHTML(nav.patents)}</a>` : ''}
       <a href="#tools">${escapeHTML(nav.tools)}</a>
       <a href="#contact">${escapeHTML(nav.contact)}</a>
       <button class="lang-toggle" id="langToggle" aria-label="Switch language">${escapeHTML(langLabel)}</button>
@@ -428,6 +432,14 @@
   function renderProjects() {
     const proj = profileData[currentLang].projects;
 
+    if (!proj || !Array.isArray(proj.items) || proj.items.length === 0) {
+      DOM.projectsSection.hidden = true;
+      DOM.projectsSection.innerHTML = '';
+      return;
+    }
+
+    DOM.projectsSection.hidden = false;
+
     let itemsHTML = '';
     proj.items.forEach(function (item) {
       itemsHTML += `
@@ -462,6 +474,14 @@
      ====================================================================== */
   function renderPatents() {
     const pat = profileData[currentLang].patents;
+
+    if (!pat || !Array.isArray(pat.items) || pat.items.length === 0) {
+      DOM.patentsSection.hidden = true;
+      DOM.patentsSection.innerHTML = '';
+      return;
+    }
+
+    DOM.patentsSection.hidden = false;
 
     const statusClasses = {
       '已授权': 'status-granted',

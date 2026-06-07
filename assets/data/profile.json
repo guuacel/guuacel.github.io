@@ -254,79 +254,11 @@
       "roleLabel": "角色",
       "techLabel": "技术",
       "periodLabel": "时间",
-      "items": [
-        {
-          "name": "工业控制系统安全测试平台",
-          "description": "搭建面向ICS/SCADA的安全测试环境，实现协议模糊测试、漏洞挖掘与入侵检测评估功能。支持Modbus、DNP3、OPC UA等主流工控协议。",
-          "role": "核心开发者",
-          "tech": [
-            "Python",
-            "C++",
-            "Wireshark",
-            "Docker"
-          ],
-          "period": "2023 – 至今",
-          "link": "#"
-        },
-        {
-          "name": "零信任认证框架原型系统",
-          "description": "设计并实现面向工业物联网场景的零信任持续认证原型系统，集成多因素身份验证、动态信任评估与细粒度访问控制模块。",
-          "role": "项目负责人",
-          "tech": [
-            "Go",
-            "gRPC",
-            "PostgreSQL",
-            "Redis"
-          ],
-          "period": "2023 – 2025",
-          "link": "#"
-        },
-        {
-          "name": "隐私保护工业数据共享方案",
-          "description": "研究基于属性加密与联邦学习的工业数据安全共享方案，实现数据可用不可见的安全协作分析平台。",
-          "role": "主要研究者",
-          "tech": [
-            "Python",
-            "PyTorch",
-            "FATE",
-            "OpenSSL"
-          ],
-          "period": "2022 – 2024",
-          "link": "#"
-        }
-      ]
+      "items": []
     },
     "patents": {
       "title": "专利与软著",
-      "items": [
-        {
-          "name": "一种面向工业物联网的轻量级认证密钥协商方法",
-          "type": "发明专利",
-          "status": "已授权",
-          "year": 2025,
-          "role": "第一发明人",
-          "note": "专利号: ZL 2025XXXXXXXX.X",
-          "number": ""
-        },
-        {
-          "name": "基于零信任的工业控制系统持续身份验证装置及方法",
-          "type": "发明专利",
-          "status": "实质审查",
-          "year": 2024,
-          "role": "第二发明人",
-          "note": "申请号: 2024XXXXXXXX.X",
-          "number": ""
-        },
-        {
-          "name": "工业控制系统安全测试与评估软件 V1.0",
-          "type": "软件著作权",
-          "status": "已登记",
-          "year": 2024,
-          "role": "主要完成人",
-          "note": "登记号: 2024SRXXXXXXX",
-          "number": ""
-        }
-      ]
+      "items": []
     },
     "contact": {
       "title": "联系方式",
@@ -658,79 +590,11 @@
       "roleLabel": "Role",
       "techLabel": "Tech",
       "periodLabel": "Period",
-      "items": [
-        {
-          "name": "ICS Security Testing Platform",
-          "description": "Built a security testing environment for ICS/SCADA, implementing protocol fuzzing, vulnerability discovery, and intrusion detection evaluation. Supports mainstream industrial protocols including Modbus, DNP3, and OPC UA.",
-          "role": "Core Developer",
-          "tech": [
-            "Python",
-            "C++",
-            "Wireshark",
-            "Docker"
-          ],
-          "period": "2023 – Present",
-          "link": "#"
-        },
-        {
-          "name": "Zero-Trust Authentication Framework Prototype",
-          "description": "Designed and implemented a zero-trust continuous authentication prototype system for IIoT scenarios, integrating multi-factor authentication, dynamic trust evaluation, and fine-grained access control modules.",
-          "role": "Project Lead",
-          "tech": [
-            "Go",
-            "gRPC",
-            "PostgreSQL",
-            "Redis"
-          ],
-          "period": "2023 – 2025",
-          "link": "#"
-        },
-        {
-          "name": "Privacy-Preserving Industrial Data Sharing Scheme",
-          "description": "Researched secure industrial data sharing solutions based on attribute-based encryption and federated learning, building a secure collaborative analysis platform enabling data usability without exposure.",
-          "role": "Principal Investigator",
-          "tech": [
-            "Python",
-            "PyTorch",
-            "FATE",
-            "OpenSSL"
-          ],
-          "period": "2022 – 2024",
-          "link": "#"
-        }
-      ]
+      "items": []
     },
     "patents": {
       "title": "Patents & Software Copyrights",
-      "items": [
-        {
-          "name": "A Lightweight Authenticated Key Agreement Method for Industrial IoT",
-          "type": "Invention Patent",
-          "status": "Granted",
-          "year": 2025,
-          "role": "First Inventor",
-          "note": "Patent No: ZL 2025XXXXXXXX.X",
-          "number": ""
-        },
-        {
-          "name": "Zero-Trust Based Continuous Identity Authentication Device and Method for ICS",
-          "type": "Invention Patent",
-          "status": "Under Review",
-          "year": 2024,
-          "role": "Second Inventor",
-          "note": "Application No: 2024XXXXXXXX.X",
-          "number": ""
-        },
-        {
-          "name": "ICS Security Testing and Evaluation Software V1.0",
-          "type": "Software Copyright",
-          "status": "Registered",
-          "year": 2024,
-          "role": "Primary Author",
-          "note": "Registration No: 2024SRXXXXXXX",
-          "number": ""
-        }
-      ]
+      "items": []
     },
     "contact": {
       "title": "Contact",
