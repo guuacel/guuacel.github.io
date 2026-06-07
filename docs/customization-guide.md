@@ -22,9 +22,7 @@ assets/data/profile.json
     "email": "ccddcc@whu.edu.cn",
     "github": "https://github.com/guuacel",
     "googleScholar": "https://scholar.google.com/citations?user=ZRjejGAAAAAJ&hl=zh-CN",
-    "orcid": "https://orcid.org/0009-0007-0926-0465",
-    "researchGate": "#",
-    "cv": "#"
+    "orcid": "https://orcid.org/0009-0007-0926-0465"
   }
 }
 ```
