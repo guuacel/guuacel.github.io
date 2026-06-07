@@ -29,8 +29,7 @@ guuacel.github.io/
 │   ├── dwtat-dasis/
 │   ├── ouvc-vdb/
 │   ├── lightweight-traceable-data-circulation/
-│   ├── ghost-weight-protocol/
-│   └── low-distortion-reversible-database-watermarking/
+│   └── ghost-weight-protocol/
 └── docs/
     └── customization-guide.md
 ```
