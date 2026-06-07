@@ -70,6 +70,15 @@
     return div.innerHTML;
   }
 
+  function formatInline(value) {
+    return String(value == null ? '' : value)
+      .split(/`([^`]*)`/g)
+      .map(function (part, index) {
+        return index % 2 === 1 ? '<code>' + escapeHTML(part) + '</code>' : escapeHTML(part);
+      })
+      .join('');
+  }
+
   function resolveInitialLang() {
     const stored = localStorage.getItem(LANG_KEY) || localStorage.getItem(LEGACY_LANG_KEY);
     if (supported.includes(stored)) return stored;
@@ -123,7 +132,7 @@
           <section class="guide-hero">
             <div class="guide-eyebrow">${escapeHTML(text.paper)}</div>
             <h1 class="guide-title">${escapeHTML(item.title || text.notFoundTitle)}</h1>
-            <p class="guide-summary">${escapeHTML(abstractText)}</p>
+            <p class="guide-summary">${formatInline(abstractText)}</p>
             <div class="guide-meta">
               ${item.authors ? `<span class="guide-pill">${escapeHTML(text.authors)}: ${escapeHTML(item.authors)}</span>` : ''}
               ${item.venue ? `<span class="guide-pill">${escapeHTML(text.venue)}: ${escapeHTML(item.venue)}</span>` : ''}
@@ -144,7 +153,7 @@
             <div class="guide-content">
               <section class="guide-section">
                 <h2>${escapeHTML(text.abstract)}</h2>
-                <p>${escapeHTML(abstractText)}</p>
+                <p>${formatInline(abstractText)}</p>
               </section>
 
               <section class="guide-section" id="implementation-steps">
@@ -154,7 +163,7 @@
                   return `
                     <h3>${escapeHTML(section.title || '')}</h3>
                     <ol>
-                      ${steps.map(function (step) { return '<li>' + escapeHTML(step) + '</li>'; }).join('')}
+                      ${steps.map(function (step) { return '<li>' + formatInline(step) + '</li>'; }).join('')}
                     </ol>
                   `;
                 }).join('')}
@@ -197,6 +206,14 @@
     });
   }
 
+  function renderMath() {
+    if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
+      window.MathJax.typesetPromise([app]).catch(function (error) {
+        console.error(error);
+      });
+    }
+  }
+
   function render() {
     const text = labels[currentLang];
     document.documentElement.lang = currentLang;
@@ -214,6 +231,7 @@
       renderItem(item);
       bindCopyButtons();
     }
+    renderMath();
   }
 
   function setLanguage(lang) {

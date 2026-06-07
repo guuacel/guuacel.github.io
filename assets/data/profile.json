@@ -361,37 +361,41 @@
             {
               "title": "公共记号与 MapToPoint",
               "steps": [
-                "设 G1 为椭圆曲线上的循环群，GT 为目标乘法群，P 为 G1 的生成元，s 为系统主密钥，P_pub = sP 为系统公钥。",
-                "对身份 ID 执行 MapToPoint 得到 Q_ID。论文中通过哈希到有限域并构造曲线点实现；Charm-Crypto 中使用 group.hash(ID, G1) 作为身份到群元素的映射。",
-                "论文使用加法群记号 rP、sQ_ID；Charm-Crypto 使用乘法记号 P ** r、Q_ID ** s，并使用 pair(A, B) 表示双线性对。"
+                "设存在双线性映射 \\(\\hat{e}:G_1\\times G_1\\rightarrow G_T\\)，其中 \\(G_1\\) 是素数阶 \\(q\\) 的椭圆曲线加法群，\\(G_T\\) 是同阶乘法群，\\(P\\in G_1\\) 为生成元。",
+                "系统主密钥为 \\(s\\in\\mathbb{Z}_q^*\\)，系统公钥为 \\(P_{pub}=sP\\)。在 Charm-Crypto 的乘法记号中对应 \\(P_{pub}=P^s\\)。",
+                "对身份 \\(ID\\in\\{0,1\\}^*\\) 执行 \\(Q_{ID}=\\mathrm{MapToPoint}(ID)\\)。论文通过哈希到有限域并构造曲线点实现，Charm-Crypto 中使用 \\(Q_{ID}=\\mathrm{group.hash}(ID,G_1)\\)。",
+                "身份私钥为 \\(d_{ID}=sQ_{ID}\\)，在 Charm-Crypto 中写作 \\(d_{ID}=Q_{ID}^{s}\\)。双线性对计算写作 \\(\\hat{e}(A,B)\\)，代码中对应 `pair(A, B)`。"
               ]
             },
             {
               "title": "BasicIdent 算法流程",
               "steps": [
-                "Setup：选择 pairing group，随机生成生成元 P 和主密钥 s，计算系统公钥 P_pub = P ** s，输出公开参数 params 与主密钥 master_key。",
-                "Extract：将用户身份 ID 哈希为 Q_ID = group.hash(ID, G1)，计算身份私钥 d_ID = Q_ID ** s。",
-                "Encrypt：对消息 M 随机选择 r，计算 U = P ** r，并计算 g_ID = pair(Q_ID, P_pub)。随后用 H(g_ID ** r) 生成掩码，输出密文 C = {U, V}，其中 V = M XOR H(g_ID ** r)。",
-                "Decrypt：使用身份私钥计算 shared = pair(d_ID, U)，由 H(shared) 得到同一掩码，再计算 M = V XOR H(shared)。",
-                "正确性来自双线性性质：pair(d_ID, U) = pair(sQ_ID, rP) = pair(Q_ID, P)^(sr)，与加密端 pair(Q_ID, P_pub)^r 相同。"
+                "Setup：随机选取 \\(P\\in G_1\\) 和 \\(s\\in\\mathbb{Z}_q^*\\)，计算 \\(P_{pub}=sP\\)，输出公开参数 \\(params=(P,P_{pub})\\) 与主密钥 \\(s\\)。",
+                "Extract：计算 \\(Q_{ID}=\\mathrm{MapToPoint}(ID)\\)，再由主密钥生成身份私钥 \\(d_{ID}=sQ_{ID}\\)。",
+                "Encrypt：随机选择 \\(r\\in\\mathbb{Z}_q\\)，计算 \\(U=rP\\)，并计算身份相关配对值 \\(g_{ID}=\\hat{e}(Q_{ID},P_{pub})\\)。",
+                "Encrypt：用 \\(H(g_{ID}^{r})\\) 生成掩码，计算 \\(V=M\\oplus H(g_{ID}^{r})\\)，输出密文 \\(C=(U,V)=(rP,M\\oplus H(g_{ID}^{r}))\\)。",
+                "Decrypt：计算 \\(M=V\\oplus H(\\hat{e}(d_{ID},U))\\)，从而恢复明文。",
+                "正确性来自双线性：\\[\\hat{e}(d_{ID},U)=\\hat{e}(sQ_{ID},rP)=\\hat{e}(Q_{ID},P)^{sr}=\\hat{e}(Q_{ID},P_{pub})^r=g_{ID}^{r}.\\]"
               ]
             },
             {
               "title": "FullIdent 算法流程",
               "steps": [
-                "Setup 与 Extract 基本沿用 BasicIdent，但需要额外使用 H1(sigma, M) 和 G1(sigma) 两类哈希/扩展函数。",
-                "Encrypt：随机选择 sigma，用 H1(sigma, M) 生成 r，计算 U = P ** r 和 g_ID = pair(Q_ID, P_pub)。",
-                "Encrypt：计算 V = sigma XOR H(g_ID ** r)，并计算 W = M XOR G1(sigma)，输出密文 C = {U, V, W}。",
-                "Decrypt：用 pair(d_ID, U) 恢复 sigma，再由 G1(sigma) 恢复消息 M。",
-                "Decrypt：重新计算 r = H1(sigma, M)，并检查 U 是否等于 P ** r；若检查失败则拒绝密文。该一致性检查是 Fujisaki-Okamoto 转换提供 CCA 防护的关键。"
+                "FullIdent 在 BasicIdent 基础上加入 Fujisaki-Okamoto 转换，引入随机值 \\(\\sigma\\in\\{0,1\\}^n\\)，并令 \\(r=H_1(\\sigma,M)\\)。",
+                "Encrypt：计算 \\(U=rP\\) 和 \\(g_{ID}=\\hat{e}(Q_{ID},P_{pub})\\)。",
+                "Encrypt：计算 \\(V=\\sigma\\oplus H(g_{ID}^{r})\\) 与 \\(W=M\\oplus G_1(\\sigma)\\)，输出密文 \\(C=(U,V,W)\\)。",
+                "Decrypt：先恢复 \\(\\sigma=V\\oplus H(\\hat{e}(d_{ID},U))\\)，再恢复 \\(M=W\\oplus G_1(\\sigma)\\)。",
+                "Decrypt：重新计算 \\(r=H_1(\\sigma,M)\\)，并验证 \\(U\\stackrel{?}{=}rP\\)。若等式不成立，则输出拒绝符号 \\(\\bot\\)。",
+                "一致性检查 \\(U=H_1(\\sigma,M)P\\) 是 FullIdent 获得选择密文安全性的关键步骤。"
               ]
             },
             {
               "title": "Charm-Crypto 实现注意事项",
               "steps": [
-                "本实现使用 PairingGroup(\"SS512\") 和 group.hash(ID, G1) 来替代论文中具体的 Weil pairing 曲线和 MapToPoint 细节。",
-                "异或操作要求输入为等长字节串，因此实现中使用 SHA-256 计数器模式 KDF 将 GT 元素或 sigma 扩展到目标长度。",
-                "BasicIdent 适合理解 IBE 的配对结构；实际测试应优先关注 FullIdent，因为它包含密文一致性检查。",
+                "论文中的加法群表达式 \\(rP\\)、\\(sQ_{ID}\\) 在 Charm-Crypto 中分别实现为 `P ** r`、`Q_ID ** s`。",
+                "论文中的 \\(\\hat{e}(Q_{ID},P_{pub})\\) 在代码中实现为 `pair(Q_ID, P_pub)`，而 \\(\\hat{e}(d_{ID},U)\\) 实现为 `pair(d_ID, U)`。",
+                "异或 \\(\\oplus\\) 要求两侧为等长字节串，因此实现中使用 SHA-256 计数器模式 KDF 将 \\(G_T\\) 元素或 \\(\\sigma\\) 扩展到目标长度。",
+                "BasicIdent 适合理解 IBE 的核心结构；实际测试应优先关注 FullIdent，因为它包含 \\(U\\stackrel{?}{=}P^r\\) 的密文一致性检查。",
                 "该代码是研究和教学用途的演示实现，不应直接作为生产环境密码库使用。"
               ]
             }
@@ -765,37 +769,41 @@
             {
               "title": "Notation and MapToPoint",
               "steps": [
-                "Let G1 be a cyclic elliptic-curve group, GT be the target multiplicative group, P be a generator of G1, s be the master secret, and P_pub = sP be the public system key.",
-                "Map the identity ID to Q_ID. The paper constructs this map through hashing into the finite field and deriving a curve point; in Charm-Crypto this is represented by group.hash(ID, G1).",
-                "The paper uses additive notation such as rP and sQ_ID. Charm-Crypto uses multiplicative notation, so these become P ** r and Q_ID ** s, while pair(A, B) represents the bilinear pairing."
+                "Assume a bilinear map \\(\\hat{e}:G_1\\times G_1\\rightarrow G_T\\), where \\(G_1\\) is an elliptic-curve group of prime order \\(q\\), \\(G_T\\) is a multiplicative group of the same order, and \\(P\\in G_1\\) is a generator.",
+                "The master secret is \\(s\\in\\mathbb{Z}_q^*\\), and the public system key is \\(P_{pub}=sP\\). In Charm-Crypto multiplicative notation this becomes \\(P_{pub}=P^s\\).",
+                "For an identity \\(ID\\in\\{0,1\\}^*\\), compute \\(Q_{ID}=\\mathrm{MapToPoint}(ID)\\). The paper constructs the map through finite-field hashing and curve-point derivation; in Charm-Crypto it is represented by \\(Q_{ID}=\\mathrm{group.hash}(ID,G_1)\\).",
+                "The identity private key is \\(d_{ID}=sQ_{ID}\\), written as \\(d_{ID}=Q_{ID}^{s}\\) in Charm-Crypto. Pairing computation \\(\\hat{e}(A,B)\\) corresponds to `pair(A, B)` in the code."
               ]
             },
             {
               "title": "BasicIdent Algorithm",
               "steps": [
-                "Setup: choose the pairing group, sample the generator P and master secret s, compute P_pub = P ** s, and output the public parameters and master key.",
-                "Extract: hash the identity into Q_ID = group.hash(ID, G1), then derive d_ID = Q_ID ** s as the identity private key.",
-                "Encrypt: sample r, compute U = P ** r and g_ID = pair(Q_ID, P_pub). Use H(g_ID ** r) as a mask and output C = {U, V}, where V = M XOR H(g_ID ** r).",
-                "Decrypt: compute shared = pair(d_ID, U), derive the same mask H(shared), and recover M = V XOR H(shared).",
-                "Correctness follows from bilinearity: pair(d_ID, U) = pair(sQ_ID, rP) = pair(Q_ID, P)^(sr), which matches pair(Q_ID, P_pub)^r from encryption."
+                "Setup: sample \\(P\\in G_1\\) and \\(s\\in\\mathbb{Z}_q^*\\), compute \\(P_{pub}=sP\\), and output public parameters \\(params=(P,P_{pub})\\) together with master secret \\(s\\).",
+                "Extract: compute \\(Q_{ID}=\\mathrm{MapToPoint}(ID)\\), then derive the identity private key \\(d_{ID}=sQ_{ID}\\).",
+                "Encrypt: sample \\(r\\in\\mathbb{Z}_q\\), compute \\(U=rP\\), and compute the identity-dependent pairing value \\(g_{ID}=\\hat{e}(Q_{ID},P_{pub})\\).",
+                "Encrypt: derive a mask \\(H(g_{ID}^{r})\\), compute \\(V=M\\oplus H(g_{ID}^{r})\\), and output \\(C=(U,V)=(rP,M\\oplus H(g_{ID}^{r}))\\).",
+                "Decrypt: recover the message as \\(M=V\\oplus H(\\hat{e}(d_{ID},U))\\).",
+                "Correctness follows from bilinearity: \\[\\hat{e}(d_{ID},U)=\\hat{e}(sQ_{ID},rP)=\\hat{e}(Q_{ID},P)^{sr}=\\hat{e}(Q_{ID},P_{pub})^r=g_{ID}^{r}.\\]"
               ]
             },
             {
               "title": "FullIdent Algorithm",
               "steps": [
-                "Setup and Extract are mostly inherited from BasicIdent, but FullIdent additionally uses H1(sigma, M) and G1(sigma) style hash/expansion functions.",
-                "Encrypt: sample sigma, derive r = H1(sigma, M), compute U = P ** r and g_ID = pair(Q_ID, P_pub).",
-                "Encrypt: compute V = sigma XOR H(g_ID ** r) and W = M XOR G1(sigma), then output C = {U, V, W}.",
-                "Decrypt: use pair(d_ID, U) to recover sigma, then use G1(sigma) to recover the message M.",
-                "Decrypt: recompute r = H1(sigma, M) and verify U == P ** r. If the check fails, reject the ciphertext. This consistency check is the core Fujisaki-Okamoto protection against chosen-ciphertext attacks."
+                "FullIdent applies the Fujisaki-Okamoto transform to BasicIdent. It samples \\(\\sigma\\in\\{0,1\\}^n\\) and sets \\(r=H_1(\\sigma,M)\\).",
+                "Encrypt: compute \\(U=rP\\) and \\(g_{ID}=\\hat{e}(Q_{ID},P_{pub})\\).",
+                "Encrypt: compute \\(V=\\sigma\\oplus H(g_{ID}^{r})\\) and \\(W=M\\oplus G_1(\\sigma)\\), then output \\(C=(U,V,W)\\).",
+                "Decrypt: recover \\(\\sigma=V\\oplus H(\\hat{e}(d_{ID},U))\\), then recover \\(M=W\\oplus G_1(\\sigma)\\).",
+                "Decrypt: recompute \\(r=H_1(\\sigma,M)\\) and verify \\(U\\stackrel{?}{=}rP\\). If the equality fails, output the rejection symbol \\(\\bot\\).",
+                "The consistency check \\(U=H_1(\\sigma,M)P\\) is the key step that gives FullIdent chosen-ciphertext security."
               ]
             },
             {
               "title": "Charm-Crypto Implementation Notes",
               "steps": [
-                "The implementation uses PairingGroup(\"SS512\") and group.hash(ID, G1) instead of reproducing the paper-specific Weil pairing curve and MapToPoint construction.",
-                "XOR requires equal-length byte strings, so the implementation uses a SHA-256 counter-mode KDF to expand GT elements or sigma to the required length.",
-                "BasicIdent is useful for understanding the pairing structure of IBE; FullIdent is the preferred construction to test because it includes ciphertext consistency checking.",
+                "The additive expressions \\(rP\\) and \\(sQ_{ID}\\) from the paper are implemented as `P ** r` and `Q_ID ** s` in Charm-Crypto.",
+                "The paper expression \\(\\hat{e}(Q_{ID},P_{pub})\\) is implemented as `pair(Q_ID, P_pub)`, and \\(\\hat{e}(d_{ID},U)\\) is implemented as `pair(d_ID, U)`.",
+                "The XOR operator \\(\\oplus\\) requires equal-length byte strings, so the implementation uses a SHA-256 counter-mode KDF to expand \\(G_T\\) elements or \\(\\sigma\\) to the target length.",
+                "BasicIdent is useful for understanding the core IBE structure; FullIdent is the preferred construction to test because it includes the ciphertext check \\(U\\stackrel{?}{=}P^r\\).",
                 "The code is a research and teaching demo, not production cryptographic software."
               ]
             }
