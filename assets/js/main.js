@@ -188,7 +188,7 @@
   function renderNav() {
     const nav = profileData[currentLang].site.nav;
     const langLabel = t('site.languageLabel');
-    const brand = t('hero.name');
+    const brand = currentLang === 'zh' ? '欢迎来到我的个人主页' : 'Welcome to My Homepage';
 
     if (DOM.navBrand) {
       DOM.navBrand.textContent = brand;
