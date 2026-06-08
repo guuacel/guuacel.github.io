@@ -3,11 +3,13 @@
 
   const LANG_KEY = 'guuacel-homepage-language';
   const LEGACY_LANG_KEY = 'homepageLang';
-  const ASSET_VERSION = '20260607-paper-implementations';
+  const ASSET_VERSION = '20260608-paper-algorithm-tabs';
   const supported = ['zh', 'en'];
 
   let profileData = null;
   let currentLang = 'zh';
+  let activeStepId = '';
+  let activeCodeId = '';
 
   const app = document.getElementById('implementationApp');
   const brand = document.getElementById('implementationBrand');
@@ -24,6 +26,7 @@
       abstract: '摘要介绍',
       steps: '算法详细步骤',
       code: '算法代码',
+      codeType: 'Python',
       copy: '复制',
       copied: '已复制',
       failed: '复制失败',
@@ -47,6 +50,7 @@
       abstract: 'Abstract',
       steps: 'Algorithm Steps',
       code: 'Algorithm Code',
+      codeType: 'Python',
       copy: 'Copy',
       copied: 'Copied',
       failed: 'Failed',
@@ -79,6 +83,14 @@
       .join('');
   }
 
+  function slugify(value, fallback) {
+    const slug = String(value || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+    return slug || fallback;
+  }
+
   function resolveInitialLang() {
     const stored = localStorage.getItem(LANG_KEY) || localStorage.getItem(LEGACY_LANG_KEY);
     if (supported.includes(stored)) return stored;
@@ -105,6 +117,56 @@
     };
   }
 
+  function getAlgorithms(item) {
+    const text = labels[currentLang];
+    if (item && Array.isArray(item.algorithms) && item.algorithms.length) {
+      return item.algorithms.map(function (algorithm, index) {
+        const id = algorithm.id || slugify(algorithm.title, 'algorithm-' + index);
+        return {
+          id: id,
+          title: algorithm.title || text.steps,
+          codeTitle: algorithm.codeTitle || algorithm.title || text.code,
+          steps: Array.isArray(algorithm.steps) && algorithm.steps.length ? algorithm.steps : [text.stepPlaceholder],
+          code: algorithm.code || { language: 'text', content: text.codePlaceholder }
+        };
+      });
+    }
+
+    const sections = Array.isArray(item.algorithmSections) && item.algorithmSections.length
+      ? item.algorithmSections
+      : [{ title: text.steps, steps: Array.isArray(item.algorithmSteps) && item.algorithmSteps.length ? item.algorithmSteps : [text.stepPlaceholder] }];
+    const code = getCode(item);
+    return sections.map(function (section, index) {
+      return {
+        id: slugify(section.title, 'algorithm-' + index),
+        title: section.title || text.steps,
+        codeTitle: section.title || text.code,
+        steps: Array.isArray(section.steps) && section.steps.length ? section.steps : [text.stepPlaceholder],
+        code: index === 0 ? code : { language: 'text', content: text.codePlaceholder }
+      };
+    });
+  }
+
+  function getActiveAlgorithm(algorithms, kind) {
+    const selectedId = kind === 'code' ? activeCodeId : activeStepId;
+    const selected = algorithms.find(function (algorithm) {
+      return algorithm.id === selectedId;
+    });
+    return selected || algorithms[0];
+  }
+
+  function renderSubNav(algorithms, kind, activeId) {
+    return algorithms.map(function (algorithm) {
+      const label = kind === 'code' ? algorithm.codeTitle : algorithm.title;
+      const isActive = algorithm.id === activeId ? ' is-active' : '';
+      return `
+        <button class="guide-toc-link guide-toc-sublink${isActive}" type="button" data-algorithm-kind="${escapeHTML(kind)}" data-algorithm-id="${escapeHTML(algorithm.id)}">
+          ${escapeHTML(label)}
+        </button>
+      `;
+    }).join('');
+  }
+
   function renderNotFound() {
     const text = labels[currentLang];
     app.innerHTML = `
@@ -121,10 +183,12 @@
   function renderItem(item) {
     const text = labels[currentLang];
     const abstractText = item.abstract || '';
-    const sections = Array.isArray(item.algorithmSections) && item.algorithmSections.length
-      ? item.algorithmSections
-      : [{ title: text.steps, steps: Array.isArray(item.algorithmSteps) && item.algorithmSteps.length ? item.algorithmSteps : [text.stepPlaceholder] }];
-    const code = getCode(item);
+    const algorithms = getAlgorithms(item);
+    const activeStep = getActiveAlgorithm(algorithms, 'steps');
+    const activeCode = getActiveAlgorithm(algorithms, 'code');
+    activeStepId = activeStep.id;
+    activeCodeId = activeCode.id;
+    const code = activeCode.code || { language: 'text', content: text.codePlaceholder };
 
     app.innerHTML = `
       <article class="guide-article is-active">
@@ -146,8 +210,14 @@
           <div class="guide-layout">
             <aside class="guide-toc">
               <div class="guide-toc-title">${escapeHTML(text.toc)}</div>
-              <a href="#implementation-steps">${escapeHTML(text.steps)}</a>
-              <a href="#implementation-code">${escapeHTML(text.code)}</a>
+              <a class="guide-toc-link" href="#implementation-steps">${escapeHTML(text.steps)}</a>
+              <div class="guide-toc-sublist">
+                ${renderSubNav(algorithms, 'steps', activeStep.id)}
+              </div>
+              <a class="guide-toc-link" href="#implementation-code">${escapeHTML(text.code)}</a>
+              <div class="guide-toc-sublist">
+                ${renderSubNav(algorithms, 'code', activeCode.id)}
+              </div>
             </aside>
 
             <div class="guide-content">
@@ -158,22 +228,18 @@
 
               <section class="guide-section" id="implementation-steps">
                 <h2>${escapeHTML(text.steps)}</h2>
-                ${sections.map(function (section) {
-                  const steps = Array.isArray(section.steps) && section.steps.length ? section.steps : [text.stepPlaceholder];
-                  return `
-                    <h3>${escapeHTML(section.title || '')}</h3>
-                    <ol>
-                      ${steps.map(function (step) { return '<li>' + formatInline(step) + '</li>'; }).join('')}
-                    </ol>
-                  `;
-                }).join('')}
+                <h3>${escapeHTML(activeStep.title)}</h3>
+                <ol>
+                  ${activeStep.steps.map(function (step) { return '<li>' + formatInline(step) + '</li>'; }).join('')}
+                </ol>
               </section>
 
               <section class="guide-section" id="implementation-code">
                 <h2>${escapeHTML(text.code)}</h2>
+                <h3>${escapeHTML(activeCode.codeTitle || activeCode.title)}</h3>
                 <div class="code-panel">
                   <div class="code-panel-header">
-                    <span>${escapeHTML(code.language)}</span>
+                    <span>${escapeHTML(code.language || text.codeType)}</span>
                     <button class="copy-code" data-copied="${escapeHTML(text.copied)}" data-failed="${escapeHTML(text.failed)}">${escapeHTML(text.copy)}</button>
                   </div>
                   <pre><code>${escapeHTML(code.content)}</code></pre>
@@ -206,6 +272,23 @@
     });
   }
 
+  function bindAlgorithmSwitches() {
+    document.querySelectorAll('[data-algorithm-kind][data-algorithm-id]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        const kind = button.dataset.algorithmKind;
+        const algorithmId = button.dataset.algorithmId;
+        if (kind === 'code') {
+          activeCodeId = algorithmId;
+        } else {
+          activeStepId = algorithmId;
+        }
+        render();
+        const target = document.getElementById(kind === 'code' ? 'implementation-code' : 'implementation-steps');
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  }
+
   function renderMath() {
     if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
       window.MathJax.typesetPromise([app]).catch(function (error) {
@@ -229,6 +312,7 @@
       renderNotFound();
     } else {
       renderItem(item);
+      bindAlgorithmSwitches();
       bindCopyButtons();
     }
     renderMath();

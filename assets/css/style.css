@@ -1225,16 +1225,42 @@ code, pre {
   font-weight: 800;
 }
 
-.guide-toc a {
+.guide-toc a,
+.guide-toc-link {
   display: block;
+  width: 100%;
   padding: 0.32rem 0;
   color: var(--color-text-light);
+  background: none;
+  border: 0;
   font-size: 0.84rem;
   line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
 }
 
-.guide-toc a:hover {
+.guide-toc a:hover,
+.guide-toc-link:hover {
   color: var(--color-accent-hover);
+}
+
+.guide-toc-sublist {
+  margin: 0.15rem 0 0.55rem;
+  padding-left: 0.75rem;
+  border-left: 2px solid var(--color-border-light);
+}
+
+.guide-toc-sublink {
+  margin: 0.08rem 0;
+  padding: 0.28rem 0.4rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+}
+
+.guide-toc-sublink.is-active {
+  color: var(--color-primary);
+  background-color: var(--color-tag-bg);
+  font-weight: 800;
 }
 
 .guide-content {
