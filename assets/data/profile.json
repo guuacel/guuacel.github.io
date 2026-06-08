@@ -361,36 +361,36 @@
             {
               "title": "BasicIdent",
               "steps": [
-                "Setup???????? \\(P\\in G_1\\) ???? \\(s\\in\\mathbb{Z}_q^*\\)??????? \\(P_{pub}=sP\\)??????? \\(params=(P,P_{pub})\\) ???? \\(s\\)?Charm-Crypto ??? `Ppub = P ** s`?",
-                "Extract???? \\(ID\\) ?? \\(Q_{ID}=\\mathrm{MapToPoint}(ID)\\)???????? \\(d_{ID}=sQ_{ID}\\)?Charm-Crypto ??? `group.hash(identity, G1)` ? `Q_ID ** master_key`?",
-                "Encrypt????? \\(r\\in\\mathbb{Z}_q\\)??? \\(U=rP\\)???? \\(g_{ID}=\\hat{e}(Q_{ID},P_{pub})\\)?????? `U = P ** r` ? `g_ID = pair(Q_ID, Ppub)`?",
-                "Encrypt?????? \\(K=g_{ID}^{r}\\)?? \\(H(K)\\) ????????????? \\(V=M\\oplus H(g_{ID}^{r})\\)????? \\(C=(U,V)\\)?",
-                "Decrypt????????? \\(K=\\hat{e}(d_{ID},U)\\)???? \\(M=V\\oplus H(K)\\)?",
-                "?????????\\[\\hat{e}(d_{ID},U)=\\hat{e}(sQ_{ID},rP)=\\hat{e}(Q_{ID},P)^{sr}=\\hat{e}(Q_{ID},P_{pub})^r=g_{ID}^{r}.\\]"
+                "Setup：随机选择生成元 \\(P\\in G_1\\) 和主密钥 \\(s\\in\\mathbb{Z}_q^*\\)，计算系统公钥 \\(P_{pub}=sP\\)，输出公开参数 \\(params=(P,P_{pub})\\) 与主密钥 \\(s\\)。Charm-Crypto 中写作 `Ppub = P ** s`。",
+                "Extract：对身份 \\(ID\\) 执行 \\(Q_{ID}=\\mathrm{MapToPoint}(ID)\\)，再计算身份私钥 \\(d_{ID}=sQ_{ID}\\)。Charm-Crypto 中使用 `group.hash(identity, G1)` 和 `Q_ID ** master_key`。",
+                "Encrypt：随机选择 \\(r\\in\\mathbb{Z}_q\\)，计算 \\(U=rP\\)，并计算 \\(g_{ID}=\\hat{e}(Q_{ID},P_{pub})\\)。代码中对应 `U = P ** r` 与 `g_ID = pair(Q_ID, Ppub)`。",
+                "Encrypt：计算共享值 \\(K=g_{ID}^{r}\\)，用 \\(H(K)\\) 生成与消息等长的掩码，得到 \\(V=M\\oplus H(g_{ID}^{r})\\)，输出密文 \\(C=(U,V)\\)。",
+                "Decrypt：使用身份私钥计算 \\(K=\\hat{e}(d_{ID},U)\\)，再恢复 \\(M=V\\oplus H(K)\\)。",
+                "正确性来自双线性：\\[\\hat{e}(d_{ID},U)=\\hat{e}(sQ_{ID},rP)=\\hat{e}(Q_{ID},P)^{sr}=\\hat{e}(Q_{ID},P_{pub})^r=g_{ID}^{r}.\\]"
               ]
             },
             {
               "title": "FullIdent",
               "steps": [
-                "Setup ? Extract ?? BasicIdent?????? \\(H_1:\\{0,1\\}^n\\times\\{0,1\\}^n\\rightarrow\\mathbb{F}_q\\) ? \\(G_1:\\{0,1\\}^n\\rightarrow\\{0,1\\}^n\\)?",
-                "Encrypt??????? \\(Q_{ID}=\\mathrm{MapToPoint}(ID)\\)?????? \\(\\sigma\\in\\{0,1\\}^n\\)?",
-                "Encrypt?????? Fujisaki-Okamoto ???? \\(r=H_1(\\sigma,M)\\)???? \\(U=rP\\)???? `h1_to_zr(sigma, message)` ??????? \\(\\sigma,M\\) ??? \\(\\mathbb{Z}_q\\)?",
-                "Encrypt??? \\(g_{ID}=\\hat{e}(Q_{ID},P_{pub})\\)????? \\(V=\\sigma\\oplus H(g_{ID}^{r})\\) ? \\(W=M\\oplus G_1(\\sigma)\\)?",
-                "Encrypt??? FullIdent ?? \\(C=(U,V,W)=(rP,\\sigma\\oplus H(g_{ID}^{r}),M\\oplus G_1(\\sigma))\\)?",
-                "Decrypt???? \\(\\sigma=V\\oplus H(\\hat{e}(d_{ID},U))\\)???? \\(M=W\\oplus G_1(\\sigma)\\)?",
-                "Decrypt????? \\(r=H_1(\\sigma,M)\\)??? \\(U\\stackrel{?}{=}rP\\)?????????????? FullIdent ???????????????"
+                "Setup 与 Extract 沿用 BasicIdent，但额外使用 \\(H_1:\\{0,1\\}^n\\times\\{0,1\\}^n\\rightarrow\\mathbb{F}_q\\) 和 \\(G_1:\\{0,1\\}^n\\rightarrow\\{0,1\\}^n\\)。",
+                "Encrypt：先对身份计算 \\(Q_{ID}=\\mathrm{MapToPoint}(ID)\\)，再随机选择 \\(\\sigma\\in\\{0,1\\}^n\\)。",
+                "Encrypt：按照论文的 Fujisaki-Okamoto 转换设置 \\(r=H_1(\\sigma,M)\\)，并计算 \\(U=rP\\)。代码中 `h1_to_zr(sigma, message)` 用确定性哈希把 \\(\\sigma,M\\) 映射到 \\(\\mathbb{Z}_q\\)。",
+                "Encrypt：计算 \\(g_{ID}=\\hat{e}(Q_{ID},P_{pub})\\)，然后生成 \\(V=\\sigma\\oplus H(g_{ID}^{r})\\) 和 \\(W=M\\oplus G_1(\\sigma)\\)。",
+                "Encrypt：输出 FullIdent 密文 \\(C=(U,V,W)=(rP,\\sigma\\oplus H(g_{ID}^{r}),M\\oplus G_1(\\sigma))\\)。",
+                "Decrypt：先计算 \\(\\sigma=V\\oplus H(\\hat{e}(d_{ID},U))\\)，再计算 \\(M=W\\oplus G_1(\\sigma)\\)。",
+                "Decrypt：重新计算 \\(r=H_1(\\sigma,M)\\)，检查 \\(U\\stackrel{?}{=}rP\\)。若检查失败则拒绝密文；这是 FullIdent 获得选择密文安全性的关键步骤。"
               ]
             },
             {
               "title": "Escrow ElGamal Encryption",
               "steps": [
-                "Setup???????? \\(P\\in G_1\\) ??????? \\(s\\in\\mathbb{Z}_q\\)??? \\(Q=sP\\)?????? \\(params=(P,Q,H)\\)?????? \\(s\\)?Charm-Crypto ??? `Q = P ** s`?",
-                "KeyGen????????? \\(x\\in\\mathbb{Z}_q\\)????? \\(P_{pub}=xP\\)???? \\(x\\)???? \\(P_{pub}\\)?",
-                "Encrypt????? \\(r\\in\\mathbb{Z}_q\\)??? \\(U=rP\\)??? \\(g=\\hat{e}(P_{pub},Q)\\)?",
-                "Encrypt??? \\(V=M\\oplus H(g^r)\\)????? \\(C=(U,V)=(rP,M\\oplus H(g^r))\\)?",
-                "Decrypt???????? \\(x\\) ?? \\(M=V\\oplus H(\\hat{e}(U,xQ))\\)???? \\(xQ\\) ?? `Q ** private_key`?",
-                "Escrow-decrypt??????????? \\(s\\) ?? \\(M=V\\oplus H(\\hat{e}(U,sP_{pub}))\\)???? \\(sP_{pub}\\) ?? `public_key ** escrow_key`?",
-                "?????????\\[\\hat{e}(U,xQ)=\\hat{e}(rP,xsP)=\\hat{e}(xP,sP)^r=\\hat{e}(P_{pub},Q)^r=g^r.\\] ???\\(\\hat{e}(U,sP_{pub})\\) ??????????"
+                "Setup：随机选择生成元 \\(P\\in G_1\\) 与全局托管密钥 \\(s\\in\\mathbb{Z}_q\\)，计算 \\(Q=sP\\)。公开参数为 \\(params=(P,Q,H)\\)，托管密钥为 \\(s\\)。Charm-Crypto 中写作 `Q = P ** s`。",
+                "KeyGen：用户随机选择私钥 \\(x\\in\\mathbb{Z}_q\\)，计算公钥 \\(P_{pub}=xP\\)。私钥是 \\(x\\)，公钥是 \\(P_{pub}\\)。",
+                "Encrypt：随机选择 \\(r\\in\\mathbb{Z}_q\\)，计算 \\(U=rP\\)，并令 \\(g=\\hat{e}(P_{pub},Q)\\)。",
+                "Encrypt：计算 \\(V=M\\oplus H(g^r)\\)，输出密文 \\(C=(U,V)=(rP,M\\oplus H(g^r))\\)。",
+                "Decrypt：普通用户用私钥 \\(x\\) 计算 \\(M=V\\oplus H(\\hat{e}(U,xQ))\\)。代码中 \\(xQ\\) 写作 `Q ** private_key`。",
+                "Escrow-decrypt：托管方用全局托管密钥 \\(s\\) 计算 \\(M=V\\oplus H(\\hat{e}(U,sP_{pub}))\\)。代码中 \\(sP_{pub}\\) 写作 `public_key ** escrow_key`。",
+                "正确性来自双线性：\\[\\hat{e}(U,xQ)=\\hat{e}(rP,xsP)=\\hat{e}(xP,sP)^r=\\hat{e}(P_{pub},Q)^r=g^r.\\] 同理，\\(\\hat{e}(U,sP_{pub})\\) 也得到同一个共享值。"
               ]
             }
           ],
@@ -398,14 +398,14 @@
             {
               "id": "basicident",
               "title": "BasicIdent",
-              "codeTitle": "BasicIdent??",
+              "codeTitle": "BasicIdent 代码",
               "steps": [
-                "Setup???????? \\(P\\in G_1\\) ???? \\(s\\in\\mathbb{Z}_q^*\\)??????? \\(P_{pub}=sP\\)??????? \\(params=(P,P_{pub})\\) ???? \\(s\\)?Charm-Crypto ??? `Ppub = P ** s`?",
-                "Extract???? \\(ID\\) ?? \\(Q_{ID}=\\mathrm{MapToPoint}(ID)\\)???????? \\(d_{ID}=sQ_{ID}\\)?Charm-Crypto ??? `group.hash(identity, G1)` ? `Q_ID ** master_key`?",
-                "Encrypt????? \\(r\\in\\mathbb{Z}_q\\)??? \\(U=rP\\)???? \\(g_{ID}=\\hat{e}(Q_{ID},P_{pub})\\)?????? `U = P ** r` ? `g_ID = pair(Q_ID, Ppub)`?",
-                "Encrypt?????? \\(K=g_{ID}^{r}\\)?? \\(H(K)\\) ????????????? \\(V=M\\oplus H(g_{ID}^{r})\\)????? \\(C=(U,V)\\)?",
-                "Decrypt????????? \\(K=\\hat{e}(d_{ID},U)\\)???? \\(M=V\\oplus H(K)\\)?",
-                "?????????\\[\\hat{e}(d_{ID},U)=\\hat{e}(sQ_{ID},rP)=\\hat{e}(Q_{ID},P)^{sr}=\\hat{e}(Q_{ID},P_{pub})^r=g_{ID}^{r}.\\]"
+                "Setup：随机选择生成元 \\(P\\in G_1\\) 和主密钥 \\(s\\in\\mathbb{Z}_q^*\\)，计算系统公钥 \\(P_{pub}=sP\\)，输出公开参数 \\(params=(P,P_{pub})\\) 与主密钥 \\(s\\)。Charm-Crypto 中写作 `Ppub = P ** s`。",
+                "Extract：对身份 \\(ID\\) 执行 \\(Q_{ID}=\\mathrm{MapToPoint}(ID)\\)，再计算身份私钥 \\(d_{ID}=sQ_{ID}\\)。Charm-Crypto 中使用 `group.hash(identity, G1)` 和 `Q_ID ** master_key`。",
+                "Encrypt：随机选择 \\(r\\in\\mathbb{Z}_q\\)，计算 \\(U=rP\\)，并计算 \\(g_{ID}=\\hat{e}(Q_{ID},P_{pub})\\)。代码中对应 `U = P ** r` 与 `g_ID = pair(Q_ID, Ppub)`。",
+                "Encrypt：计算共享值 \\(K=g_{ID}^{r}\\)，用 \\(H(K)\\) 生成与消息等长的掩码，得到 \\(V=M\\oplus H(g_{ID}^{r})\\)，输出密文 \\(C=(U,V)\\)。",
+                "Decrypt：使用身份私钥计算 \\(K=\\hat{e}(d_{ID},U)\\)，再恢复 \\(M=V\\oplus H(K)\\)。",
+                "正确性来自双线性：\\[\\hat{e}(d_{ID},U)=\\hat{e}(sQ_{ID},rP)=\\hat{e}(Q_{ID},P)^{sr}=\\hat{e}(Q_{ID},P_{pub})^r=g_{ID}^{r}.\\]"
               ],
               "code": {
                 "language": "python",
@@ -415,15 +415,15 @@
             {
               "id": "fullident",
               "title": "FullIdent",
-              "codeTitle": "FullIdent??",
+              "codeTitle": "FullIdent 代码",
               "steps": [
-                "Setup ? Extract ?? BasicIdent?????? \\(H_1:\\{0,1\\}^n\\times\\{0,1\\}^n\\rightarrow\\mathbb{F}_q\\) ? \\(G_1:\\{0,1\\}^n\\rightarrow\\{0,1\\}^n\\)?",
-                "Encrypt??????? \\(Q_{ID}=\\mathrm{MapToPoint}(ID)\\)?????? \\(\\sigma\\in\\{0,1\\}^n\\)?",
-                "Encrypt?????? Fujisaki-Okamoto ???? \\(r=H_1(\\sigma,M)\\)???? \\(U=rP\\)???? `h1_to_zr(sigma, message)` ??????? \\(\\sigma,M\\) ??? \\(\\mathbb{Z}_q\\)?",
-                "Encrypt??? \\(g_{ID}=\\hat{e}(Q_{ID},P_{pub})\\)????? \\(V=\\sigma\\oplus H(g_{ID}^{r})\\) ? \\(W=M\\oplus G_1(\\sigma)\\)?",
-                "Encrypt??? FullIdent ?? \\(C=(U,V,W)=(rP,\\sigma\\oplus H(g_{ID}^{r}),M\\oplus G_1(\\sigma))\\)?",
-                "Decrypt???? \\(\\sigma=V\\oplus H(\\hat{e}(d_{ID},U))\\)???? \\(M=W\\oplus G_1(\\sigma)\\)?",
-                "Decrypt????? \\(r=H_1(\\sigma,M)\\)??? \\(U\\stackrel{?}{=}rP\\)?????????????? FullIdent ???????????????"
+                "Setup 与 Extract 沿用 BasicIdent，但额外使用 \\(H_1:\\{0,1\\}^n\\times\\{0,1\\}^n\\rightarrow\\mathbb{F}_q\\) 和 \\(G_1:\\{0,1\\}^n\\rightarrow\\{0,1\\}^n\\)。",
+                "Encrypt：先对身份计算 \\(Q_{ID}=\\mathrm{MapToPoint}(ID)\\)，再随机选择 \\(\\sigma\\in\\{0,1\\}^n\\)。",
+                "Encrypt：按照论文的 Fujisaki-Okamoto 转换设置 \\(r=H_1(\\sigma,M)\\)，并计算 \\(U=rP\\)。代码中 `h1_to_zr(sigma, message)` 用确定性哈希把 \\(\\sigma,M\\) 映射到 \\(\\mathbb{Z}_q\\)。",
+                "Encrypt：计算 \\(g_{ID}=\\hat{e}(Q_{ID},P_{pub})\\)，然后生成 \\(V=\\sigma\\oplus H(g_{ID}^{r})\\) 和 \\(W=M\\oplus G_1(\\sigma)\\)。",
+                "Encrypt：输出 FullIdent 密文 \\(C=(U,V,W)=(rP,\\sigma\\oplus H(g_{ID}^{r}),M\\oplus G_1(\\sigma))\\)。",
+                "Decrypt：先计算 \\(\\sigma=V\\oplus H(\\hat{e}(d_{ID},U))\\)，再计算 \\(M=W\\oplus G_1(\\sigma)\\)。",
+                "Decrypt：重新计算 \\(r=H_1(\\sigma,M)\\)，检查 \\(U\\stackrel{?}{=}rP\\)。若检查失败则拒绝密文；这是 FullIdent 获得选择密文安全性的关键步骤。"
               ],
               "code": {
                 "language": "python",
@@ -433,15 +433,15 @@
             {
               "id": "escrow-elgamal",
               "title": "Escrow ElGamal Encryption",
-              "codeTitle": "Escrow ElGamal Encryption??",
+              "codeTitle": "Escrow ElGamal Encryption 代码",
               "steps": [
-                "Setup???????? \\(P\\in G_1\\) ??????? \\(s\\in\\mathbb{Z}_q\\)??? \\(Q=sP\\)?????? \\(params=(P,Q,H)\\)?????? \\(s\\)?Charm-Crypto ??? `Q = P ** s`?",
-                "KeyGen????????? \\(x\\in\\mathbb{Z}_q\\)????? \\(P_{pub}=xP\\)???? \\(x\\)???? \\(P_{pub}\\)?",
-                "Encrypt????? \\(r\\in\\mathbb{Z}_q\\)??? \\(U=rP\\)??? \\(g=\\hat{e}(P_{pub},Q)\\)?",
-                "Encrypt??? \\(V=M\\oplus H(g^r)\\)????? \\(C=(U,V)=(rP,M\\oplus H(g^r))\\)?",
-                "Decrypt???????? \\(x\\) ?? \\(M=V\\oplus H(\\hat{e}(U,xQ))\\)???? \\(xQ\\) ?? `Q ** private_key`?",
-                "Escrow-decrypt??????????? \\(s\\) ?? \\(M=V\\oplus H(\\hat{e}(U,sP_{pub}))\\)???? \\(sP_{pub}\\) ?? `public_key ** escrow_key`?",
-                "?????????\\[\\hat{e}(U,xQ)=\\hat{e}(rP,xsP)=\\hat{e}(xP,sP)^r=\\hat{e}(P_{pub},Q)^r=g^r.\\] ???\\(\\hat{e}(U,sP_{pub})\\) ??????????"
+                "Setup：随机选择生成元 \\(P\\in G_1\\) 与全局托管密钥 \\(s\\in\\mathbb{Z}_q\\)，计算 \\(Q=sP\\)。公开参数为 \\(params=(P,Q,H)\\)，托管密钥为 \\(s\\)。Charm-Crypto 中写作 `Q = P ** s`。",
+                "KeyGen：用户随机选择私钥 \\(x\\in\\mathbb{Z}_q\\)，计算公钥 \\(P_{pub}=xP\\)。私钥是 \\(x\\)，公钥是 \\(P_{pub}\\)。",
+                "Encrypt：随机选择 \\(r\\in\\mathbb{Z}_q\\)，计算 \\(U=rP\\)，并令 \\(g=\\hat{e}(P_{pub},Q)\\)。",
+                "Encrypt：计算 \\(V=M\\oplus H(g^r)\\)，输出密文 \\(C=(U,V)=(rP,M\\oplus H(g^r))\\)。",
+                "Decrypt：普通用户用私钥 \\(x\\) 计算 \\(M=V\\oplus H(\\hat{e}(U,xQ))\\)。代码中 \\(xQ\\) 写作 `Q ** private_key`。",
+                "Escrow-decrypt：托管方用全局托管密钥 \\(s\\) 计算 \\(M=V\\oplus H(\\hat{e}(U,sP_{pub}))\\)。代码中 \\(sP_{pub}\\) 写作 `public_key ** escrow_key`。",
+                "正确性来自双线性：\\[\\hat{e}(U,xQ)=\\hat{e}(rP,xsP)=\\hat{e}(xP,sP)^r=\\hat{e}(P_{pub},Q)^r=g^r.\\] 同理，\\(\\hat{e}(U,sP_{pub})\\) 也得到同一个共享值。"
               ],
               "code": {
                 "language": "python",

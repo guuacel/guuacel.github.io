@@ -3,7 +3,7 @@
 
   const LANG_KEY = 'guuacel-homepage-language';
   const LEGACY_LANG_KEY = 'homepageLang';
-  const ASSET_VERSION = '20260608-paper-algorithm-tabs';
+  const ASSET_VERSION = '20260608-paper-title-fix';
   const supported = ['zh', 'en'];
 
   let profileData = null;
