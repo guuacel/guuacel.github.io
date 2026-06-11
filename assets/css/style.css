@@ -1399,6 +1399,232 @@ code, pre {
 }
 
 /* --------------------------------------------------------------------------
+   PDF Tool Page
+   -------------------------------------------------------------------------- */
+.pdf-tool-panel {
+  padding: 1.2rem;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.pdf-tool-tabs {
+  display: inline-flex;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+  padding: 0.25rem;
+  background-color: var(--color-bg-alt);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+}
+
+.pdf-tool-tab {
+  min-height: 2.2rem;
+  padding: 0.35rem 0.9rem;
+  color: var(--color-text-light);
+  background-color: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  font-size: 0.86rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.pdf-tool-tab.is-active {
+  color: var(--color-primary);
+  background-color: var(--color-bg-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.pdf-tool-card {
+  display: none;
+}
+
+.pdf-tool-card.is-active {
+  display: block;
+}
+
+.pdf-tool-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.pdf-tool-card-head h2 {
+  color: var(--color-primary);
+  font-size: 1.15rem;
+}
+
+.pdf-tool-card-head span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.55rem;
+  padding: 0.16rem 0.55rem;
+  color: var(--color-tag-text);
+  background-color: var(--color-tag-bg);
+  border: 1px solid #c9ddf6;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.pdf-dropzone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 7rem;
+  padding: 1rem;
+  color: var(--color-primary);
+  background-color: var(--color-bg-alt);
+  border: 1px dashed #a8c4e6;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.pdf-dropzone input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pdf-file-list,
+.pdf-output-list {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 0.85rem;
+}
+
+.pdf-file-row,
+.pdf-output-link,
+.pdf-selected-file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem;
+  padding: 0.75rem 0.85rem;
+  background-color: var(--color-bg-alt);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-sm);
+}
+
+.pdf-file-main {
+  display: grid;
+  gap: 0.12rem;
+  min-width: 0;
+}
+
+.pdf-file-main strong,
+.pdf-selected-file strong,
+.pdf-output-link span {
+  overflow: hidden;
+  color: var(--color-text);
+  font-size: 0.9rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pdf-file-main span,
+.pdf-selected-file span {
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+}
+
+.pdf-file-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.35rem;
+}
+
+.pdf-file-actions button {
+  min-height: 1.75rem;
+  padding: 0.18rem 0.5rem;
+  color: var(--color-text-light);
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.72rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.pdf-file-actions button:disabled,
+.guide-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.pdf-field-label {
+  display: block;
+  margin: 0.95rem 0 0.35rem;
+  color: var(--color-text);
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.pdf-range-input {
+  width: 100%;
+  min-height: 2.45rem;
+  padding: 0.45rem 0.65rem;
+  color: var(--color-text);
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.92rem;
+}
+
+.pdf-tool-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.9rem;
+}
+
+.pdf-primary-button {
+  color: #ffffff;
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.pdf-primary-button:hover {
+  color: #ffffff;
+  background-color: var(--color-accent-hover);
+}
+
+.pdf-tool-status {
+  min-height: 1.5rem;
+  margin-top: 0.9rem;
+  color: var(--color-text-light);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.pdf-tool-status[data-type="success"] {
+  color: #1b5e20;
+}
+
+.pdf-tool-status[data-type="error"] {
+  color: #a33030;
+}
+
+.pdf-output-list h3 {
+  color: var(--color-primary);
+  font-size: 0.95rem;
+}
+
+.pdf-output-link strong {
+  color: var(--color-accent);
+  font-size: 0.8rem;
+}
+
+/* --------------------------------------------------------------------------
    Contact Section
    -------------------------------------------------------------------------- */
 .contact-grid {
@@ -1754,6 +1980,27 @@ code, pre {
 
   .guide-section {
     padding: 1rem;
+  }
+
+  .pdf-tool-panel {
+    padding: 1rem;
+  }
+
+  .pdf-file-row,
+  .pdf-selected-file,
+  .pdf-output-link {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .pdf-file-actions,
+  .pdf-tool-actions {
+    width: 100%;
+  }
+
+  .pdf-file-actions button,
+  .pdf-tool-actions .guide-button {
+    flex: 1 1 auto;
   }
 
   .guide-nav-inner {

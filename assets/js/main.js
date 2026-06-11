@@ -20,7 +20,7 @@
      ====================================================================== */
   let profileData = null;
   let currentLang = 'zh';
-  const ASSET_VERSION = '20260607-paper-implementations';
+  const ASSET_VERSION = '20260611-pdf-tool';
 
   /* ======================================================================
      DOM References
@@ -541,6 +541,7 @@
       const iconMap = {
         code: '</>',
         python: 'Py',
+        pdf: 'PDF',
         scholar: 'GS',
         id: 'ID',
       };

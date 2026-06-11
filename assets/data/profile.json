@@ -320,11 +320,15 @@
           "target": "_self"
         },
         {
-          "name": "Google Scholar",
-          "description": "查看论文、引用和学术档案。",
-          "action": "打开 Scholar",
-          "link": "https://scholar.google.com/citations?user=ZRjejGAAAAAJ&hl=zh-CN",
-          "icon": "scholar"
+          "name": "PDF 工具",
+          "description": "浏览器端 PDF 合并、拆分和页面提取工具，适合论文、报告和材料整理。",
+          "action": "打开 PDF 工具",
+          "link": "pdf_tool.html",
+          "icon": "pdf",
+          "tags": [
+            "PDF"
+          ],
+          "target": "_self"
         },
         {
           "name": "ORCID",
@@ -777,11 +781,15 @@
           "target": "_self"
         },
         {
-          "name": "Google Scholar",
-          "description": "Publication, citation, and academic profile entry.",
-          "action": "Open Scholar",
-          "link": "https://scholar.google.com/citations?user=ZRjejGAAAAAJ&hl=zh-CN",
-          "icon": "scholar"
+          "name": "PDF Tool",
+          "description": "Browser-based PDF merge, split, and page extraction tool for papers, reports, and documents.",
+          "action": "Open PDF Tool",
+          "link": "pdf_tool.html",
+          "icon": "pdf",
+          "tags": [
+            "PDF"
+          ],
+          "target": "_self"
         },
         {
           "name": "ORCID",
