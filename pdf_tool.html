@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PDF 工具 | PDF Tool</title>
-  <meta name="description" content="浏览器端 PDF 合并、拆分和页面提取工具。">
+  <title>文档工具 | Document Tool</title>
+  <meta name="description" content="浏览器端文档工具，支持 PDF 合并、PDF 拆分、Word 转 PDF、PDF 转 Word。">
   <link rel="icon" type="image/png" href="assets/img/avatar-placeholder.png">
-  <link rel="stylesheet" href="assets/css/style.css?v=20260611-pdf-tool">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260611-document-tool">
 </head>
 <body class="guide-body pdf-tool-body">
   <header class="guide-nav">
     <div class="container guide-nav-inner">
-      <div class="guide-brand" id="pdfToolBrand">PDF 工具</div>
+      <div class="guide-brand" id="pdfToolBrand">文档工具</div>
       <div class="guide-actions">
         <a class="guide-button" id="pdfToolHomeLink" href="index.html#tools">返回主页</a>
         <button class="guide-button" id="pdfToolLangToggle" type="button">English</button>
@@ -22,15 +22,17 @@
   <main class="guide-main" id="pdfToolApp">
     <div class="container">
       <section class="guide-hero pdf-tool-hero">
-        <div class="guide-eyebrow" id="pdfToolEyebrow">Browser PDF Tool</div>
-        <h1 class="guide-title" id="pdfToolTitle">PDF 合并与拆分</h1>
-        <p class="guide-summary" id="pdfToolSummary">本地处理 PDF 文件，适合论文、报告和材料整理。</p>
+        <div class="guide-eyebrow" id="pdfToolEyebrow">Browser Document Tool</div>
+        <h1 class="guide-title" id="pdfToolTitle">文档转换与 PDF 处理</h1>
+        <p class="guide-summary" id="pdfToolSummary">本地处理文件，支持 PDF 合并、拆分、Word 转 PDF 和 PDF 转 Word。</p>
       </section>
 
       <section class="pdf-tool-panel" aria-labelledby="pdfToolTitle">
-        <div class="pdf-tool-tabs" role="tablist" aria-label="PDF operation">
-          <button class="pdf-tool-tab is-active" id="mergeTab" type="button" data-mode="merge">合并</button>
-          <button class="pdf-tool-tab" id="splitTab" type="button" data-mode="split">拆分</button>
+        <div class="pdf-tool-tabs" role="tablist" aria-label="Document operation">
+          <button class="pdf-tool-tab is-active" id="mergeTab" type="button" data-mode="merge">PDF 合并</button>
+          <button class="pdf-tool-tab" id="splitTab" type="button" data-mode="split">PDF 拆分</button>
+          <button class="pdf-tool-tab" id="wordToPdfTab" type="button" data-mode="wordToPdf">Word 转 PDF</button>
+          <button class="pdf-tool-tab" id="pdfToWordTab" type="button" data-mode="pdfToWord">PDF 转 Word</button>
         </div>
 
         <div class="pdf-tool-grid">
@@ -39,7 +41,7 @@
               <h2 id="mergeTitle">合并 PDF</h2>
               <span id="mergeBadge">多文件</span>
             </div>
-            <label class="pdf-dropzone" for="mergeInput" id="mergeDropzone">
+            <label class="pdf-dropzone" for="mergeInput">
               <input id="mergeInput" type="file" accept="application/pdf,.pdf" multiple>
               <span id="mergeDropText">选择 PDF 文件</span>
             </label>
@@ -55,7 +57,7 @@
               <h2 id="splitTitle">拆分 PDF</h2>
               <span id="splitBadge">单文件</span>
             </div>
-            <label class="pdf-dropzone" for="splitInput" id="splitDropzone">
+            <label class="pdf-dropzone" for="splitInput">
               <input id="splitInput" type="file" accept="application/pdf,.pdf">
               <span id="splitDropText">选择 PDF 文件</span>
             </label>
@@ -69,6 +71,40 @@
             </div>
             <div class="pdf-output-list" id="splitOutputList"></div>
           </section>
+
+          <section class="pdf-tool-card" id="wordToPdfPanel" data-panel="wordToPdf">
+            <div class="pdf-tool-card-head">
+              <h2 id="wordToPdfTitle">Word 转 PDF</h2>
+              <span id="wordToPdfBadge">DOCX</span>
+            </div>
+            <label class="pdf-dropzone" for="wordInput">
+              <input id="wordInput" type="file" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+              <span id="wordDropText">选择 Word 文件（.docx）</span>
+            </label>
+            <div class="pdf-selected-file" id="wordFileInfo"></div>
+            <p class="pdf-tool-note" id="wordToPdfNote">浏览器端转换会提取 Word 文本并生成 PDF，复杂排版和图片不会完全保留。</p>
+            <div class="pdf-tool-actions">
+              <button class="guide-button pdf-primary-button" id="wordToPdfButton" type="button">转换并下载 PDF</button>
+              <button class="guide-button" id="wordClearButton" type="button">清空</button>
+            </div>
+          </section>
+
+          <section class="pdf-tool-card" id="pdfToWordPanel" data-panel="pdfToWord">
+            <div class="pdf-tool-card-head">
+              <h2 id="pdfToWordTitle">PDF 转 Word</h2>
+              <span id="pdfToWordBadge">DOCX</span>
+            </div>
+            <label class="pdf-dropzone" for="pdfWordInput">
+              <input id="pdfWordInput" type="file" accept="application/pdf,.pdf">
+              <span id="pdfWordDropText">选择 PDF 文件</span>
+            </label>
+            <div class="pdf-selected-file" id="pdfWordFileInfo"></div>
+            <p class="pdf-tool-note" id="pdfToWordNote">PDF 转 Word 会提取文本生成 .docx，扫描件或复杂版式可能无法完整还原。</p>
+            <div class="pdf-tool-actions">
+              <button class="guide-button pdf-primary-button" id="pdfToWordButton" type="button">转换并下载 Word</button>
+              <button class="guide-button" id="pdfWordClearButton" type="button">清空</button>
+            </div>
+          </section>
         </div>
 
         <div class="pdf-tool-status" id="pdfToolStatus" role="status" aria-live="polite"></div>
@@ -77,6 +113,9 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-  <script src="assets/js/pdf-tool.js?v=20260611-pdf-tool"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mammoth@1.9.0/mammoth.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+  <script src="assets/js/pdf-tool.js?v=20260611-document-tool"></script>
 </body>
 </html>

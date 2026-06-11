@@ -1399,7 +1399,7 @@ code, pre {
 }
 
 /* --------------------------------------------------------------------------
-   PDF Tool Page
+   Document Tool Page
    -------------------------------------------------------------------------- */
 .pdf-tool-panel {
   padding: 1.2rem;
@@ -1411,6 +1411,7 @@ code, pre {
 
 .pdf-tool-tabs {
   display: inline-flex;
+  flex-wrap: wrap;
   gap: 0.35rem;
   margin-bottom: 1rem;
   padding: 0.25rem;
@@ -1578,6 +1579,13 @@ code, pre {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   font-size: 0.92rem;
+}
+
+.pdf-tool-note {
+  margin-top: 0.8rem;
+  color: var(--color-text-muted);
+  font-size: 0.84rem;
+  line-height: 1.65;
 }
 
 .pdf-tool-actions {

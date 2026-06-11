@@ -320,13 +320,14 @@
           "target": "_self"
         },
         {
-          "name": "PDF 工具",
-          "description": "浏览器端 PDF 合并、拆分和页面提取工具，适合论文、报告和材料整理。",
-          "action": "打开 PDF 工具",
+          "name": "文档工具",
+          "description": "浏览器端文档工具，支持 PDF 合并、PDF 拆分、Word 转 PDF 和 PDF 转 Word。",
+          "action": "打开文档工具",
           "link": "pdf_tool.html",
           "icon": "pdf",
           "tags": [
-            "PDF"
+            "PDF",
+            "Word"
           ],
           "target": "_self"
         },
@@ -781,13 +782,14 @@
           "target": "_self"
         },
         {
-          "name": "PDF Tool",
-          "description": "Browser-based PDF merge, split, and page extraction tool for papers, reports, and documents.",
-          "action": "Open PDF Tool",
+          "name": "Document Tool",
+          "description": "Browser-based document tool for PDF merge, PDF split, Word to PDF, and PDF to Word.",
+          "action": "Open Document Tool",
           "link": "pdf_tool.html",
           "icon": "pdf",
           "tags": [
-            "PDF"
+            "PDF",
+            "Word"
           ],
           "target": "_self"
         },

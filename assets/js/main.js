@@ -20,7 +20,7 @@
      ====================================================================== */
   let profileData = null;
   let currentLang = 'zh';
-  const ASSET_VERSION = '20260611-pdf-tool';
+  const ASSET_VERSION = '20260611-document-tool';
 
   /* ======================================================================
      DOM References
