@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>个人主页后台管理</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>个人主页后台管理</h1>
+      <p>管理论文实现，保存到本地仓库，并发布到 GitHub Pages。</p>
+    </div>
+    <div class="top-actions">
+      <button id="reloadBtn" type="button">刷新数据</button>
+      <button id="publishBtn" type="button" class="primary">发布到 GitHub</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <div class="panel-title">
+        <h2>论文实现</h2>
+        <button id="newBtn" type="button">新增</button>
+      </div>
+      <div id="implementationList" class="implementation-list"></div>
+      <pre id="gitStatus" class="status-box"></pre>
+    </aside>
+
+    <section class="editor">
+      <form id="implementationForm">
+        <section class="card">
+          <h2>基本信息</h2>
+          <div class="grid two">
+            <label>实现 ID
+              <input name="id" required pattern="[a-z0-9][a-z0-9-]*" placeholder="efficiently-thresholdizable-batched-ibe">
+            </label>
+            <label>代码目录
+              <input name="codeFolder" pattern="[a-z0-9][a-z0-9-]*" placeholder="默认同实现 ID">
+            </label>
+            <label>作者
+              <input name="authors">
+            </label>
+            <label>期刊/会议
+              <input name="venue">
+            </label>
+            <label>年份
+              <input name="year" type="number" min="1900" max="2100">
+            </label>
+            <label>DOI
+              <input name="doi">
+            </label>
+            <label>卷期
+              <input name="volume">
+            </label>
+            <label>页码
+              <input name="pages">
+            </label>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>中英文标题与摘要</h2>
+          <div class="grid two">
+            <label>中文标题
+              <input name="zhTitle" required>
+            </label>
+            <label>英文标题
+              <input name="enTitle" required>
+            </label>
+            <label>中文摘要
+              <textarea name="zhAbstract" rows="7"></textarea>
+            </label>
+            <label>English Abstract
+              <textarea name="enAbstract" rows="7"></textarea>
+            </label>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="panel-title">
+            <h2>算法 / README / 代码</h2>
+            <button id="addAlgorithmBtn" type="button">添加算法</button>
+          </div>
+          <div id="algorithms"></div>
+        </section>
+
+        <section class="card">
+          <label class="check-row">
+            <input name="writeFiles" type="checkbox" checked>
+            保存时同步写入 code 目录文件
+          </label>
+          <div class="form-actions">
+            <button type="submit" class="primary">保存到本地</button>
+            <button id="deleteBtn" type="button" class="danger">删除当前实现</button>
+          </div>
+        </section>
+      </form>
+    </section>
+  </main>
+
+  <template id="algorithmTemplate">
+    <article class="algorithm card nested">
+      <div class="panel-title">
+        <h3>算法</h3>
+        <button type="button" class="danger small removeAlgorithm">删除算法</button>
+      </div>
+      <div class="grid two">
+        <label>算法 ID
+          <input data-field="id" required pattern="[a-z0-9][a-z0-9-]*">
+        </label>
+        <label>代码标题
+          <input data-field="codeTitle" placeholder="basic_bibe.py">
+        </label>
+        <label>中文算法标题
+          <input data-field="zhTitle">
+        </label>
+        <label>English Algorithm Title
+          <input data-field="enTitle">
+        </label>
+        <label>中文 README 标题
+          <input data-field="zhReadmeTitle">
+        </label>
+        <label>English README Title
+          <input data-field="enReadmeTitle">
+        </label>
+        <label>中文步骤（每行一条）
+          <textarea data-field="zhStepsText" rows="6"></textarea>
+        </label>
+        <label>English Steps (one per line)
+          <textarea data-field="enStepsText" rows="6"></textarea>
+        </label>
+        <label>README 文件名
+          <input data-field="readmeFileName" placeholder="README_basic_bibe.md">
+        </label>
+        <label>代码文件名
+          <input data-field="codeFileName" placeholder="basic_bibe.py">
+        </label>
+      </div>
+      <div class="file-row">
+        <label>导入 README
+          <input data-field="readmeFile" type="file" accept=".md,.txt">
+        </label>
+        <label>导入代码
+          <input data-field="codeFile" type="file" accept=".py,.js,.ts,.txt,.md">
+        </label>
+      </div>
+      <label>README 内容（支持 Markdown 和公式）
+        <textarea data-field="readme" rows="10"></textarea>
+      </label>
+      <label>代码内容
+        <textarea data-field="codeContent" rows="12" class="mono"></textarea>
+      </label>
+    </article>
+  </template>
+
+  <div id="toast" class="toast" hidden></div>
+  <script src="app.js"></script>
+</body>
+</html>
