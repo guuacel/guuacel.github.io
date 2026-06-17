@@ -3,7 +3,7 @@
 
   const LANG_KEY = 'guuacel-homepage-language';
   const LEGACY_LANG_KEY = 'homepageLang';
-  const ASSET_VERSION = '20260616-bibe-readme';
+  const ASSET_VERSION = '20260617-readme-math';
   const supported = ['zh', 'en'];
 
   let profileData = null;
@@ -84,6 +84,139 @@
         return index % 2 === 1 ? '<code>' + escapeHTML(part) + '</code>' : escapeHTML(part);
       })
       .join('');
+  }
+
+  function safeHref(value) {
+    const href = String(value || '').trim();
+    if (/^(https?:|mailto:|#|\.\/|\.\.\/|\/)/i.test(href)) return href;
+    return '#';
+  }
+
+  function formatMarkdownInline(value) {
+    return String(value == null ? '' : value)
+      .split(/`([^`]*)`/g)
+      .map(function (part, index) {
+        if (index % 2 === 1) return '<code>' + escapeHTML(part) + '</code>';
+        let html = '';
+        let lastIndex = 0;
+        const linkPattern = /\[([^\]]+)\]\(([^)]+)\)/g;
+        let match;
+        while ((match = linkPattern.exec(part)) !== null) {
+          html += escapeHTML(part.slice(lastIndex, match.index));
+          html += '<a href="' + escapeHTML(safeHref(match[2])) + '" target="_blank" rel="noopener">' + escapeHTML(match[1]) + '</a>';
+          lastIndex = match.index + match[0].length;
+        }
+        html += escapeHTML(part.slice(lastIndex));
+        return html;
+      })
+      .join('');
+  }
+
+  function renderMarkdown(value) {
+    const lines = String(value || '').replace(/\r\n?/g, '\n').split('\n');
+    let html = '';
+    let paragraph = [];
+    let list = [];
+    let inCode = false;
+    let codeLang = '';
+    let codeLines = [];
+    let inMath = false;
+    let mathLines = [];
+
+    function flushParagraph() {
+      if (!paragraph.length) return;
+      html += '<p>' + formatMarkdownInline(paragraph.join(' ')) + '</p>';
+      paragraph = [];
+    }
+
+    function flushList() {
+      if (!list.length) return;
+      html += '<ul>' + list.map(function (item) {
+        return '<li>' + formatMarkdownInline(item) + '</li>';
+      }).join('') + '</ul>';
+      list = [];
+    }
+
+    function flushCode() {
+      html += '<pre><code' + (codeLang ? ' class="language-' + escapeHTML(codeLang) + '"' : '') + '>' + escapeHTML(codeLines.join('\n')) + '</code></pre>';
+      codeLines = [];
+      codeLang = '';
+    }
+
+    function flushMath() {
+      html += '<div class="guide-math-block">\\[' + escapeHTML(mathLines.join('\n')) + '\\]</div>';
+      mathLines = [];
+    }
+
+    lines.forEach(function (line) {
+      const trimmed = line.trim();
+      const fence = trimmed.match(/^```([\w-]*)\s*$/);
+
+      if (fence) {
+        if (inCode) {
+          flushCode();
+          inCode = false;
+        } else {
+          flushParagraph();
+          flushList();
+          inCode = true;
+          codeLang = fence[1] || '';
+        }
+        return;
+      }
+
+      if (inCode) {
+        codeLines.push(line);
+        return;
+      }
+
+      if (trimmed === '$$') {
+        if (inMath) {
+          flushMath();
+          inMath = false;
+        } else {
+          flushParagraph();
+          flushList();
+          inMath = true;
+        }
+        return;
+      }
+
+      if (inMath) {
+        mathLines.push(line);
+        return;
+      }
+
+      if (!trimmed) {
+        flushParagraph();
+        flushList();
+        return;
+      }
+
+      const heading = trimmed.match(/^(#{1,6})\s+(.+)$/);
+      if (heading) {
+        flushParagraph();
+        flushList();
+        const level = Math.min(6, heading[1].length + 2);
+        html += '<h' + level + '>' + formatMarkdownInline(heading[2]) + '</h' + level + '>';
+        return;
+      }
+
+      const bullet = trimmed.match(/^[-*]\s+(.+)$/);
+      if (bullet) {
+        flushParagraph();
+        list.push(bullet[1]);
+        return;
+      }
+
+      paragraph.push(trimmed);
+    });
+
+    if (inCode) flushCode();
+    if (inMath) flushMath();
+    flushParagraph();
+    flushList();
+    return html;
   }
 
   function slugify(value, fallback) {
@@ -259,12 +392,7 @@
               <section class="guide-section" id="implementation-readme">
                 <h2>${escapeHTML(text.readme)}</h2>
                 <h3>${escapeHTML(activeReadme.readmeTitle || activeReadme.title)}</h3>
-                <div class="code-panel">
-                  <div class="code-panel-header">
-                    <span>Markdown</span>
-                  </div>
-                  <pre><code>${escapeHTML(readme)}</code></pre>
-                </div>
+                <div class="guide-markdown">${renderMarkdown(readme)}</div>
               </section>
 
               <section class="guide-section" id="implementation-code">

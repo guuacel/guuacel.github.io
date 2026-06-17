@@ -1315,6 +1315,64 @@ code, pre {
   margin: 0.75rem 0;
 }
 
+.guide-markdown h3,
+.guide-markdown h4,
+.guide-markdown h5,
+.guide-markdown h6 {
+  color: var(--color-text);
+  line-height: 1.35;
+}
+
+.guide-markdown h3 {
+  font-size: 1rem;
+  margin: 1.1rem 0 0.5rem;
+}
+
+.guide-markdown h4,
+.guide-markdown h5,
+.guide-markdown h6 {
+  font-size: 0.94rem;
+  margin: 1rem 0 0.45rem;
+}
+
+.guide-markdown p {
+  margin: 0.6rem 0;
+}
+
+.guide-markdown a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+}
+
+.guide-markdown pre {
+  margin: 0.75rem 0;
+  padding: 0.85rem 1rem;
+  overflow-x: auto;
+  color: #e5e7eb;
+  background-color: #0f172a;
+  border-radius: var(--radius-md);
+  font-size: 0.84rem;
+  line-height: 1.7;
+}
+
+.guide-markdown code {
+  font-size: 0.86em;
+}
+
+.guide-markdown :not(pre) > code {
+  padding: 0.08rem 0.28rem;
+  color: var(--color-primary);
+  background-color: #eef4fb;
+  border-radius: 0.25rem;
+}
+
+.guide-math-block {
+  margin: 0.8rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
 .guide-note {
   margin: 0.8rem 0;
   padding: 0.75rem 0.9rem;
