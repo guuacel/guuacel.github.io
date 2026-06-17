@@ -3,12 +3,13 @@
 
   const LANG_KEY = 'guuacel-homepage-language';
   const LEGACY_LANG_KEY = 'homepageLang';
-  const ASSET_VERSION = '20260608-paper-title-fix';
+  const ASSET_VERSION = '20260616-bibe-readme';
   const supported = ['zh', 'en'];
 
   let profileData = null;
   let currentLang = 'zh';
   let activeStepId = '';
+  let activeReadmeId = '';
   let activeCodeId = '';
 
   const app = document.getElementById('implementationApp');
@@ -25,6 +26,7 @@
       toc: '目录',
       abstract: '摘要介绍',
       steps: '算法详细步骤',
+      readme: 'README 说明',
       code: '算法代码',
       codeType: 'Python',
       copy: '复制',
@@ -49,6 +51,7 @@
       toc: 'Contents',
       abstract: 'Abstract',
       steps: 'Algorithm Steps',
+      readme: 'README Notes',
       code: 'Algorithm Code',
       codeType: 'Python',
       copy: 'Copy',
@@ -126,7 +129,9 @@
           id: id,
           title: algorithm.title || text.steps,
           codeTitle: algorithm.codeTitle || algorithm.title || text.code,
+          readmeTitle: algorithm.readmeTitle || algorithm.title || text.readme,
           steps: Array.isArray(algorithm.steps) && algorithm.steps.length ? algorithm.steps : [text.stepPlaceholder],
+          readme: algorithm.readme || '',
           code: algorithm.code || { language: 'text', content: text.codePlaceholder }
         };
       });
@@ -141,14 +146,20 @@
         id: slugify(section.title, 'algorithm-' + index),
         title: section.title || text.steps,
         codeTitle: section.title || text.code,
+        readmeTitle: section.title || text.readme,
         steps: Array.isArray(section.steps) && section.steps.length ? section.steps : [text.stepPlaceholder],
+        readme: section.readme || '',
         code: index === 0 ? code : { language: 'text', content: text.codePlaceholder }
       };
     });
   }
 
   function getActiveAlgorithm(algorithms, kind) {
-    const selectedId = kind === 'code' ? activeCodeId : activeStepId;
+    const selectedId = kind === 'code'
+      ? activeCodeId
+      : kind === 'readme'
+        ? activeReadmeId
+        : activeStepId;
     const selected = algorithms.find(function (algorithm) {
       return algorithm.id === selectedId;
     });
@@ -157,7 +168,11 @@
 
   function renderSubNav(algorithms, kind, activeId) {
     return algorithms.map(function (algorithm) {
-      const label = kind === 'code' ? algorithm.codeTitle : algorithm.title;
+      const label = kind === 'code'
+        ? algorithm.codeTitle
+        : kind === 'readme'
+          ? algorithm.readmeTitle
+          : algorithm.title;
       const isActive = algorithm.id === activeId ? ' is-active' : '';
       return `
         <button class="guide-toc-link guide-toc-sublink${isActive}" type="button" data-algorithm-kind="${escapeHTML(kind)}" data-algorithm-id="${escapeHTML(algorithm.id)}">
@@ -185,10 +200,13 @@
     const abstractText = item.abstract || '';
     const algorithms = getAlgorithms(item);
     const activeStep = getActiveAlgorithm(algorithms, 'steps');
+    const activeReadme = getActiveAlgorithm(algorithms, 'readme');
     const activeCode = getActiveAlgorithm(algorithms, 'code');
     activeStepId = activeStep.id;
+    activeReadmeId = activeReadme.id;
     activeCodeId = activeCode.id;
     const code = activeCode.code || { language: 'text', content: text.codePlaceholder };
+    const readme = activeReadme.readme || '';
 
     app.innerHTML = `
       <article class="guide-article is-active">
@@ -214,6 +232,10 @@
               <div class="guide-toc-sublist">
                 ${renderSubNav(algorithms, 'steps', activeStep.id)}
               </div>
+              <a class="guide-toc-link" href="#implementation-readme">${escapeHTML(text.readme)}</a>
+              <div class="guide-toc-sublist">
+                ${renderSubNav(algorithms, 'readme', activeReadme.id)}
+              </div>
               <a class="guide-toc-link" href="#implementation-code">${escapeHTML(text.code)}</a>
               <div class="guide-toc-sublist">
                 ${renderSubNav(algorithms, 'code', activeCode.id)}
@@ -232,6 +254,17 @@
                 <ol>
                   ${activeStep.steps.map(function (step) { return '<li>' + formatInline(step) + '</li>'; }).join('')}
                 </ol>
+              </section>
+
+              <section class="guide-section" id="implementation-readme">
+                <h2>${escapeHTML(text.readme)}</h2>
+                <h3>${escapeHTML(activeReadme.readmeTitle || activeReadme.title)}</h3>
+                <div class="code-panel">
+                  <div class="code-panel-header">
+                    <span>Markdown</span>
+                  </div>
+                  <pre><code>${escapeHTML(readme)}</code></pre>
+                </div>
               </section>
 
               <section class="guide-section" id="implementation-code">
@@ -279,11 +312,19 @@
         const algorithmId = button.dataset.algorithmId;
         if (kind === 'code') {
           activeCodeId = algorithmId;
+        } else if (kind === 'readme') {
+          activeReadmeId = algorithmId;
         } else {
           activeStepId = algorithmId;
         }
         render();
-        const target = document.getElementById(kind === 'code' ? 'implementation-code' : 'implementation-steps');
+        const target = document.getElementById(
+          kind === 'code'
+            ? 'implementation-code'
+            : kind === 'readme'
+              ? 'implementation-readme'
+              : 'implementation-steps'
+        );
         if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });

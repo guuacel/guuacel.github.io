@@ -3,4 +3,5 @@
 This folder stores code for papers listed on the homepage. Most paper folders are placeholders until implementation code is uploaded.
 
 - `boneh-franklin-ibe-weil-pairing/`: Charm-Crypto demo implementations for BasicIdent, FullIdent, and Escrow ElGamal Encryption.
+- `efficiently-thresholdizable-batched-ibe/`: Charm-Crypto demo implementations for Basic BIBE, signed Batched Encryption, and the evaluation-point BIBE variant.
 
