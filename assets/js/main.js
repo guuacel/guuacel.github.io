@@ -20,7 +20,7 @@
      ====================================================================== */
   let profileData = null;
   let currentLang = 'zh';
-  const ASSET_VERSION = '20260617-bibe-implementation';
+  const ASSET_VERSION = '20260618-implementation-sort';
 
   /* ======================================================================
      DOM References
@@ -91,6 +91,15 @@
     }
 
     return classes.join(' ');
+  }
+
+  function sortByYearDesc(items) {
+    return items.slice().sort(function (a, b) {
+      const yearA = Number(a.year) || 0;
+      const yearB = Number(b.year) || 0;
+      if (yearA !== yearB) return yearB - yearA;
+      return String(a.title || '').localeCompare(String(b.title || ''));
+    });
   }
 
   /* ======================================================================
@@ -578,7 +587,9 @@
      ====================================================================== */
   function renderImplementations() {
     const implementations = profileData[currentLang].implementations;
-    const items = implementations && Array.isArray(implementations.items) ? implementations.items : [];
+    const items = implementations && Array.isArray(implementations.items)
+      ? sortByYearDesc(implementations.items)
+      : [];
 
     let contentHTML = '';
     if (items.length) {

@@ -3,7 +3,7 @@
 
   const LANG_KEY = 'guuacel-homepage-language';
   const LEGACY_LANG_KEY = 'homepageLang';
-  const ASSET_VERSION = '20260617-readme-math';
+  const ASSET_VERSION = '20260618-implementation-sort';
   const supported = ['zh', 'en'];
 
   let profileData = null;
@@ -227,6 +227,15 @@
     return slug || fallback;
   }
 
+  function sortByYearDesc(items) {
+    return items.slice().sort(function (a, b) {
+      const yearA = Number(a.year) || 0;
+      const yearB = Number(b.year) || 0;
+      if (yearA !== yearB) return yearB - yearA;
+      return String(a.title || '').localeCompare(String(b.title || ''));
+    });
+  }
+
   function resolveInitialLang() {
     const stored = localStorage.getItem(LANG_KEY) || localStorage.getItem(LEGACY_LANG_KEY);
     if (supported.includes(stored)) return stored;
@@ -235,7 +244,7 @@
 
   function getItems() {
     const section = profileData && profileData[currentLang] && profileData[currentLang].implementations;
-    return section && Array.isArray(section.items) ? section.items : [];
+    return section && Array.isArray(section.items) ? sortByYearDesc(section.items) : [];
   }
 
   function findItem() {
