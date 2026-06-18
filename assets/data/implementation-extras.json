@@ -1,0 +1,116 @@
+{
+  "zh": {
+    "items": [
+      {
+        "id": "kzg-polynomial-commitments",
+        "title": "Constant-Size Commitments to Polynomials and Their Applications",
+        "authors": "Aniket Kate, Gregory M. Zaverucha, and Ian Goldberg",
+        "venue": "Advances in Cryptology - ASIACRYPT 2010",
+        "year": 2010,
+        "volume": "LNCS 6477",
+        "pages": "177-194",
+        "doi": "10.1007/978-3-642-17373-8_11",
+        "abstract": "Kate、Zaverucha 和 Goldberg 提出的 KZG 多项式承诺可以把一个多项式压缩为单个群元素，并用单个群元素证明某个点值确实来自该多项式。该实现使用 Charm-Crypto 复现可信设置、承诺、单点打开验证，以及基于插值多项式和消失多项式的多点批量打开验证。",
+        "code": {
+          "language": "python",
+          "content": ""
+        },
+        "algorithmSections": [
+          {
+            "title": "KZG 多项式承诺、单点打开与批量打开",
+            "steps": [
+              "Setup：随机选择陷门 \\(\\tau\\leftarrow\\mathbb Z_p\\)，发布 \\([1]_1,[\\tau]_1,\\ldots,[\\tau^D]_1\\) 和 \\([1]_2,[\\tau]_2,\\ldots,[\\tau^D]_2\\)。真实系统中 \\(\\tau\\) 应在可信设置后销毁。",
+              "Commit：对多项式 \\(f(X)=\\sum_{i=0}^{d}a_iX^i\\) 输出常数大小承诺 \\(C=[f(\\tau)]_1=\\prod_i[\\tau^i]_1^{a_i}\\)。代码入口为 `kzg.commit(polynomial)`。",
+              "Open：在点 \\(z\\) 打开时计算 \\(y=f(z)\\)，并构造商多项式 \\(q(X)=(f(X)-y)/(X-z)\\)，证明为 \\(\\pi=[q(\\tau)]_1\\)。",
+              "Verify：验证配对等式 \\(e(C/[y]_1,g_2)\\stackrel{?}{=}e(\\pi,[\\tau-z]_2)\\)，正确性来自恒等式 \\(f(\\tau)-y=q(\\tau)(\\tau-z)\\)。",
+              "Batch open：对点集 \\(S=\\{z_1,\\ldots,z_m\\}\\)，插值得到 \\(I_S(z_i)=f(z_i)\\)，再用消失多项式 \\(Z_S(X)=\\prod_i(X-z_i)\\) 构造 \\(q(X)=(f(X)-I_S(X))/Z_S(X)\\)。",
+              "Batch verify：检查 \\(e(C/[I_S(\\tau)]_1,g_2)\\stackrel{?}{=}e(\\pi,[Z_S(\\tau)]_2)\\)。实现通过公开的 \\(G_1\\) 与 \\(G_2\\) powers of tau 计算两侧承诺。"
+            ]
+          }
+        ],
+        "algorithms": [
+          {
+            "id": "kzg-commitment",
+            "title": "KZG 多项式承诺、单点打开与批量打开",
+            "readmeTitle": "KZG 多项式承诺 README",
+            "codeTitle": "kzg_commitment.py",
+            "steps": [
+              "Setup：随机选择陷门 \\(\\tau\\leftarrow\\mathbb Z_p\\)，发布 \\([1]_1,[\\tau]_1,\\ldots,[\\tau^D]_1\\) 和 \\([1]_2,[\\tau]_2,\\ldots,[\\tau^D]_2\\)。真实系统中 \\(\\tau\\) 应在可信设置后销毁。",
+              "Commit：对多项式 \\(f(X)=\\sum_{i=0}^{d}a_iX^i\\) 输出常数大小承诺 \\(C=[f(\\tau)]_1=\\prod_i[\\tau^i]_1^{a_i}\\)。代码入口为 `kzg.commit(polynomial)`。",
+              "Open：在点 \\(z\\) 打开时计算 \\(y=f(z)\\)，并构造商多项式 \\(q(X)=(f(X)-y)/(X-z)\\)，证明为 \\(\\pi=[q(\\tau)]_1\\)。",
+              "Verify：验证配对等式 \\(e(C/[y]_1,g_2)\\stackrel{?}{=}e(\\pi,[\\tau-z]_2)\\)，正确性来自恒等式 \\(f(\\tau)-y=q(\\tau)(\\tau-z)\\)。",
+              "Batch open：对点集 \\(S=\\{z_1,\\ldots,z_m\\}\\)，插值得到 \\(I_S(z_i)=f(z_i)\\)，再用消失多项式 \\(Z_S(X)=\\prod_i(X-z_i)\\) 构造 \\(q(X)=(f(X)-I_S(X))/Z_S(X)\\)。",
+              "Batch verify：检查 \\(e(C/[I_S(\\tau)]_1,g_2)\\stackrel{?}{=}e(\\pi,[Z_S(\\tau)]_2)\\)。实现通过公开的 \\(G_1\\) 与 \\(G_2\\) powers of tau 计算两侧承诺。"
+            ],
+            "code": {
+              "language": "python",
+              "content": ""
+            },
+            "readmePath": "code/kzg-polynomial-commitments/README.md",
+            "codePath": "code/kzg-polynomial-commitments/kzg_commitment.py",
+            "codeLanguage": "python"
+          }
+        ],
+        "codePath": "code/kzg-polynomial-commitments/kzg_commitment.py",
+        "codeLanguage": "python"
+      }
+    ]
+  },
+  "en": {
+    "items": [
+      {
+        "id": "kzg-polynomial-commitments",
+        "title": "Constant-Size Commitments to Polynomials and Their Applications",
+        "authors": "Aniket Kate, Gregory M. Zaverucha, and Ian Goldberg",
+        "venue": "Advances in Cryptology - ASIACRYPT 2010",
+        "year": 2010,
+        "volume": "LNCS 6477",
+        "pages": "177-194",
+        "doi": "10.1007/978-3-642-17373-8_11",
+        "abstract": "The KZG polynomial commitment scheme by Kate, Zaverucha, and Goldberg compresses a polynomial into one group element and proves evaluations with one group element. This Charm-Crypto implementation demonstrates trusted setup, commitments, single-point openings, and multi-point batch openings using interpolation and vanishing polynomials.",
+        "code": {
+          "language": "python",
+          "content": ""
+        },
+        "algorithmSections": [
+          {
+            "title": "KZG Polynomial Commitments, Single Openings, and Batch Openings",
+            "steps": [
+              "Setup: sample a trapdoor \\(\\tau\\leftarrow\\mathbb Z_p\\), publish \\([1]_1,[\\tau]_1,\\ldots,[\\tau^D]_1\\) and \\([1]_2,[\\tau]_2,\\ldots,[\\tau^D]_2\\). In a real deployment, \\(\\tau\\) must be destroyed after the trusted setup.",
+              "Commit: for \\(f(X)=\\sum_{i=0}^{d}a_iX^i\\), output the constant-size commitment \\(C=[f(\\tau)]_1=\\prod_i[\\tau^i]_1^{a_i}\\). The code entry point is `kzg.commit(polynomial)`.",
+              "Open: to open at \\(z\\), compute \\(y=f(z)\\), form \\(q(X)=(f(X)-y)/(X-z)\\), and output \\(\\pi=[q(\\tau)]_1\\).",
+              "Verify: check \\(e(C/[y]_1,g_2)\\stackrel{?}{=}e(\\pi,[\\tau-z]_2)\\). Correctness follows from \\(f(\\tau)-y=q(\\tau)(\\tau-z)\\).",
+              "Batch open: for \\(S=\\{z_1,\\ldots,z_m\\}\\), interpolate \\(I_S(z_i)=f(z_i)\\), build \\(Z_S(X)=\\prod_i(X-z_i)\\), and compute \\(q(X)=(f(X)-I_S(X))/Z_S(X)\\).",
+              "Batch verify: check \\(e(C/[I_S(\\tau)]_1,g_2)\\stackrel{?}{=}e(\\pi,[Z_S(\\tau)]_2)\\). The implementation computes both commitments from the public \\(G_1\\) and \\(G_2\\) powers of tau."
+            ]
+          }
+        ],
+        "algorithms": [
+          {
+            "id": "kzg-commitment",
+            "title": "KZG Polynomial Commitments, Single Openings, and Batch Openings",
+            "readmeTitle": "KZG Polynomial Commitment README",
+            "codeTitle": "kzg_commitment.py",
+            "steps": [
+              "Setup: sample a trapdoor \\(\\tau\\leftarrow\\mathbb Z_p\\), publish \\([1]_1,[\\tau]_1,\\ldots,[\\tau^D]_1\\) and \\([1]_2,[\\tau]_2,\\ldots,[\\tau^D]_2\\). In a real deployment, \\(\\tau\\) must be destroyed after the trusted setup.",
+              "Commit: for \\(f(X)=\\sum_{i=0}^{d}a_iX^i\\), output the constant-size commitment \\(C=[f(\\tau)]_1=\\prod_i[\\tau^i]_1^{a_i}\\). The code entry point is `kzg.commit(polynomial)`.",
+              "Open: to open at \\(z\\), compute \\(y=f(z)\\), form \\(q(X)=(f(X)-y)/(X-z)\\), and output \\(\\pi=[q(\\tau)]_1\\).",
+              "Verify: check \\(e(C/[y]_1,g_2)\\stackrel{?}{=}e(\\pi,[\\tau-z]_2)\\). Correctness follows from \\(f(\\tau)-y=q(\\tau)(\\tau-z)\\).",
+              "Batch open: for \\(S=\\{z_1,\\ldots,z_m\\}\\), interpolate \\(I_S(z_i)=f(z_i)\\), build \\(Z_S(X)=\\prod_i(X-z_i)\\), and compute \\(q(X)=(f(X)-I_S(X))/Z_S(X)\\).",
+              "Batch verify: check \\(e(C/[I_S(\\tau)]_1,g_2)\\stackrel{?}{=}e(\\pi,[Z_S(\\tau)]_2)\\). The implementation computes both commitments from the public \\(G_1\\) and \\(G_2\\) powers of tau."
+            ],
+            "code": {
+              "language": "python",
+              "content": ""
+            },
+            "readmePath": "code/kzg-polynomial-commitments/README.md",
+            "codePath": "code/kzg-polynomial-commitments/kzg_commitment.py",
+            "codeLanguage": "python"
+          }
+        ],
+        "codePath": "code/kzg-polynomial-commitments/kzg_commitment.py",
+        "codeLanguage": "python"
+      }
+    ]
+  }
+}
