@@ -103,12 +103,65 @@
               "language": "python",
               "content": ""
             },
-            "readmePath": "code/kzg-polynomial-commitments/README.md",
+            "readmePath": "code/kzg-polynomial-commitments/README.en.md",
             "codePath": "code/kzg-polynomial-commitments/kzg_commitment.py",
             "codeLanguage": "python"
           }
         ],
         "codePath": "code/kzg-polynomial-commitments/kzg_commitment.py",
+        "codeLanguage": "python"
+      },
+      {
+        "id": "bls-short-signatures-weil-pairing",
+        "title": "Short Signatures from the Weil Pairing",
+        "authors": "Dan Boneh, Ben Lynn, and Hovav Shacham",
+        "venue": "Advances in Cryptology - ASIACRYPT 2001",
+        "year": 2001,
+        "volume": "LNCS 2248",
+        "pages": "514-532",
+        "doi": "10.1007/3-540-45682-1_30",
+        "code": {
+          "language": "python",
+          "content": ""
+        },
+        "abstract": "Boneh, Lynn, and Shacham introduced a short signature scheme from the Weil pairing. BLS signatures hash a message onto an elliptic-curve group, exponentiate that point with the secret key, and verify through a bilinear pairing equation. This Charm-Crypto implementation demonstrates single-message signing, aggregate verification for distinct messages, and fast aggregate verification for a common message, while noting the need for rogue-key defenses in real systems.",
+        "algorithmSections": [
+          {
+            "title": "BLS Short Signatures and Aggregate Verification",
+            "steps": [
+              "Setup: generate prime-order bilinear groups \\(G_1,G_2,G_T\\), choose generators \\(g_1\\in G_1\\) and \\(g_2\\in G_2\\), and define a hash-to-group function \\(H:\\{0,1\\}^{*}\\rightarrow G_1\\). The implementation entry point is `BLSSignature(curve=\"MNT224\")`.",
+              "KeyGen: sample a secret key \\(x\\leftarrow\\mathbb Z_p\\), then compute the public key \\(pk=g_2^x\\). The `keygen()` method returns `SecretKey` and `PublicKey`.",
+              "Sign: hash the message \\(m\\) into \\(h=H(m)\\in G_1\\), then output \\(\\sigma=h^x=H(m)^x\\). The code entry point is `bls.sign(secret_key, message)`.",
+              "Verify: check \\(e(\\sigma,g_2)\\stackrel{?}{=}e(H(m),pk)\\). Correctness follows from bilinearity: \\(e(H(m)^x,g_2)=e(H(m),g_2^x)\\).",
+              "Aggregate: signatures on distinct messages can be aggregated as \\(\\sigma=\\prod_i\\sigma_i\\), then verified with \\(e(\\sigma,g_2)=\\prod_i e(H(m_i),pk_i)\\).",
+              "Fast aggregate verify: when all signers sign the same message, aggregate public keys as \\(\\prod_i pk_i\\), then verify \\(e(\\sigma,g_2)=e(H(m),\\prod_i pk_i)\\). Real systems should add proof-of-possession or another rogue-key defense."
+            ]
+          }
+        ],
+        "algorithms": [
+          {
+            "id": "bls-signature",
+            "title": "BLS Short Signatures and Aggregate Verification",
+            "readmeTitle": "BLS Short Signature README",
+            "codeTitle": "bls_signature.py",
+            "steps": [
+              "Setup: generate prime-order bilinear groups \\(G_1,G_2,G_T\\), choose generators \\(g_1\\in G_1\\) and \\(g_2\\in G_2\\), and define a hash-to-group function \\(H:\\{0,1\\}^{*}\\rightarrow G_1\\). The implementation entry point is `BLSSignature(curve=\"MNT224\")`.",
+              "KeyGen: sample a secret key \\(x\\leftarrow\\mathbb Z_p\\), then compute the public key \\(pk=g_2^x\\). The `keygen()` method returns `SecretKey` and `PublicKey`.",
+              "Sign: hash the message \\(m\\) into \\(h=H(m)\\in G_1\\), then output \\(\\sigma=h^x=H(m)^x\\). The code entry point is `bls.sign(secret_key, message)`.",
+              "Verify: check \\(e(\\sigma,g_2)\\stackrel{?}{=}e(H(m),pk)\\). Correctness follows from bilinearity: \\(e(H(m)^x,g_2)=e(H(m),g_2^x)\\).",
+              "Aggregate: signatures on distinct messages can be aggregated as \\(\\sigma=\\prod_i\\sigma_i\\), then verified with \\(e(\\sigma,g_2)=\\prod_i e(H(m_i),pk_i)\\).",
+              "Fast aggregate verify: when all signers sign the same message, aggregate public keys as \\(\\prod_i pk_i\\), then verify \\(e(\\sigma,g_2)=e(H(m),\\prod_i pk_i)\\). Real systems should add proof-of-possession or another rogue-key defense."
+            ],
+            "code": {
+              "language": "python",
+              "content": ""
+            },
+            "readmePath": "code/bls-short-signatures-weil-pairing/README.en.md",
+            "codePath": "code/bls-short-signatures-weil-pairing/bls_signature.py",
+            "codeLanguage": "python"
+          }
+        ],
+        "codePath": "code/bls-short-signatures-weil-pairing/bls_signature.py",
         "codeLanguage": "python"
       }
     ]
