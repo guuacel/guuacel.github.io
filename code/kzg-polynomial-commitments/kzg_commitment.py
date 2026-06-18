@@ -18,8 +18,8 @@ else:
 def require_charm() -> None:
     if PairingGroup is None:
         raise RuntimeError(
-            "当前 Python 环境未安装 charm-crypto，无法运行真实 Charm pairing 版本。"
-            "请先安装 Charm-Crypto 后再执行本文件。"
+            "charm-crypto is not installed in the current Python environment. "
+            "Install Charm-Crypto before running this file."
         ) from _CHARM_IMPORT_ERROR
 
 
@@ -27,7 +27,7 @@ def timed(label: str, fn: Callable[[], Any]) -> Any:
     start = time.perf_counter()
     value = fn()
     elapsed_ms = (time.perf_counter() - start) * 1000
-    print(f"{label}运行时间为：{elapsed_ms:.3f} ms")
+    print(f"{label} elapsed time: {elapsed_ms:.3f} ms")
     return value
 
 
@@ -96,7 +96,7 @@ def interpolate(group: Any, points: Sequence[Tuple[Any, Any]]) -> List[Any]:
 
     xs = [point[0] for point in points]
     if len({str(x) for x in xs}) != len(xs):
-        raise ValueError("插值点的 x 坐标必须互不相同")
+        raise ValueError("interpolation x-coordinates must be distinct")
 
     result = [zr_zero(group)]
     for i, (xi, yi) in enumerate(points):
@@ -269,46 +269,46 @@ class KZGCommitment:
 
 
 def demo_single_opening() -> None:
-    print("========== KZG 单点打开演示 ==========")
+    print("========== KZG single-point opening demo ==========")
     kzg = timed("-----setup-----\n", lambda: KZGCommitment(curve="MNT224", max_degree=8))
-    print(f"公共参数：curve={kzg.curve}, max_degree={kzg.max_degree}")
-    print(f"生成元：g1={short(kzg.g1)}, g2={short(kzg.g2)}")
+    print(f"Public parameters: curve={kzg.curve}, max_degree={kzg.max_degree}")
+    print(f"Generators: g1={short(kzg.g1)}, g2={short(kzg.g2)}")
 
     polynomial = timed("-----sample polynomial-----\n", lambda: kzg.random_polynomial(degree=4))
-    print("多项式系数：")
+    print("Polynomial coefficients:")
     for index, coefficient in enumerate(polynomial):
         print(f"  a_{index}={short(coefficient)}")
 
     commitment = timed("-----commit-----\n", lambda: kzg.commit(polynomial))
-    print(f"承诺 C=[f(tau)]_1={short(commitment)}")
+    print(f"Commitment C=[f(tau)]_1={short(commitment)}")
 
     point = kzg.group.random(ZR)
     proof = timed("-----open-----\n", lambda: kzg.open(polynomial, point))
-    print(f"打开点 z={short(proof.point)}")
-    print(f"声明值 y=f(z)={short(proof.value)}")
-    print(f"证明 pi=[q(tau)]_1={short(proof.witness)}")
+    print(f"Opening point z={short(proof.point)}")
+    print(f"Claimed value y=f(z)={short(proof.value)}")
+    print(f"Proof pi=[q(tau)]_1={short(proof.witness)}")
 
     ok = timed("-----verify-----\n", lambda: kzg.verify(commitment, proof))
-    print(f"单点验证是否通过：{ok}")
+    print(f"Single-point verification passed: {ok}")
 
     bad_proof = OpeningProof(point=proof.point, value=proof.value + zr_one(kzg.group), witness=proof.witness)
     bad_ok = kzg.verify(commitment, bad_proof)
-    print(f"篡改声明值验证是否通过：{bad_ok}")
+    print(f"Tampered-value verification passed: {bad_ok}")
 
 
 def demo_batch_opening() -> None:
-    print("\n========== KZG 多点批量打开演示 ==========")
+    print("\n========== KZG multi-point batch opening demo ==========")
     kzg = KZGCommitment(curve="MNT224", max_degree=8)
     polynomial = kzg.random_polynomial(degree=5)
     commitment = kzg.commit(polynomial)
     points = [kzg.group.random(ZR) for _ in range(3)]
 
-    proof = timed("批量打开", lambda: kzg.batch_open(polynomial, points))
-    ok = timed("批量验证", lambda: kzg.batch_verify(commitment, proof))
-    print(f"批量点数：{len(points)}")
+    proof = timed("Batch open", lambda: kzg.batch_open(polynomial, points))
+    ok = timed("Batch verify", lambda: kzg.batch_verify(commitment, proof))
+    print(f"Number of batch points: {len(points)}")
     for point, value in zip(proof.points, proof.values):
         print(f"  z={short(point)}, f(z)={short(value)}")
-    print(f"批量验证是否通过：{ok}")
+    print(f"Batch verification passed: {ok}")
 
 
 if __name__ == "__main__":
