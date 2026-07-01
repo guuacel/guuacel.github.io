@@ -438,6 +438,22 @@ code, pre {
   margin-top: 0.15rem;
 }
 
+.edu-advisor {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-top: 0.2rem;
+}
+
+.edu-advisor a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.edu-advisor a:hover {
+  color: var(--color-primary-dark);
+}
+
 /* --------------------------------------------------------------------------
    Publications Section
    -------------------------------------------------------------------------- */

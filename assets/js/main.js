@@ -20,7 +20,7 @@
      ====================================================================== */
   let profileData = null;
   let currentLang = 'zh';
-  const ASSET_VERSION = '20260618-implementation-sort';
+  const ASSET_VERSION = '20260701-about-advisors';
 
   /* ======================================================================
      DOM References
@@ -64,6 +64,26 @@
     const div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
+  }
+
+  function renderInlineEmphasis(text, phrases) {
+    let rendered = escapeHTML(text || '');
+    (phrases || []).forEach(function (phrase) {
+      if (!phrase) return;
+      const escapedPhrase = escapeHTML(phrase);
+      rendered = rendered.split(escapedPhrase).join(`<strong>${escapedPhrase}</strong>`);
+    });
+    return rendered;
+  }
+
+  function renderAdvisor(advisor) {
+    if (!advisor || !advisor.name || !advisor.url) return '';
+    return `
+      <div class="edu-advisor">
+        ${escapeHTML(advisor.label || (currentLang === 'zh' ? '导师' : 'Advisor'))}:
+        <a href="${escapeHTML(advisor.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(advisor.name)}</a>
+      </div>
+    `;
   }
 
   function getPublicationTagClass(tag) {
@@ -280,6 +300,7 @@
           <div class="edu-degree">${escapeHTML(edu.degree)}</div>
           <div class="edu-school">${escapeHTML(edu.school)}</div>
           <div class="edu-year">${escapeHTML(edu.year)}</div>
+          ${renderAdvisor(edu.advisor)}
         </div>
       `;
     });
@@ -289,7 +310,7 @@
         <h2 class="section-title">${escapeHTML(about.title)}</h2>
         <div class="about-content">
           <div class="about-bio">
-            <p>${escapeHTML(about.bio)}</p>
+            <p>${renderInlineEmphasis(about.bio, about.bioBoldPhrases)}</p>
             <div class="about-research-text">
               <h3>${escapeHTML(researchLabel)}</h3>
               <p>${escapeHTML(researchText)}</p>

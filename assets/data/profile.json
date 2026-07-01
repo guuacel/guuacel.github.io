@@ -35,22 +35,38 @@
     },
     "about": {
       "title": "关于我",
-      "bio": "我目前是武汉大学网络空间安全学院的博士研究生，师从 曹越 教授。我的研究聚焦于工业控制系统（ICS）与工业物联网（IIoT）环境下的安全问题，涵盖密码协议设计、零信任认证架构、以及隐私保护数据共享等方向。在攻读博士期间，参与了多项国家级科研项目，并在相关领域发表多篇学术论文。",
+      "bio": "我目前是武汉大学网络空间安全学院的博士研究生，师从（曹越）教授。我的研究聚焦于工业控制系统（ICS）与工业物联网（IIoT）环境下的安全问题，涵盖密码协议设计、零信任认证架构、以及隐私保护数据共享等方向。在攻读博士期间，参与了多项国家级科研项目，并在相关领域发表多篇学术论文。",
+      "bioBoldPhrases": ["（曹越）"],
       "education": [
         {
           "degree": "博士研究生 · 网络空间安全",
           "school": "武汉大学",
-          "year": "2025 – 至今"
+          "year": "2025 – 至今",
+          "advisor": {
+            "label": "导师",
+            "name": "曹越",
+            "url": "http://yuecao.e.zwz.hk/"
+          }
         },
         {
           "degree": "硕士 · 电子信息",
           "school": "贵州大学",
-          "year": "2022 – 2025"
+          "year": "2022 – 2025",
+          "advisor": {
+            "label": "导师",
+            "name": "彭长根",
+            "url": "https://pbd.gzu.edu.cn/2024/0407/c17349a215054/page.htm"
+          }
         },
         {
           "degree": "学士 · 软件工程",
           "school": "北方民族大学",
-          "year": "2018 – 2022"
+          "year": "2018 – 2022",
+          "advisor": {
+            "label": "导师",
+            "name": "王晓峰",
+            "url": "https://bmdjsj.nmu.edu.cn/info/1064/2094.htm"
+          }
         }
       ],
       "researchInterests": [
@@ -652,22 +668,38 @@
     },
     "about": {
       "title": "About Me",
-      "bio": "I am currently a Ph.D. student at the School of Cyber Science and Engineering, Wuhan University. My research focuses on security issues in Industrial Control Systems (ICS) and Industrial Internet of Things (IIoT), including cryptographic protocol design, zero-trust authentication architectures, and privacy-preserving data sharing. During my doctoral studies, I have participated in several national-level research projects and published multiple papers in related fields.",
+      "bio": "I am currently a Ph.D. student at the School of Cyber Science and Engineering, Wuhan University, supervised by Prof. Yue Cao. My research focuses on security issues in Industrial Control Systems (ICS) and Industrial Internet of Things (IIoT), including cryptographic protocol design, zero-trust authentication architectures, and privacy-preserving data sharing. During my doctoral studies, I have participated in several national-level research projects and published multiple papers in related fields.",
+      "bioBoldPhrases": ["Prof. Yue Cao"],
       "education": [
         {
           "degree": "Ph.D. · Cyberspace Security",
           "school": "Wuhan University",
-          "year": "2025 – Present"
+          "year": "2025 – Present",
+          "advisor": {
+            "label": "Advisor",
+            "name": "Yue Cao",
+            "url": "http://yuecao.e.zwz.hk/"
+          }
         },
         {
           "degree": "M.S. · Electronic Information",
           "school": "Guizhou University",
-          "year": "2022 – 2025"
+          "year": "2022 – 2025",
+          "advisor": {
+            "label": "Advisor",
+            "name": "Changgen Peng",
+            "url": "https://pbd.gzu.edu.cn/2024/0407/c17349a215054/page.htm"
+          }
         },
         {
           "degree": "B.S. · Software Engineering",
           "school": "North Minzu University",
-          "year": "2018 – 2022"
+          "year": "2018 – 2022",
+          "advisor": {
+            "label": "Advisor",
+            "name": "Xiaofeng Wang",
+            "url": "https://bmdjsj.nmu.edu.cn/info/1064/2094.htm"
+          }
         }
       ],
       "researchInterests": [
