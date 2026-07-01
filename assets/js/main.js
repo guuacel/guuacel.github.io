@@ -20,7 +20,7 @@
      ====================================================================== */
   let profileData = null;
   let currentLang = 'zh';
-  const ASSET_VERSION = '20260701-about-advisors';
+  const ASSET_VERSION = '20260701-about-advisors-inline';
 
   /* ======================================================================
      DOM References
@@ -78,11 +78,10 @@
 
   function renderAdvisor(advisor) {
     if (!advisor || !advisor.name || !advisor.url) return '';
+    const label = advisor.label || (currentLang === 'zh' ? '导师' : 'Advisor');
+    const separator = currentLang === 'zh' ? '：' : ': ';
     return `
-      <div class="edu-advisor">
-        ${escapeHTML(advisor.label || (currentLang === 'zh' ? '导师' : 'Advisor'))}:
-        <a href="${escapeHTML(advisor.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(advisor.name)}</a>
-      </div>
+      <div class="edu-advisor">${escapeHTML(label)}${separator}<a href="${escapeHTML(advisor.url)}" target="_blank" rel="noopener noreferrer"><strong>${escapeHTML(advisor.name)}</strong></a></div>
     `;
   }
 
@@ -297,10 +296,12 @@
     about.education.forEach(function (edu) {
       eduHTML += `
         <div class="edu-item">
-          <div class="edu-degree">${escapeHTML(edu.degree)}</div>
+          <div class="edu-degree-row">
+            <div class="edu-degree">${escapeHTML(edu.degree)}</div>
+            ${renderAdvisor(edu.advisor)}
+          </div>
           <div class="edu-school">${escapeHTML(edu.school)}</div>
           <div class="edu-year">${escapeHTML(edu.year)}</div>
-          ${renderAdvisor(edu.advisor)}
         </div>
       `;
     });

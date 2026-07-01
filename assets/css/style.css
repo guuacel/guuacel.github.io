@@ -421,6 +421,13 @@ code, pre {
   border-bottom: none;
 }
 
+.edu-degree-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 10.75rem;
+  align-items: baseline;
+  column-gap: 1.5rem;
+}
+
 .edu-degree {
   font-size: 0.9rem;
   font-weight: 600;
@@ -441,7 +448,8 @@ code, pre {
 .edu-advisor {
   font-size: 0.8rem;
   color: var(--color-text-muted);
-  margin-top: 0.2rem;
+  justify-self: start;
+  white-space: nowrap;
 }
 
 .edu-advisor a {
@@ -452,6 +460,10 @@ code, pre {
 
 .edu-advisor a:hover {
   color: var(--color-primary-dark);
+}
+
+.edu-advisor strong {
+  font-weight: 700;
 }
 
 /* --------------------------------------------------------------------------
@@ -1982,6 +1994,15 @@ code, pre {
 @media (max-width: 768px) {
   :root {
     --section-padding: 3.5rem 1rem;
+  }
+
+  .edu-degree-row {
+    grid-template-columns: 1fr;
+    row-gap: 0.15rem;
+  }
+
+  .edu-advisor {
+    white-space: normal;
   }
 
   .tools-grid {
