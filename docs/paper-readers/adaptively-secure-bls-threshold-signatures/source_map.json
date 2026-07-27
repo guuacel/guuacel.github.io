@@ -1,0 +1,36 @@
+{
+  "paper": {
+    "title": "Adaptively Secure BLS Threshold Signatures from DDH and co-CDH",
+    "authors": ["Sourav Das", "Ling Ren"],
+    "year": 2024,
+    "pages": 32,
+    "source_format": "pdf-text",
+    "reader_scope": "targeted blog-oriented reading requested by the user"
+  },
+  "blocks": [
+    {"id": "S001", "page": 1, "type": "text", "topic": "research question and contribution", "confidence": "high"},
+    {"id": "S002", "page": 1, "type": "text", "topic": "static versus adaptive corruption", "confidence": "high"},
+    {"id": "S003", "page": "1-3", "type": "text", "topic": "limitations of prior work", "confidence": "high"},
+    {"id": "S004", "page": "3-4", "type": "text", "topic": "zero-constant auxiliary polynomial intuition", "confidence": "high"},
+    {"id": "S005", "page": "8-9", "type": "text", "topic": "Setup and KGen", "nearby": ["F001"], "confidence": "high"},
+    {"id": "F001", "page": 9, "type": "figure", "figure": 2, "asset": "assets/fig2-threshold-scheme.png", "confidence": "high"},
+    {"id": "S006", "page": "8-9", "type": "text", "topic": "PSign, PVer, and Sigma proof", "nearby": ["F002"], "confidence": "high"},
+    {"id": "F002", "page": 9, "type": "figure", "figure": 3, "asset": "assets/fig3-sigma-proof.png", "confidence": "high"},
+    {"id": "S007", "page": "9-10", "type": "text", "topic": "Comb and standard BLS verification", "confidence": "high"},
+    {"id": "S008", "page": "19-21", "type": "text", "topic": "modified JF-DKG", "nearby": ["F003"], "confidence": "high"},
+    {"id": "F003", "page": 21, "type": "figure", "figure": 5, "asset": "assets/fig5-dkg.png", "confidence": "high"},
+    {"id": "S009", "page": 27, "type": "text", "topic": "implementation and evaluation", "confidence": "high"},
+    {"id": "S010", "page": 28, "type": "text", "topic": "conclusion and assumptions", "confidence": "high"}
+  ],
+  "glossary": {
+    "threshold signature": "门限签名",
+    "adaptive adversary": "自适应攻击者",
+    "static adversary": "静态攻击者",
+    "DDH": "判定型 Diffie-Hellman",
+    "co-CDH": "co-计算型 Diffie-Hellman",
+    "random oracle model": "随机预言机模型",
+    "distributed key generation": "分布式密钥生成",
+    "single inconsistent party": "单一不一致参与方",
+    "partial signature": "部分签名"
+  }
+}
