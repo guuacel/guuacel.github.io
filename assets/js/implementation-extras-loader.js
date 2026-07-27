@@ -1,7 +1,8 @@
 (function () {
   'use strict';
 
-  const EXTRA_URL = 'assets/data/implementation-extras.json?v=20260618-kzg-implementation';
+  const ASSET_VERSION = '20260727-adaptive-bls-threshold';
+  const EXTRA_URL = 'assets/data/implementation-extras.json?v=' + ASSET_VERSION;
   const nativeFetch = window.fetch.bind(window);
 
   function isProfileRequest(input) {
@@ -43,7 +44,7 @@
   }
 
   async function readText(path) {
-    const response = await nativeFetch(path + '?v=20260618-kzg-implementation');
+    const response = await nativeFetch(path + '?v=' + ASSET_VERSION);
     if (!response.ok) throw new Error('Failed to load ' + path + ': ' + response.status);
     return response.text();
   }
