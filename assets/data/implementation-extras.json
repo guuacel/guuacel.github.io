@@ -53,6 +53,65 @@
         ],
         "codePath": "code/kzg-polynomial-commitments/kzg_commitment.py",
         "codeLanguage": "python"
+      },
+      {
+        "id": "adaptively-secure-bls-threshold-signatures",
+        "title": "Adaptively Secure BLS Threshold Signatures from DDH and co-CDH",
+        "authors": "Sourav Das and Ling Ren",
+        "venue": "Advances in Cryptology - CRYPTO 2024",
+        "year": 2024,
+        "volume": "LNCS 14926",
+        "pages": "251-284",
+        "doi": "10.1007/978-3-031-68394-7_9",
+        "abstract": "Das 和 Ren 针对经典 Boldyreva BLS 门限签名缺乏标准假设下自适应安全证明的问题，构造了依赖非对称配对群中 DDH 与 co-CDH 困难性的方案。该实现使用 Charm-Crypto 复现三多项式密钥份额、带 Fiat-Shamir Σ 证明的部分签名、拉格朗日聚合、标准 BLS 最终验证，以及改造版 JF-DKG。",
+        "code": {
+          "language": "python",
+          "content": ""
+        },
+        "algorithmSections": [
+          {
+            "title": "自适应安全 BLS 门限签名与改造版 JF-DKG",
+            "steps": [
+              "Setup：生成非对称配对群 \\((G,\\widehat G,G_T)\\)，在 \\(G\\) 中选择生成元 \\(g,h,v\\)，并定义 \\(H_0,H_1:\\mathcal M\\rightarrow\\widehat G\\) 与 Fiat-Shamir 随机预言机 \\(H_{FS}\\)。Charm 实现将论文的 \\(G\\) 映射到 `G2`、\\(\\widehat G\\) 映射到 `G1`。",
+              "KGen：选择三个 \\(t\\) 次多项式 \\(s(x),r(x),u(x)\\)，约束 \\(r(0)=u(0)=0\\)。签名者 \\(i\\) 获得 \\(sk_i=(s(i),r(i),u(i))\\)，门限公钥为 \\(pk_i=g^{s(i)}h^{r(i)}v^{u(i)}\\)，系统公钥为 \\(pk=g^{s(0)}\\)。",
+              "PSign：签名者计算 \\(\\sigma_i=H_0(m)^{s(i)}H_1(m)^{r(i)}\\)，并用同一组见证 \\((s(i),r(i),u(i))\\) 生成部分签名正确性的 Fiat-Shamir Σ 证明。",
+              "SigmaProve：随机选择 \\(a_s,a_r,a_u\\)，计算 \\(x=g^{a_s}h^{a_r}v^{a_u}\\)、\\(y=H_0(m)^{a_s}H_1(m)^{a_r}\\)，再由完整转录得到挑战 \\(c\\) 和响应 \\(z_s,z_r,z_u\\)。",
+              "PVer：验证 \\(g^{z_s}h^{z_r}v^{z_u}=x\\cdot pk_i^c\\) 以及 \\(H_0(m)^{z_s}H_1(m)^{z_r}=y\\cdot\\sigma_i^c\\)。任何失败的部分签名都在聚合前被拒绝。",
+              "Comb：收集至少 \\(t+1\\) 个不同签名者的有效部分签名，用零点处的拉格朗日系数 \\(L_{i,S}\\) 计算 \\(\\sigma=\\prod_{i\\in S}\\sigma_i^{L_{i,S}}\\)。由于 \\(r(0)=0\\)，聚合结果化为 \\(H_0(m)^{s(0)}\\)。",
+              "Ver：使用与普通 BLS 相同的配对等式 \\(e(pk,H_0(m))=e(g,\\sigma)\\)。Charm 的参数顺序写为 `pair(H0(m), pk) == pair(sigma, g)`。",
+              "DKG：每个 dealer 同时分享 \\(s_i(x)\\) 以及零常数多项式 \\(r_i(x),u_i(x)\\)，公布系数承诺并证明常数项知识；接收者验证三元份额，投诉不一致 dealer，最后对合格集合求和派生系统公钥和所有门限份额。",
+              "测试：验证任意合格的 \\(t+1\\) 子集产生同一唯一 BLS 签名，篡改部分签名或消息会被拒绝，份额不足无法聚合，且 DKG 能剔除发送不一致份额的 dealer。"
+            ]
+          }
+        ],
+        "algorithms": [
+          {
+            "id": "adaptive-bls-threshold",
+            "title": "自适应安全 BLS 门限签名与改造版 JF-DKG",
+            "readmeTitle": "Das-Ren BLS 门限签名 README",
+            "codeTitle": "adaptive_bls_threshold.py",
+            "steps": [
+              "Setup：生成非对称配对群 \\((G,\\widehat G,G_T)\\)，在 \\(G\\) 中选择生成元 \\(g,h,v\\)，并定义 \\(H_0,H_1:\\mathcal M\\rightarrow\\widehat G\\) 与 Fiat-Shamir 随机预言机 \\(H_{FS}\\)。Charm 实现将论文的 \\(G\\) 映射到 `G2`、\\(\\widehat G\\) 映射到 `G1`。",
+              "KGen：选择三个 \\(t\\) 次多项式 \\(s(x),r(x),u(x)\\)，约束 \\(r(0)=u(0)=0\\)。签名者 \\(i\\) 获得 \\(sk_i=(s(i),r(i),u(i))\\)，门限公钥为 \\(pk_i=g^{s(i)}h^{r(i)}v^{u(i)}\\)，系统公钥为 \\(pk=g^{s(0)}\\)。",
+              "PSign：签名者计算 \\(\\sigma_i=H_0(m)^{s(i)}H_1(m)^{r(i)}\\)，并用同一组见证 \\((s(i),r(i),u(i))\\) 生成部分签名正确性的 Fiat-Shamir Σ 证明。",
+              "SigmaProve：随机选择 \\(a_s,a_r,a_u\\)，计算 \\(x=g^{a_s}h^{a_r}v^{a_u}\\)、\\(y=H_0(m)^{a_s}H_1(m)^{a_r}\\)，再由完整转录得到挑战 \\(c\\) 和响应 \\(z_s,z_r,z_u\\)。",
+              "PVer：验证 \\(g^{z_s}h^{z_r}v^{z_u}=x\\cdot pk_i^c\\) 以及 \\(H_0(m)^{z_s}H_1(m)^{z_r}=y\\cdot\\sigma_i^c\\)。任何失败的部分签名都在聚合前被拒绝。",
+              "Comb：收集至少 \\(t+1\\) 个不同签名者的有效部分签名，用零点处的拉格朗日系数 \\(L_{i,S}\\) 计算 \\(\\sigma=\\prod_{i\\in S}\\sigma_i^{L_{i,S}}\\)。由于 \\(r(0)=0\\)，聚合结果化为 \\(H_0(m)^{s(0)}\\)。",
+              "Ver：使用与普通 BLS 相同的配对等式 \\(e(pk,H_0(m))=e(g,\\sigma)\\)。Charm 的参数顺序写为 `pair(H0(m), pk) == pair(sigma, g)`。",
+              "DKG：每个 dealer 同时分享 \\(s_i(x)\\) 以及零常数多项式 \\(r_i(x),u_i(x)\\)，公布系数承诺并证明常数项知识；接收者验证三元份额，投诉不一致 dealer，最后对合格集合求和派生系统公钥和所有门限份额。",
+              "测试：验证任意合格的 \\(t+1\\) 子集产生同一唯一 BLS 签名，篡改部分签名或消息会被拒绝，份额不足无法聚合，且 DKG 能剔除发送不一致份额的 dealer。"
+            ],
+            "code": {
+              "language": "python",
+              "content": ""
+            },
+            "readmePath": "code/adaptively-secure-bls-threshold-signatures/README.md",
+            "codePath": "code/adaptively-secure-bls-threshold-signatures/adaptive_bls_threshold.py",
+            "codeLanguage": "python"
+          }
+        ],
+        "codePath": "code/adaptively-secure-bls-threshold-signatures/adaptive_bls_threshold.py",
+        "codeLanguage": "python"
       }
     ]
   },
@@ -162,6 +221,65 @@
           }
         ],
         "codePath": "code/bls-short-signatures-weil-pairing/bls_signature.py",
+        "codeLanguage": "python"
+      },
+      {
+        "id": "adaptively-secure-bls-threshold-signatures",
+        "title": "Adaptively Secure BLS Threshold Signatures from DDH and co-CDH",
+        "authors": "Sourav Das and Ling Ren",
+        "venue": "Advances in Cryptology - CRYPTO 2024",
+        "year": 2024,
+        "volume": "LNCS 14926",
+        "pages": "251-284",
+        "doi": "10.1007/978-3-031-68394-7_9",
+        "abstract": "Das and Ren address the lack of an adaptive-security proof for the classic Boldyreva threshold BLS scheme under standard assumptions. Their construction relies on DDH and co-CDH in asymmetric pairing groups while preserving non-interactive signing and ordinary BLS final verification. This Charm-Crypto implementation covers the three-polynomial key shares, Fiat-Shamir Sigma proofs, Lagrange aggregation, and the modified JF-DKG.",
+        "code": {
+          "language": "python",
+          "content": ""
+        },
+        "algorithmSections": [
+          {
+            "title": "Adaptively Secure BLS Threshold Signatures and Modified JF-DKG",
+            "steps": [
+              "Setup: generate asymmetric pairing groups \\((G,\\widehat G,G_T)\\), choose \\(g,h,v\\in G\\), and define \\(H_0,H_1:\\mathcal M\\rightarrow\\widehat G\\) plus the Fiat-Shamir random oracle \\(H_{FS}\\). The Charm implementation maps the paper's \\(G\\) to `G2` and \\(\\widehat G\\) to `G1`.",
+              "KGen: sample degree-\\(t\\) polynomials \\(s(x),r(x),u(x)\\) with \\(r(0)=u(0)=0\\). Signer \\(i\\) receives \\(sk_i=(s(i),r(i),u(i))\\), its threshold public key is \\(pk_i=g^{s(i)}h^{r(i)}v^{u(i)}\\), and the system public key is \\(pk=g^{s(0)}\\).",
+              "PSign: compute \\(\\sigma_i=H_0(m)^{s(i)}H_1(m)^{r(i)}\\), then use the same witness \\((s(i),r(i),u(i))\\) to produce a Fiat-Shamir Sigma proof that the partial signature matches the threshold public key.",
+              "SigmaProve: sample \\(a_s,a_r,a_u\\), compute \\(x=g^{a_s}h^{a_r}v^{a_u}\\) and \\(y=H_0(m)^{a_s}H_1(m)^{a_r}\\), hash the full transcript to challenge \\(c\\), and return responses \\(z_s,z_r,z_u\\).",
+              "PVer: check \\(g^{z_s}h^{z_r}v^{z_u}=x\\cdot pk_i^c\\) and \\(H_0(m)^{z_s}H_1(m)^{z_r}=y\\cdot\\sigma_i^c\\). Any invalid share is rejected before aggregation.",
+              "Comb: collect at least \\(t+1\\) valid shares from distinct signers and compute \\(\\sigma=\\prod_{i\\in S}\\sigma_i^{L_{i,S}}\\) with Lagrange coefficients at zero. Because \\(r(0)=0\\), the result reduces to \\(H_0(m)^{s(0)}\\).",
+              "Ver: use the ordinary BLS equation \\(e(pk,H_0(m))=e(g,\\sigma)\\). Charm's argument order is `pair(H0(m), pk) == pair(sigma, g)`.",
+              "DKG: every dealer shares \\(s_i(x)\\) and the zero-constant polynomials \\(r_i(x),u_i(x)\\), broadcasts coefficient commitments and a constant-term proof, handles complaints, and sums the qualified dealers' contributions to derive all threshold keys.",
+              "Tests: check that every qualified \\(t+1\\) subset yields the same unique BLS signature, tampering is rejected, too few shares cannot be combined, and the DKG disqualifies a dealer that reveals inconsistent shares."
+            ]
+          }
+        ],
+        "algorithms": [
+          {
+            "id": "adaptive-bls-threshold",
+            "title": "Adaptively Secure BLS Threshold Signatures and Modified JF-DKG",
+            "readmeTitle": "Das-Ren BLS Threshold Signature README",
+            "codeTitle": "adaptive_bls_threshold.py",
+            "steps": [
+              "Setup: generate asymmetric pairing groups \\((G,\\widehat G,G_T)\\), choose \\(g,h,v\\in G\\), and define \\(H_0,H_1:\\mathcal M\\rightarrow\\widehat G\\) plus the Fiat-Shamir random oracle \\(H_{FS}\\). The Charm implementation maps the paper's \\(G\\) to `G2` and \\(\\widehat G\\) to `G1`.",
+              "KGen: sample degree-\\(t\\) polynomials \\(s(x),r(x),u(x)\\) with \\(r(0)=u(0)=0\\). Signer \\(i\\) receives \\(sk_i=(s(i),r(i),u(i))\\), its threshold public key is \\(pk_i=g^{s(i)}h^{r(i)}v^{u(i)}\\), and the system public key is \\(pk=g^{s(0)}\\).",
+              "PSign: compute \\(\\sigma_i=H_0(m)^{s(i)}H_1(m)^{r(i)}\\), then use the same witness \\((s(i),r(i),u(i))\\) to produce a Fiat-Shamir Sigma proof that the partial signature matches the threshold public key.",
+              "SigmaProve: sample \\(a_s,a_r,a_u\\), compute \\(x=g^{a_s}h^{a_r}v^{a_u}\\) and \\(y=H_0(m)^{a_s}H_1(m)^{a_r}\\), hash the full transcript to challenge \\(c\\), and return responses \\(z_s,z_r,z_u\\).",
+              "PVer: check \\(g^{z_s}h^{z_r}v^{z_u}=x\\cdot pk_i^c\\) and \\(H_0(m)^{z_s}H_1(m)^{z_r}=y\\cdot\\sigma_i^c\\). Any invalid share is rejected before aggregation.",
+              "Comb: collect at least \\(t+1\\) valid shares from distinct signers and compute \\(\\sigma=\\prod_{i\\in S}\\sigma_i^{L_{i,S}}\\) with Lagrange coefficients at zero. Because \\(r(0)=0\\), the result reduces to \\(H_0(m)^{s(0)}\\).",
+              "Ver: use the ordinary BLS equation \\(e(pk,H_0(m))=e(g,\\sigma)\\). Charm's argument order is `pair(H0(m), pk) == pair(sigma, g)`.",
+              "DKG: every dealer shares \\(s_i(x)\\) and the zero-constant polynomials \\(r_i(x),u_i(x)\\), broadcasts coefficient commitments and a constant-term proof, handles complaints, and sums the qualified dealers' contributions to derive all threshold keys.",
+              "Tests: check that every qualified \\(t+1\\) subset yields the same unique BLS signature, tampering is rejected, too few shares cannot be combined, and the DKG disqualifies a dealer that reveals inconsistent shares."
+            ],
+            "code": {
+              "language": "python",
+              "content": ""
+            },
+            "readmePath": "code/adaptively-secure-bls-threshold-signatures/README.en.md",
+            "codePath": "code/adaptively-secure-bls-threshold-signatures/adaptive_bls_threshold.py",
+            "codeLanguage": "python"
+          }
+        ],
+        "codePath": "code/adaptively-secure-bls-threshold-signatures/adaptive_bls_threshold.py",
         "codeLanguage": "python"
       }
     ]
