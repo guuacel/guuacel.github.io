@@ -201,6 +201,136 @@
               ]
             }
           ]
+        },
+        {
+          id: 'chapter-2',
+          number: '第二章',
+          title: 'LLL 格基约化算法',
+          source: 'Lattices in Computer Science, Lecture 2: LLL Algorithm',
+          introduction: '本章研究 LLL 格基约化算法。它把任意整数格基转换为结构更规整的约化基，并从中得到最短向量问题的指数因子近似解。内容依次包括约化基定义、近似保证、算法步骤、正确性和多项式时间分析。',
+          sections: [
+            {
+              title: '1. LLL 算法解决什么问题',
+              paragraphs: [
+                'LLL 算法由 A. K. Lenstra、H. W. Lenstra Jr. 和 L. Lovász 于 1982 年提出。它可以视为二维 Gauss 格基约化向高维空间的推广：输入一组可能很长、很倾斜的格基，输出一组更短、更接近正交的等价格基。',
+                'LLL 并不保证找到真正的最短非零格向量，但会把约化基的第一个向量作为 SVP 的近似解。它在固定维数中给出常数近似，也广泛用于整数与有理数上的多项式分解、代数数最小多项式恢复、整数关系发现、固定维整数规划、CVP 近似以及密码分析。'
+              ],
+              bullets: [
+                '多项式分解：把整数或有理数系数多项式分解为不可约因子。',
+                '整数关系：寻找不全为零的整数系数，使若干实数的线性组合为零。',
+                '数值恢复：从高精度近似值推断代数数满足的最小多项式。',
+                '密码分析：分析背包密码、特殊参数 RSA 等系统中的弱结构。'
+              ],
+              note: '本章讨论满秩整数格和欧氏范数。非满秩格以及其他范数存在相应扩展。'
+            },
+            {
+              title: '2. \\(\\delta\\)-LLL 约化基',
+              paragraphs: [
+                '设 \\(B=(b_1,\\ldots,b_n)\\) 的 Gram-Schmidt 正交化为 \\((\\widetilde b_1,\\ldots,\\widetilde b_n)\\)，并记投影系数为 \\(\\mu_{i,j}=\\langle b_i,\\widetilde b_j\\rangle/\\langle\\widetilde b_j,\\widetilde b_j\\rangle\\)。当参数满足 \\(1/4<\\delta<1\\) 时，一组基称为 \\(\\delta\\)-LLL 约化基，需要同时满足两个条件。'
+              ],
+              formulas: [
+                '\\[|\\mu_{i,j}|\\leq\\frac12,\\qquad 1\\leq j<i\\leq n.\\]',
+                '\\[\\delta\\|\\widetilde b_i\\|^2\\leq\\|\\mu_{i+1,i}\\widetilde b_i+\\widetilde b_{i+1}\\|^2,\\qquad 1\\leq i<n.\\]',
+                '\\[\\|\\widetilde b_{i+1}\\|^2\\geq\\left(\\delta-\\frac14\\right)\\|\\widetilde b_i\\|^2.\\]'
+              ],
+              note: '第一个条件称为尺寸约化，它限制后续基向量在先前正交方向上的投影。第二个条件通常称为 Lovász 条件，它防止后一个正交化向量比前一个骤然变短。常用参数是 \\(\\delta=3/4\\)。',
+              figures: [
+                {
+                  src: 'assets/img/knowledge/lattice/chapter-2/lll-reduced-definition.png',
+                  alt: '原讲义中的 LLL 约化基定义',
+                  caption: '图 1：原讲义给出的 Gram-Schmidt 系数和 \\(\\delta\\)-LLL 约化基的两个条件。'
+                }
+              ]
+            },
+            {
+              title: '3. 约化基的近似质量',
+              paragraphs: [
+                'LLL 约化基最重要的性质，是第一个基向量不会比格中真正的最短非零向量长太多。Lovász 条件给出了相邻 Gram-Schmidt 长度之间的递推关系，把它从第一个方向一直传递到最后一个方向。再结合 \\(\\lambda_1(\\mathcal L)\\geq\\min_i\\|\\widetilde b_i\\|\\)，即可得到近似界。'
+              ],
+              formulas: [
+                '\\[\\|b_1\\|\\leq\\left(\\delta-\\frac14\\right)^{-(n-1)/2}\\lambda_1(\\mathcal L)=\\left(\\frac{2}{\\sqrt{4\\delta-1}}\\right)^{n-1}\\lambda_1(\\mathcal L).\\]',
+                '\\[\\delta=\\frac34\\quad\\Longrightarrow\\quad\\|b_1\\|\\leq2^{(n-1)/2}\\lambda_1(\\mathcal L).\\]'
+              ],
+              note: '当 \\(\\delta\\) 趋近于 1 时，近似因子接近 \\((2/\\sqrt3)^{n-1}\\)。这仍随维数指数增长，但 LLL 的优势是能在输入长度的多项式时间内得到该保证。',
+              figures: [
+                {
+                  src: 'assets/img/knowledge/lattice/chapter-2/lll-approximation-bound.png',
+                  alt: '原讲义中的 LLL 最短向量近似界证明',
+                  caption: '图 2：从相邻正交化向量的长度关系推导第一个基向量的近似保证。'
+                }
+              ]
+            },
+            {
+              title: '4. LLL 的两个核心操作',
+              paragraphs: [
+                '算法先计算 Gram-Schmidt 数据，然后反复执行“尺寸约化”和“相邻交换”。尺寸约化从后向前处理投影方向，把 \\(b_i\\) 在 \\(\\widetilde b_j\\) 方向上的系数舍入到最近整数并消去，使 \\(|\\mu_{i,j}|\\leq1/2\\)。',
+                '如果某对相邻向量违反 Lovász 条件，就交换 \\(b_i\\) 与 \\(b_{i+1}\\)，重新计算相关 Gram-Schmidt 数据并继续。所有尺寸约化都是整数列操作，交换也是幺模操作，所以算法从始至终生成同一个格。'
+              ],
+              formulas: [
+                '\\[c_{i,j}=\\left\\lfloor\\frac{\\langle b_i,\\widetilde b_j\\rangle}{\\langle\\widetilde b_j,\\widetilde b_j\\rangle}\\right\\rceil,\\qquad b_i\\leftarrow b_i-c_{i,j}b_j.\\]',
+                '\\[\\text{若 }\\delta\\|\\widetilde b_i\\|^2>\\|\\mu_{i+1,i}\\widetilde b_i+\\widetilde b_{i+1}\\|^2,\\text{ 则交换 }b_i,b_{i+1}.\\]'
+              ],
+              note: '尺寸约化的内层循环必须按照 \\(j=i-1,i-2,\\ldots,1\\) 的逆序执行，否则后续操作可能重新破坏已经约化的高编号投影。',
+              figures: [
+                {
+                  src: 'assets/img/knowledge/lattice/chapter-2/lll-reduction-step.png',
+                  alt: '原讲义中的 LLL 尺寸约化步骤',
+                  caption: '图 3：尺寸约化步骤。对每个 \\(b_i\\)，从后向前消去过大的 Gram-Schmidt 投影系数。'
+                },
+                {
+                  src: 'assets/img/knowledge/lattice/chapter-2/lll-swap-step.png',
+                  alt: '原讲义中的 LLL 相邻交换步骤',
+                  caption: '图 4：若 Lovász 条件不成立，则交换相邻基向量并重新开始检查。'
+                }
+              ]
+            },
+            {
+              title: '5. 为什么输出一定正确',
+              paragraphs: [
+                '若算法终止，交换检查保证每一对相邻向量都满足 Lovász 条件；逆序尺寸约化保证所有 \\(|\\mu_{i,j}|\\leq1/2\\)。因此输出满足 \\(\\delta\\)-LLL 约化基的定义。',
+                '算法只使用 \\(b_i\\leftarrow b_i+a b_j\\)（其中 \\(a\\in\\mathbb Z\\)）和基向量交换。这些操作对应整数幺模变换，不改变格；因此输出不仅“约化”，而且仍是输入格的一组基。'
+              ],
+              note: '在尺寸约化中，从 \\(b_i\\) 减去较早基向量的整数倍不会改变其正交剩余量，所以这一阶段无须完整重算 Gram-Schmidt 正交基。'
+            },
+            {
+              title: '6. 势函数与终止性',
+              paragraphs: [
+                '为了证明算法不会无限交换，讲义为每组基定义一个对前部向量赋予更高权重的势函数。令 \\(\\Lambda_i=\\mathcal L(b_1,\\ldots,b_i)\\)，其行列式为 \\(D_{B,i}\\)，则：'
+              ],
+              formulas: [
+                '\\[D_B=\\prod_{i=1}^{n}\\|\\widetilde b_i\\|^{n-i+1}=\\prod_{i=1}^{n}D_{B,i}.\\]',
+                '\\[\\frac{D_B\' }{D_B}=\\frac{\\|\\mu_{i+1,i}\\widetilde b_i+\\widetilde b_{i+1}\\|}{\\|\\widetilde b_i\\|}<\\sqrt\\delta.\\]'
+              ],
+              note: '尺寸约化不改变 Gram-Schmidt 向量，因此势函数保持不变；每次违反 Lovász 条件的交换都会让势函数至少乘上一个小于 1 的固定因子。初始势函数的对数受输入比特长度的多项式控制，而势函数又有正下界，所以交换次数是多项式级。',
+              figures: [
+                {
+                  src: 'assets/img/knowledge/lattice/chapter-2/lll-potential.png',
+                  alt: '原讲义中的 LLL 势函数定义',
+                  caption: '图 5：LLL 运行时间分析所用的势函数；越靠前的 Gram-Schmidt 向量权重越大。'
+                }
+              ]
+            },
+            {
+              title: '7. 为什么还要分析数值大小',
+              paragraphs: [
+                '多项式次算术操作并不自动意味着多项式时间，因为中间整数或有理数的位数可能迅速膨胀。LLL 的完整分析还必须证明：Gram-Schmidt 向量可以用多项式位数表示，尺寸约化过程中出现的整数系数和基向量也不会变得过大。',
+                '证明利用前缀格行列式、Cramer 法则和范数上界，控制 Gram-Schmidt 坐标的分母与大小；再结合 \\(|\\mu_{i,j}|\\leq1/2\\)，控制约化后基向量以及中间更新的位长。由此可知，每轮所需的位运算数和总轮数都为输入规模的多项式。'
+              ]
+            },
+            {
+              title: '8. 实际表现与后续方向',
+              paragraphs: [
+                'LLL 和其推广 BKZ 的最坏情况行为已有较成熟的界，但实验表明，在很多“典型”格上它们通常明显优于最坏情况分析。如何解释这种平均或启发式表现，以及如何针对理想格等特殊格族设计更强的约化算法，仍是重要研究方向。',
+                '若需要比 LLL 更好的高维近似质量，可以使用 Schnorr 的分块思想以及 BKZ。它们通过在更大的局部块中执行更强的约化，用更多计算时间换取更短的输出向量。'
+              ]
+            },
+            {
+              title: '本章小结',
+              paragraphs: [
+                'LLL 的核心是一种“局部整理、全局下降”的机制：尺寸约化压低投影系数，Lovász 检查纠正不合理的向量顺序，势函数保证交换不能无限发生。最终得到的等价基既具有可证明的短向量近似质量，又能在输入比特长度的多项式时间内计算，是格算法和格密码工具链中的基础算法。'
+              ]
+            }
+          ]
         }
       ]
     },
