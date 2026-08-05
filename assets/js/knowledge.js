@@ -7,7 +7,7 @@
   const initialParams = new URLSearchParams(window.location.search);
   let activeBookId = initialParams.get('book') || 'lattice';
   let activeChapterId = initialParams.get('chapter') || 'chapter-1';
-  let expandedBookId = activeBookId;
+  let expandedBookId = null;
 
   const pageCopy = {
     zh: {
