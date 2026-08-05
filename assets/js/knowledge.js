@@ -24,6 +24,11 @@
       overview: '内容概览',
       topics: '核心知识',
       path: '建议阅读路径',
+      discussion: '章节讨论',
+      discussionHint: '登录 GitHub 后提问或回复',
+      discussionLoading: '正在加载本章讨论…',
+      discussionError: '讨论组件加载失败。',
+      discussionOpen: '前往 GitHub Discussions',
       footer: '阅读 · 理解 · 实践'
     },
     en: {
@@ -40,6 +45,11 @@
       overview: 'Overview',
       topics: 'Key Topics',
       path: 'Suggested Reading Path',
+      discussion: 'Chapter Discussion',
+      discussionHint: 'Sign in with GitHub to ask or reply',
+      discussionLoading: 'Loading this chapter discussion…',
+      discussionError: 'The discussion widget could not be loaded.',
+      discussionOpen: 'Open GitHub Discussions',
       footer: 'Read · Understand · Practice'
     }
   };
@@ -781,8 +791,23 @@
     shelfHint: document.getElementById('bookShelfHint'),
     list: document.getElementById('bookList'),
     content: document.getElementById('bookContent'),
+    discussion: document.getElementById('chapterDiscussion'),
+    discussionTitle: document.getElementById('discussionTitle'),
+    discussionHint: document.getElementById('discussionHint'),
+    discussionChapterNumber: document.getElementById('discussionChapterNumber'),
+    discussionChapterTitle: document.getElementById('discussionChapterTitle'),
+    discussionMount: document.getElementById('giscusMount'),
     footer: document.getElementById('knowledgeFooter')
   };
+
+  const giscusConfig = {
+    repo: 'guuacel/guuacel.github.io',
+    repoId: 'R_kgDOSyBWsA',
+    category: 'Q&A',
+    categoryId: 'DIC_kwDOSyBWsM4DCvBL'
+  };
+
+  let discussionRenderToken = 0;
 
   function escapeHTML(value) {
     const node = document.createElement('div');
@@ -811,6 +836,8 @@
     elements.summary.textContent = copy.summary;
     elements.shelfTitle.textContent = copy.shelf;
     elements.shelfHint.textContent = copy.hint;
+    elements.discussionTitle.textContent = copy.discussion;
+    elements.discussionHint.textContent = copy.discussionHint;
     elements.footer.textContent = copy.footer;
   }
 
@@ -934,6 +961,64 @@
     }
   }
 
+  function renderDiscussion(book, chapter) {
+    discussionRenderToken += 1;
+    const renderToken = discussionRenderToken;
+    elements.discussionMount.replaceChildren();
+
+    if (!chapter) {
+      elements.discussion.hidden = true;
+      return;
+    }
+
+    const copy = pageCopy[currentLang];
+    elements.discussion.hidden = false;
+    elements.discussion.style.setProperty('--book-color', book.color);
+    elements.discussionChapterNumber.textContent = book.title + ' · ' + chapter.number;
+    elements.discussionChapterTitle.textContent = chapter.title;
+
+    const loading = document.createElement('p');
+    loading.className = 'knowledge-discussion-loading';
+    loading.textContent = copy.discussionLoading;
+    elements.discussionMount.appendChild(loading);
+
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    script.async = true;
+    script.crossOrigin = 'anonymous';
+    script.setAttribute('data-repo', giscusConfig.repo);
+    script.setAttribute('data-repo-id', giscusConfig.repoId);
+    script.setAttribute('data-category', giscusConfig.category);
+    script.setAttribute('data-category-id', giscusConfig.categoryId);
+    script.setAttribute('data-mapping', 'specific');
+    script.setAttribute('data-term', 'knowledge/' + book.id + '/' + chapter.id);
+    script.setAttribute('data-strict', '1');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'top');
+    script.setAttribute('data-theme', 'light');
+    script.setAttribute('data-lang', currentLang === 'zh' ? 'zh-CN' : 'en');
+    script.setAttribute('data-loading', 'lazy');
+    script.addEventListener('load', function () {
+      if (renderToken === discussionRenderToken) loading.remove();
+    });
+    script.addEventListener('error', function () {
+      if (renderToken !== discussionRenderToken) return;
+      elements.discussionMount.replaceChildren();
+      const message = document.createElement('p');
+      const link = document.createElement('a');
+      message.className = 'knowledge-discussion-error';
+      message.appendChild(document.createTextNode(copy.discussionError + ' '));
+      link.href = 'https://github.com/' + giscusConfig.repo + '/discussions';
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = copy.discussionOpen;
+      message.appendChild(link);
+      elements.discussionMount.appendChild(message);
+    });
+    elements.discussionMount.appendChild(script);
+  }
+
   function renderBookContent() {
     const book = getBook(activeBookId);
     const chapter = getChapter(book, activeChapterId);
@@ -941,6 +1026,7 @@
     if (chapter) activeChapterId = chapter.id;
     elements.content.style.setProperty('--book-color', book.color);
     elements.content.innerHTML = chapter ? renderChapterContent(book, chapter) : renderOverviewContent(book);
+    renderDiscussion(book, chapter);
     typesetMath();
   }
 
