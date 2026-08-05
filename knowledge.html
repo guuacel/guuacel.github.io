@@ -7,7 +7,7 @@
   <meta name="description" content="密码学与网络安全基础书目及阅读笔记。">
   <link rel="icon" type="image/png" href="assets/img/avatar-placeholder.png">
   <link rel="stylesheet" href="assets/css/style.css?v=20260805-knowledge-library">
-  <link rel="stylesheet" href="assets/css/knowledge.css?v=20260805-default-collapsed-lattice">
+  <link rel="stylesheet" href="assets/css/knowledge.css?v=20260806-chapter-discussions">
   <script>
     window.MathJax = {
       tex: {
@@ -53,6 +53,21 @@
         </aside>
 
         <article class="knowledge-reader" id="bookContent" role="tabpanel" aria-live="polite"></article>
+
+        <aside class="knowledge-discussion" id="chapterDiscussion" aria-labelledby="discussionTitle" hidden>
+          <div class="knowledge-discussion-heading">
+            <span class="knowledge-discussion-mark" aria-hidden="true">论</span>
+            <div>
+              <h2 id="discussionTitle">章节讨论</h2>
+              <p id="discussionHint">登录 GitHub 后提问或回复</p>
+            </div>
+          </div>
+          <div class="knowledge-discussion-context">
+            <span id="discussionChapterNumber"></span>
+            <strong id="discussionChapterTitle"></strong>
+          </div>
+          <div class="knowledge-discussion-mount" id="giscusMount" aria-live="polite"></div>
+        </aside>
       </div>
     </div>
   </main>
@@ -63,6 +78,6 @@
 
   <script defer src="assets/js/lattice-chapters-4-8.js?v=20260805-default-collapsed-lattice"></script>
   <script defer src="assets/js/lattice-chapters-9-12.js?v=20260805-default-collapsed-lattice"></script>
-  <script defer src="assets/js/knowledge.js?v=20260805-default-collapsed-lattice"></script>
+  <script defer src="assets/js/knowledge.js?v=20260806-chapter-discussions"></script>
 </body>
 </html>
