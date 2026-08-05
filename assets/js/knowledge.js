@@ -7,6 +7,7 @@
   const initialParams = new URLSearchParams(window.location.search);
   let activeBookId = initialParams.get('book') || 'lattice';
   let activeChapterId = initialParams.get('chapter') || 'chapter-1';
+  let expandedBookId = activeBookId;
 
   const pageCopy = {
     zh: {
@@ -816,8 +817,13 @@
   function renderBookList() {
     elements.list.innerHTML = books.map(function (book) {
       const isActive = book.id === activeBookId;
-      const chapterList = isActive && book.chapters ?
-        '<div class="knowledge-chapter-list" aria-label="' + escapeHTML(book.title) + '章节">' +
+      const hasChapters = Boolean(book.chapters && book.chapters.length);
+      const isExpanded = hasChapters && book.id === expandedBookId;
+      const chapterListId = 'chapter-list-' + book.id;
+      const chapterList = hasChapters ?
+        '<div class="knowledge-chapter-list" id="' + escapeHTML(chapterListId) + '"' +
+          (isExpanded ? '' : ' hidden') +
+          ' aria-label="' + escapeHTML(book.title) + '章节">' +
           book.chapters.map(function (chapter) {
             const chapterIsActive = chapter.id === activeChapterId;
             return '<button class="knowledge-chapter' + (chapterIsActive ? ' is-active' : '') + '"' +
@@ -832,9 +838,14 @@
       return '<div class="knowledge-book-entry">' +
         '<button class="knowledge-book' + (isActive ? ' is-active' : '') + '"' +
           ' type="button" role="tab" aria-selected="' + isActive + '"' +
-          ' aria-controls="bookContent" data-book-id="' + escapeHTML(book.id) + '"' +
+          ' aria-controls="bookContent' + (hasChapters ? ' ' + escapeHTML(chapterListId) : '') + '"' +
+          (hasChapters ? ' aria-expanded="' + isExpanded + '"' : '') +
+          ' data-book-id="' + escapeHTML(book.id) + '"' +
           ' style="--book-color:' + escapeHTML(book.color) + '">' +
-          '<span class="knowledge-book-title">' + escapeHTML(book.title) + '</span>' +
+          '<span class="knowledge-book-heading">' +
+            '<span class="knowledge-book-title">' + escapeHTML(book.title) + '</span>' +
+            (hasChapters ? '<span class="knowledge-book-expander" aria-hidden="true"></span>' : '') +
+          '</span>' +
           '<span class="knowledge-book-author">' + escapeHTML(book.author) + '</span>' +
         '</button>' +
         chapterList +
@@ -954,17 +965,28 @@
   elements.list.addEventListener('click', function (event) {
     const button = event.target.closest('[data-book-id]');
     if (!button) return;
-    activeBookId = button.getAttribute('data-book-id');
+    const clickedBookId = button.getAttribute('data-book-id');
+    activeBookId = clickedBookId;
     const book = getBook(activeBookId);
-    if (button.hasAttribute('data-chapter-id')) {
+    const isChapterButton = button.hasAttribute('data-chapter-id');
+    if (isChapterButton) {
       activeChapterId = button.getAttribute('data-chapter-id');
+      expandedBookId = activeBookId;
     } else if (book.chapters && book.chapters.length) {
-      activeChapterId = book.chapters[0].id;
+      expandedBookId = expandedBookId === activeBookId ? null : activeBookId;
+    } else {
+      expandedBookId = null;
     }
     updateLocation();
     renderBookList();
     renderBookContent();
-    if (window.innerWidth <= 880) {
+    const focusTarget = elements.list.querySelector(
+      isChapterButton ?
+        '[data-book-id="' + clickedBookId + '"][data-chapter-id="' + activeChapterId + '"]' :
+        '.knowledge-book[data-book-id="' + clickedBookId + '"]'
+    );
+    if (focusTarget) focusTarget.focus();
+    if (window.innerWidth <= 880 && (isChapterButton || !book.chapters || !book.chapters.length)) {
       elements.content.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   });
@@ -978,6 +1000,9 @@
     activeBookId = books[nextIndex].id;
     if (books[nextIndex].chapters && books[nextIndex].chapters.length) {
       activeChapterId = books[nextIndex].chapters[0].id;
+      expandedBookId = activeBookId;
+    } else {
+      expandedBookId = null;
     }
     updateLocation();
     renderBookList();

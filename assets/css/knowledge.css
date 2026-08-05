@@ -143,9 +143,34 @@
 
 .knowledge-book-title {
   display: block;
+  min-width: 0;
+  flex: 1;
   font-size: 0.87rem;
   font-weight: 750;
   line-height: 1.4;
+}
+
+.knowledge-book-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.knowledge-book-expander {
+  width: 0.48rem;
+  height: 0.48rem;
+  flex: 0 0 auto;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  opacity: 0.65;
+  transform: rotate(45deg);
+  transform-origin: center;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+.knowledge-book[aria-expanded="true"] .knowledge-book-expander {
+  opacity: 1;
+  transform: rotate(225deg);
 }
 
 .knowledge-book-author {
