@@ -657,7 +657,10 @@
             }
           ]
         }
-      ]
+      ].concat(
+        window.LATTICE_CHAPTERS_4_8 || [],
+        window.LATTICE_CHAPTERS_9_12 || []
+      )
     },
     {
       id: 'understanding-cryptography',
