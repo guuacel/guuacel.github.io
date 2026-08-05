@@ -13,7 +13,8 @@
         "patents": "专利与软著",
         "contact": "联系方式",
         "tools": "工具",
-        "implementations": "论文实现"
+        "implementations": "论文实现",
+        "knowledge": "基础知识"
       },
       "languageLabel": "English",
       "footer": {
@@ -646,7 +647,8 @@
         "patents": "Patents",
         "contact": "Contact",
         "tools": "Tools",
-        "implementations": "Paper Implementations"
+        "implementations": "Paper Implementations",
+        "knowledge": "Fundamentals"
       },
       "languageLabel": "中文",
       "footer": {

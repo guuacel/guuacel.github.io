@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>基础知识 | Fundamentals</title>
+  <meta name="description" content="密码学与网络安全基础书目及阅读笔记。">
+  <link rel="icon" type="image/png" href="assets/img/avatar-placeholder.png">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260805-knowledge-library">
+  <link rel="stylesheet" href="assets/css/knowledge.css?v=20260805-knowledge-library">
+</head>
+<body class="guide-body knowledge-body">
+  <header class="guide-nav">
+    <div class="container guide-nav-inner">
+      <a class="guide-brand knowledge-brand" href="knowledge.html" id="knowledgeBrand">基础知识</a>
+      <div class="guide-actions">
+        <a class="guide-button" id="knowledgeHomeLink" href="index.html#implementations">返回主页</a>
+        <button class="guide-button" id="knowledgeLangToggle" type="button">English</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="knowledge-main">
+    <div class="container">
+      <section class="knowledge-intro" aria-labelledby="knowledgeTitle">
+        <div class="guide-eyebrow" id="knowledgeEyebrow">Digital Library</div>
+        <h1 class="guide-title" id="knowledgeTitle">基础知识</h1>
+        <p class="guide-summary" id="knowledgeSummary">精选密码学与网络安全基础书目，整理核心概念、知识结构和阅读建议。</p>
+      </section>
+
+      <div class="knowledge-library">
+        <aside class="knowledge-shelf" aria-labelledby="bookShelfTitle">
+          <div class="knowledge-shelf-heading">
+            <span class="knowledge-shelf-mark" aria-hidden="true">书</span>
+            <div>
+              <h2 id="bookShelfTitle">书籍导航</h2>
+              <p id="bookShelfHint">选择一本书查看内容</p>
+            </div>
+          </div>
+          <div class="knowledge-book-list" id="bookList" role="tablist" aria-orientation="vertical"></div>
+        </aside>
+
+        <article class="knowledge-reader" id="bookContent" role="tabpanel" aria-live="polite"></article>
+      </div>
+    </div>
+  </main>
+
+  <footer class="knowledge-footer">
+    <div class="container" id="knowledgeFooter">阅读 · 理解 · 实践</div>
+  </footer>
+
+  <script src="assets/js/knowledge.js?v=20260805-knowledge-library"></script>
+</body>
+</html>

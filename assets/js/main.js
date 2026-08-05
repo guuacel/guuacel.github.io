@@ -20,7 +20,7 @@
      ====================================================================== */
   let profileData = null;
   let currentLang = 'zh';
-  const ASSET_VERSION = '20260701-about-advisors-inline';
+  const ASSET_VERSION = '20260805-knowledge-library';
 
   /* ======================================================================
      DOM References
@@ -229,6 +229,7 @@
       <a href="#publications">${escapeHTML(nav.publications)}</a>
       <a href="#tools">${escapeHTML(nav.tools)}</a>
       <a href="#implementations">${escapeHTML(nav.implementations)}</a>
+      <a href="knowledge.html">${escapeHTML(nav.knowledge)}</a>
       <a href="#contact">${escapeHTML(nav.contact)}</a>
       <button class="lang-toggle" id="langToggle" aria-label="Switch language">${escapeHTML(langLabel)}</button>
     `;
