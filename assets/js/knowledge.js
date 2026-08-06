@@ -29,6 +29,7 @@
       discussionLoading: '正在加载本章讨论…',
       discussionError: '讨论组件加载失败。',
       discussionOpen: '前往 GitHub Discussions',
+      downloadPdf: '下载原版 PDF',
       footer: '阅读 · 理解 · 实践'
     },
     en: {
@@ -50,6 +51,7 @@
       discussionLoading: 'Loading this chapter discussion…',
       discussionError: 'The discussion widget could not be loaded.',
       discussionOpen: 'Open GitHub Discussions',
+      downloadPdf: 'Download Original PDF',
       footer: 'Read · Understand · Practice'
     }
   };
@@ -81,6 +83,7 @@
           number: '第一章',
           title: '格的基本概念与计算问题',
           source: 'Lattices in Computer Science, Lecture 1: Introduction',
+          sourcePdf: 'assets/pdfs/knowledge/lattice/01-introduction.pdf',
           introduction: '本章从二维周期点阵出发，依次介绍格、格基、基本平行多面体、格的行列式、Gram-Schmidt 正交化、逐次最小值与 Minkowski 定理，最后给出最短向量问题和最近向量问题的计算定义。',
           sections: [
             {
@@ -218,6 +221,7 @@
           number: '第二章',
           title: 'LLL 格基约化算法',
           source: 'Lattices in Computer Science, Lecture 2: LLL Algorithm',
+          sourcePdf: 'assets/pdfs/knowledge/lattice/02-lll.pdf',
           introduction: '本章严格按照讲义的顺序，从“为什么需要约化格基”开始，依次学习 Gram-Schmidt 正交化、δ-LLL 约化基的两个条件、LLL 算法的尺寸约化与交换步骤、正确性、势函数终止证明和位复杂度。内容面向初学者，先解释每个符号和动作的直觉，再给出原讲义中的公式与证明主线。',
           sections: [
             {
@@ -476,6 +480,7 @@
           number: '第三章',
           title: '最近向量问题与 Babai 最近平面算法',
           source: 'Lattices in Computer Science, Lecture 3: CVP Algorithm',
+          sourcePdf: 'assets/pdfs/knowledge/lattice/03-cvp.pdf',
           introduction: '本章面向第一次学习格算法的读者，研究最近向量问题（CVP）及其经典近似算法——Babai 最近平面算法。我们会先用几何直觉理解“离目标最近的格点”，再区分搜索、优化和判定三种近似 CVP，随后逐步拆解算法、手算一个二维例子，并用初学者能够跟上的方式说明近似保证为什么成立。',
           sections: [
             {
@@ -908,6 +913,11 @@
 
   function renderChapterContent(book, chapter) {
     const copy = pageCopy[currentLang];
+    const pdfDownload = chapter.sourcePdf ?
+      '<a class="knowledge-pdf-download" href="' + escapeHTML(chapter.sourcePdf) + '" download' +
+        ' aria-label="' + escapeHTML(copy.downloadPdf + '：' + chapter.title) + '">' +
+        escapeHTML(copy.downloadPdf) +
+      '</a>' : '';
     return '<header class="knowledge-reader-header">' +
         '<div class="knowledge-category">' + escapeHTML(book.category.zh) + ' · ' + escapeHTML(chapter.number) + '</div>' +
         '<h2 class="knowledge-reader-title">' + escapeHTML(book.title) + '</h2>' +
@@ -915,6 +925,7 @@
         '<div class="knowledge-book-meta">' +
           '<span>' + escapeHTML(copy.author) + ' · ' + escapeHTML(book.author) + '</span>' +
           '<span>' + escapeHTML(copy.level) + ' · ' + escapeHTML(book.level.zh) + '</span>' +
+          pdfDownload +
         '</div>' +
       '</header>' +
       '<div class="knowledge-reader-body knowledge-chapter-body">' +

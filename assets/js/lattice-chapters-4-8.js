@@ -7,6 +7,7 @@
       number: '第四章',
       title: '低公开指数 RSA 攻击与 Coppersmith 小根方法',
       source: 'Lattices in Computer Science, Lecture 4: Attack on RSA with Low Public Exponent',
+      sourcePdf: 'assets/pdfs/knowledge/lattice/04-rsa.pdf',
       introduction: '本章从 RSA 的加密、解密过程讲起，解释为什么把公开指数取得很小虽然能加快加密，却会在重复发送或结构化填充时泄露明文。随后按照讲义的证明路线，介绍如何用中国剩余定理合并同余式，以及如何把“小模根”问题编码成格中的短向量，再借助 LLL 找到一个在整数上也为零的辅助多项式。',
       sections: [
         {
@@ -130,6 +131,7 @@
       number: '第五章',
       title: '定维整数规划与 Lenstra 算法',
       source: 'Lattices in Computer Science, Lecture 5: Integer Programming',
+      sourcePdf: 'assets/pdfs/knowledge/lattice/05-integer-programming.pdf',
       introduction: '本章按照讲义介绍整数规划为何在一般维数下是 NP 完全问题，以及 Lenstra 如何在维数固定时把它变成多项式时间问题。核心思路是：先用椭球把凸体变得接近球形，再把整数点变成变换后的格点，最后借助 LLL 找到一个稀疏方向，只枚举常数条可能相交的平行超平面并递归降维。',
       sections: [
         {
@@ -232,6 +234,7 @@
       number: '第六章',
       title: '格问题的基础复杂度：CVP、SVP 与归约',
       source: 'Lattices in Computer Science, Lecture 5: Some Basic Complexity Results',
+      sourcePdf: 'assets/pdfs/knowledge/lattice/06-complexity.pdf',
       introduction: '本章建立格计算问题的复杂度语言。我们先区分 CVP 的判定、优化与搜索版本，并证明精确版本之间多项式等价；随后给出判定 CVP 的 NP 完全性证明；最后定义 GapCVP 与 GapSVP，说明如何用保持维数和近似间隙的归约，把 GapSVP 转化为多个 GapCVP 实例。',
       sections: [
         {
@@ -337,6 +340,7 @@
       number: '第七章',
       title: '近似困难性的边界：Goldreich–Goldwasser 协议',
       source: 'Lattices in Computer Science, Lecture 7: Limits on Inapproximability',
+      sourcePdf: 'assets/pdfs/knowledge/lattice/07-gg.pdf',
       introduction: '本章讨论一个反方向的问题：我们不仅想证明格问题困难，也想知道近似因子大到什么程度后，它不太可能仍是 NP 困难的。Goldreich–Goldwasser 协议让一个全知证明者帮助概率验证者确认“目标点离格很远”，从而把较大间隙的 GapCVP 放入 coAM。证明使用统计距离、高维球交叠和基本平行多面体上的周期分布。',
       sections: [
         {
@@ -465,6 +469,7 @@
       number: '第八章',
       title: '精确 SVP 的指数时间随机筛法',
       source: 'Lattices in Computer Science, Lecture 8: A 2^{O(n)}-Time Algorithm for SVP',
+      sourcePdf: 'assets/pdfs/knowledge/lattice/08-svp-algorithm.pdf',
       introduction: '本章介绍 Ajtai–Kumar–Sivakumar 的随机筛法。算法先把最短向量长度缩放到已知区间，再从半径为 2 的球中采样大量点，将它们模基本平行多面体约化，并反复用少量中心压缩代表向量。最终得到许多短格向量，通过一个只用于分析的随机对称操作证明，其中必然出现真正的最短向量。',
       sections: [
         {

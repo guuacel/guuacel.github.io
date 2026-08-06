@@ -392,7 +392,8 @@
   margin-top: 1rem;
 }
 
-.knowledge-book-meta span {
+.knowledge-book-meta span,
+.knowledge-pdf-download {
   padding: 0.22rem 0.65rem;
   color: var(--color-tag-text);
   background: var(--color-tag-bg);
@@ -400,6 +401,36 @@
   border-radius: var(--radius-full);
   font-size: 0.74rem;
   font-weight: 650;
+}
+
+.knowledge-pdf-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #fff;
+  background: #276749;
+  border-color: #276749;
+  text-decoration: none;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.knowledge-pdf-download::before {
+  content: "↓";
+  font-size: 0.85rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.knowledge-pdf-download:hover {
+  color: #fff;
+  background: #1f5b3e;
+  border-color: #1f5b3e;
+  transform: translateY(-1px);
+}
+
+.knowledge-pdf-download:focus-visible {
+  outline: 3px solid rgba(39, 103, 73, 0.24);
+  outline-offset: 2px;
 }
 
 .knowledge-reader-body {

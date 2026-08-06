@@ -7,6 +7,7 @@
       number: '第九章',
       title: '对偶格、KZ 基与转移思想',
       source: 'Lattices in Computer Science, Lecture 8: Dual Lattices',
+      sourcePdf: 'assets/pdfs/knowledge/lattice/09-dual-lattice.pdf',
       introduction: '本章从内积的整数约束定义对偶格，推导对偶基、二次对偶和行列式互反关系。接着用逐次最小值说明原格与对偶格的长短如何互相制约，并介绍递归选择最短投影向量的 Korkine–Zolotarev 基。最后说明这些结构怎样产生 GapSVP 的 coNP 证书和近似 SVP 归约。',
       sections: [
         {
@@ -135,6 +136,7 @@
       number: '第十章',
       title: '傅里叶变换、傅里叶级数与 Poisson 求和公式',
       source: 'Lattices in Computer Science, Lecture 9: Fourier Transform',
+      sourcePdf: 'assets/pdfs/knowledge/lattice/10-fourier-transform.pdf',
       introduction: '本章补齐后续高斯格分析需要的傅里叶工具。我们从一维傅里叶变换及矩形函数、高斯函数的例子出发，整理平移、调制、缩放、卷积和微分等性质，再推广到高维。随后转向周期函数的傅里叶级数，并逐步把 Poisson 求和公式从整数格推广到任意满秩格。',
       sections: [
         {
@@ -282,6 +284,7 @@
       number: '第十一章',
       title: '转移定理、覆盖半径与周期高斯',
       source: 'Lattices in Computer Science, Lecture 11: Transference Theorems',
+      sourcePdf: 'assets/pdfs/knowledge/lattice/11-transference.pdf',
       introduction: '本章用上一章的 Poisson 求和公式证明原格和对偶格之间更强的几何联系。目标是理解 Banaszczyk 转移定理 \\(1\\le\\lambda_1(\\Lambda)\\lambda_n(\\Lambda^*)\\le n\\)。讲义通过覆盖半径把问题转化为 \\(\\lambda_1(\\Lambda)\\mu(\\Lambda^*)\\) 的上界，并用周期高斯的尾界与“平移后近似均匀”性质完成反证。',
       sections: [
         {
@@ -411,6 +414,7 @@
       number: '第十二章',
       title: '平均情形困难性与格上的碰撞抗性哈希',
       source: 'Lattices in Computer Science, Lecture 12: Average-Case Hardness',
+      sourcePdf: 'assets/pdfs/knowledge/lattice/12-average-case.pdf',
       introduction: '本章解释格密码最有代表性的性质：破解随机生成的密码实例，可以被转化为求解任意最坏情况格实例。我们以模子集和碰撞抗性哈希为例，先定义 SIVP 与 CRHF，再引入平滑参数，说明高斯噪声如何把任意格基本平行多面体上的分布“抹平”。最后逐步分析 FINDVECTOR 归约，证明随机碰撞寻找器能够产生一组短且线性无关的格向量。',
       sections: [
         {
