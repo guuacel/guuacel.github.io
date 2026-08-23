@@ -536,6 +536,109 @@
   line-height: 1.75;
 }
 
+.knowledge-code-panel {
+  margin-top: 1.1rem;
+  overflow: hidden;
+  color: #e6edf3;
+  background: #0d1826;
+  border: 1px solid #26384c;
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 24px rgba(13, 24, 38, 0.12);
+}
+
+.knowledge-code-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 2.85rem;
+  padding: 0.45rem 0.55rem 0.45rem 1rem;
+  color: #aebfd0;
+  background: #142235;
+  border-bottom: 1px solid #26384c;
+  font-size: 0.74rem;
+  font-weight: 750;
+}
+
+.knowledge-code-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.knowledge-code-tab {
+  padding: 0.38rem 0.65rem;
+  color: #b8c8d8;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0.38rem;
+  cursor: pointer;
+  font: inherit;
+  transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.knowledge-code-tab:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.knowledge-code-tab.is-active {
+  color: #fff;
+  background: #276749;
+  border-color: #3a8a62;
+}
+
+.knowledge-code-tab:focus-visible {
+  outline: 3px solid rgba(104, 211, 145, 0.35);
+  outline-offset: 2px;
+}
+
+.knowledge-code-block {
+  max-width: 100%;
+  margin: 0;
+  padding: 1.15rem;
+  overflow: auto;
+  color: #e6edf3;
+  background: #0d1826;
+  font-family: "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.78rem;
+  line-height: 1.7;
+  tab-size: 2;
+  white-space: pre;
+}
+
+.knowledge-code-block[hidden] {
+  display: none;
+}
+
+.knowledge-references ol {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0.75rem 0 0;
+  padding-left: 1.3rem;
+}
+
+.knowledge-references li {
+  padding-left: 0.2rem;
+}
+
+.knowledge-references li::before {
+  display: none;
+}
+
+.knowledge-references a {
+  color: var(--color-accent);
+  font-weight: 650;
+  text-decoration: underline;
+  text-decoration-color: rgba(44, 111, 170, 0.32);
+  text-underline-offset: 0.18em;
+}
+
+.knowledge-references a:hover {
+  color: var(--color-primary);
+  text-decoration-color: currentColor;
+}
+
 .knowledge-figure-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -667,6 +770,26 @@
 
   .knowledge-equation {
     padding: 0.7rem 0.5rem;
+  }
+
+  .knowledge-code-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding: 0.65rem;
+  }
+
+  .knowledge-code-tabs {
+    width: 100%;
+  }
+
+  .knowledge-code-tab {
+    flex: 1;
+  }
+
+  .knowledge-code-block {
+    padding: 0.9rem;
+    font-size: 0.72rem;
   }
 }
 

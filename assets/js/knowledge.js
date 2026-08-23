@@ -678,6 +678,7 @@
         window.LATTICE_CHAPTERS_9_12 || []
       )
     },
+    window.GUOMI_BOOK,
     {
       id: 'understanding-cryptography',
       color: '#2c6faa',
@@ -783,7 +784,7 @@
         en: ['Understand the role of each core primitive', 'Trace data flow through a real protocol', 'Map trust boundaries and review system risks']
       }
     }
-  ];
+  ].filter(Boolean);
 
   const elements = {
     brand: document.getElementById('knowledgeBrand'),
@@ -904,15 +905,66 @@
           '</figure>';
         }).join('') +
       '</div>' : '';
+    const codeExamples = renderCodeExamples(section.codeExamples);
 
     return '<section class="knowledge-content-section knowledge-article-section">' +
       '<h2>' + escapeHTML(section.title) + '</h2>' +
-      paragraphs + formulas + note + bullets + figures +
+      paragraphs + formulas + note + bullets + figures + codeExamples +
+    '</section>';
+  }
+
+  function renderCodeExamples(examples) {
+    if (!examples) return '';
+    const languages = [
+      { id: 'python', label: 'Python' },
+      { id: 'cpp', label: 'C++' },
+      { id: 'java', label: 'Java' }
+    ];
+    const tabs = languages.map(function (language, index) {
+      return '<button class="knowledge-code-tab' + (index === 0 ? ' is-active' : '') + '"' +
+        ' type="button" role="tab" data-code-lang="' + language.id + '"' +
+        ' aria-selected="' + (index === 0 ? 'true' : 'false') + '">' +
+        escapeHTML(language.label) +
+      '</button>';
+    }).join('');
+    const panels = languages.map(function (language, index) {
+      return '<pre class="knowledge-code-block" data-code-panel="' + language.id + '"' +
+        (index === 0 ? '' : ' hidden') + '><code>' +
+        escapeHTML(examples[language.id] || '本语言暂无示例。') +
+      '</code></pre>';
+    }).join('');
+    return '<div class="knowledge-code-panel">' +
+      '<div class="knowledge-code-toolbar">' +
+        '<span>示例代码</span>' +
+        '<div class="knowledge-code-tabs" role="tablist" aria-label="切换示例代码语言">' + tabs + '</div>' +
+      '</div>' +
+      panels +
+    '</div>';
+  }
+
+  function renderReferences(references) {
+    if (!references || !references.length) return '';
+    return '<section class="knowledge-content-section knowledge-references">' +
+      '<h2>资料与实现库</h2>' +
+      '<ol>' + references.map(function (reference) {
+        return '<li><a href="' + escapeHTML(reference.url) + '" target="_blank" rel="noopener noreferrer">' +
+          escapeHTML(reference.label) +
+        '</a></li>';
+      }).join('') + '</ol>' +
     '</section>';
   }
 
   function renderChapterContent(book, chapter) {
     const copy = pageCopy[currentLang];
+    const articleSections = chapter.sections.filter(function (section) {
+      return !section.codeExamples;
+    });
+    const codeSections = chapter.sections.filter(function (section) {
+      return Boolean(section.codeExamples);
+    });
+    const sourceNote = chapter.sourceNote || (chapter.sourcePdf ?
+      '中文学习笔记，插图截取自原讲义。' :
+      '中文学习讲义，网页资料与实现库链接见本章末尾。');
     const pdfDownload = chapter.sourcePdf ?
       '<a class="knowledge-pdf-download" href="' + escapeHTML(chapter.sourcePdf) + '" download' +
         ' aria-label="' + escapeHTML(copy.downloadPdf + '：' + chapter.title) + '">' +
@@ -931,9 +983,11 @@
       '<div class="knowledge-reader-body knowledge-chapter-body">' +
         '<div class="knowledge-chapter-lead">' +
           '<p>' + escapeHTML(chapter.introduction) + '</p>' +
-          '<div class="knowledge-source-note"><strong>资料来源</strong><span>' + escapeHTML(chapter.source) + '</span><span>中文学习笔记，插图截取自原讲义。</span></div>' +
+          '<div class="knowledge-source-note"><strong>资料来源</strong><span>' + escapeHTML(chapter.source) + '</span><span>' + escapeHTML(sourceNote) + '</span></div>' +
         '</div>' +
-        chapter.sections.map(renderChapterSection).join('') +
+        articleSections.map(renderChapterSection).join('') +
+        renderReferences(chapter.references) +
+        codeSections.map(renderChapterSection).join('') +
       '</div>';
   }
 
@@ -1054,6 +1108,12 @@
   }
 
   function render() {
+    const book = getBook(activeBookId);
+    if (book.chapters && book.chapters.length && !book.chapters.some(function (chapter) {
+      return chapter.id === activeChapterId;
+    })) {
+      activeChapterId = book.chapters[0].id;
+    }
     renderPageCopy();
     renderBookList();
     renderBookContent();
@@ -1063,6 +1123,7 @@
     const button = event.target.closest('[data-book-id]');
     if (!button) return;
     const clickedBookId = button.getAttribute('data-book-id');
+    const previousBookId = activeBookId;
     activeBookId = clickedBookId;
     const book = getBook(activeBookId);
     const isChapterButton = button.hasAttribute('data-chapter-id');
@@ -1070,6 +1131,11 @@
       activeChapterId = button.getAttribute('data-chapter-id');
       expandedBookId = activeBookId;
     } else if (book.chapters && book.chapters.length) {
+      if (previousBookId !== activeBookId || !book.chapters.some(function (chapter) {
+        return chapter.id === activeChapterId;
+      })) {
+        activeChapterId = book.chapters[0].id;
+      }
       expandedBookId = expandedBookId === activeBookId ? null : activeBookId;
     } else {
       expandedBookId = null;
@@ -1112,6 +1178,22 @@
     currentLang = supportedLanguages[(supportedLanguages.indexOf(currentLang) + 1) % supportedLanguages.length];
     localStorage.setItem(LANG_KEY, currentLang);
     render();
+  });
+
+  elements.content.addEventListener('click', function (event) {
+    const tab = event.target.closest('[data-code-lang]');
+    if (!tab) return;
+    const panel = tab.closest('.knowledge-code-panel');
+    if (!panel) return;
+    const language = tab.getAttribute('data-code-lang');
+    panel.querySelectorAll('[data-code-lang]').forEach(function (button) {
+      const isActive = button === tab;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+    panel.querySelectorAll('[data-code-panel]').forEach(function (codePanel) {
+      codePanel.hidden = codePanel.getAttribute('data-code-panel') !== language;
+    });
   });
 
   render();
