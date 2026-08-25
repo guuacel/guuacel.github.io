@@ -164,6 +164,18 @@
       "doiLabel": "DOI",
       "papers": [
         {
+          "title": "An efficient conditional privacy-preserving batch authentication scheme against collusion attacks for VANETs",
+          "authors": "Yu Peng, Youliang Tian, Chuanda Cai, Qijia Zhang, Changgen Peng",
+          "venue": "Journal of Systems Architecture",
+          "year": 2026,
+          "type": "journal",
+          "doi": "10.1016/j.sysarc.2026.103950",
+          "pdf": "#",
+          "code": "#",
+          "tags": [],
+          "bibtex": "@article{peng2026efficient,\n  title={An Efficient Conditional Privacy-Preserving Batch Authentication Scheme Against Collusion Attacks for VANETs},\n  author={Yu Peng and Youliang Tian and Chuanda Cai and Qijia Zhang and Changgen Peng},\n  journal={Journal of Systems Architecture},\n  volume={180},\n  pages={103950},\n  year={2026},\n  doi={10.1016/j.sysarc.2026.103950}\n}"
+        },
+        {
           "title": "A Gateway-Assisted Fine-Grained Data Sharing Scheme for Cross-Domain IIoT",
           "authors": "Chuanda Cai, Yue Cao, Changbing Bi, Changgen Peng, Ali Shoker, Chao Fu",
           "venue": "IEEE Internet of Things Journal",
@@ -797,6 +809,18 @@
       "codeLabel": "Code",
       "doiLabel": "DOI",
       "papers": [
+        {
+          "title": "An efficient conditional privacy-preserving batch authentication scheme against collusion attacks for VANETs",
+          "authors": "Yu Peng, Youliang Tian, Chuanda Cai, Qijia Zhang, Changgen Peng",
+          "venue": "Journal of Systems Architecture",
+          "year": 2026,
+          "type": "journal",
+          "doi": "10.1016/j.sysarc.2026.103950",
+          "pdf": "#",
+          "code": "#",
+          "tags": [],
+          "bibtex": "@article{peng2026efficient,\n  title={An Efficient Conditional Privacy-Preserving Batch Authentication Scheme Against Collusion Attacks for VANETs},\n  author={Yu Peng and Youliang Tian and Chuanda Cai and Qijia Zhang and Changgen Peng},\n  journal={Journal of Systems Architecture},\n  volume={180},\n  pages={103950},\n  year={2026},\n  doi={10.1016/j.sysarc.2026.103950}\n}"
+        },
         {
           "title": "A Gateway-Assisted Fine-Grained Data Sharing Scheme for Cross-Domain IIoT",
           "authors": "Chuanda Cai, Yue Cao, Changbing Bi, Changgen Peng, Ali Shoker, Chao Fu",
