@@ -20,7 +20,7 @@
      ====================================================================== */
   let profileData = null;
   let currentLang = 'zh';
-  const ASSET_VERSION = '20260805-knowledge-library';
+  const ASSET_VERSION = '20260825-highlight-author';
 
   /* ======================================================================
      DOM References
@@ -408,7 +408,7 @@
         html += `
           <div class="pub-item">
             <div class="pub-title">${escapeHTML(paper.title)}</div>
-            <div class="pub-authors">${escapeHTML(paper.authors)}</div>
+            <div class="pub-authors">${renderInlineEmphasis(paper.authors, ['Chuanda Cai', '蔡传达'])}</div>
             <div class="pub-venue">${escapeHTML(paper.venue)}</div>
             <div class="pub-meta">
               <span class="pub-type-badge pub-type-${paper.type}">${typeLabel}</span>`;

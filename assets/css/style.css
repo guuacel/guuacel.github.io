@@ -546,6 +546,10 @@ code, pre {
   margin-bottom: 0.3rem;
 }
 
+.pub-authors strong {
+  font-weight: 700;
+}
+
 .pub-venue {
   font-size: 0.82rem;
   color: var(--color-accent);
