@@ -164,6 +164,33 @@
       "doiLabel": "DOI",
       "papers": [
         {
+          "title": "A Batch Identity-Based Encryption Scheme for Object-Level Authorization of Smart Tourism Data",
+          "authors": "Lixia Sun, Dengshuo Zhu, Changgen Peng, Chenran Xiong, Chuanda Cai",
+          "venue": "Cryptography",
+          "year": 2026,
+          "type": "journal",
+          "doi": "10.3390/cryptography10050067",
+          "pdf": "https://www.mdpi.com/2410-387X/10/5/67/pdf",
+          "code": "#",
+          "tags": [],
+          "bibtex": "@article{sun2026batch,\n  title={A Batch Identity-Based Encryption Scheme for Object-Level Authorization of Smart Tourism Data},\n  author={Lixia Sun and Dengshuo Zhu and Changgen Peng and Chenran Xiong and Chuanda Cai},\n  journal={Cryptography},\n  volume={10},\n  number={5},\n  pages={67},\n  year={2026},\n  doi={10.3390/cryptography10050067}\n}"
+        },
+        {
+          "title": "PA-ATAS: Edge-Assisted Policy-Aware Accountable Threshold Aggregate Signatures for IoT Authorization",
+          "authors": "Mingsong Huang, Changgen Peng, Chuanda Cai, Weijie Tan, Jianming Du",
+          "venue": "IEEE Internet of Things Journal",
+          "year": 2026,
+          "type": "journal",
+          "doi": "10.1109/JIOT.2026.3732016",
+          "pdf": "#",
+          "code": "#",
+          "tags": [
+            "中科院 2区 top",
+            "CCF C类"
+          ],
+          "bibtex": "@article{huang2026paatas,\n  title={{PA-ATAS}: Edge-Assisted Policy-Aware Accountable Threshold Aggregate Signatures for IoT Authorization},\n  author={Mingsong Huang and Changgen Peng and Chuanda Cai and Weijie Tan and Jianming Du},\n  journal={IEEE Internet of Things Journal},\n  year={2026},\n  doi={10.1109/JIOT.2026.3732016}\n}"
+        },
+        {
           "title": "An efficient conditional privacy-preserving batch authentication scheme against collusion attacks for VANETs",
           "authors": "Yu Peng, Youliang Tian, Chuanda Cai, Qijia Zhang, Changgen Peng",
           "venue": "Journal of Systems Architecture",
@@ -809,6 +836,33 @@
       "codeLabel": "Code",
       "doiLabel": "DOI",
       "papers": [
+        {
+          "title": "A Batch Identity-Based Encryption Scheme for Object-Level Authorization of Smart Tourism Data",
+          "authors": "Lixia Sun, Dengshuo Zhu, Changgen Peng, Chenran Xiong, Chuanda Cai",
+          "venue": "Cryptography",
+          "year": 2026,
+          "type": "journal",
+          "doi": "10.3390/cryptography10050067",
+          "pdf": "https://www.mdpi.com/2410-387X/10/5/67/pdf",
+          "code": "#",
+          "tags": [],
+          "bibtex": "@article{sun2026batch,\n  title={A Batch Identity-Based Encryption Scheme for Object-Level Authorization of Smart Tourism Data},\n  author={Lixia Sun and Dengshuo Zhu and Changgen Peng and Chenran Xiong and Chuanda Cai},\n  journal={Cryptography},\n  volume={10},\n  number={5},\n  pages={67},\n  year={2026},\n  doi={10.3390/cryptography10050067}\n}"
+        },
+        {
+          "title": "PA-ATAS: Edge-Assisted Policy-Aware Accountable Threshold Aggregate Signatures for IoT Authorization",
+          "authors": "Mingsong Huang, Changgen Peng, Chuanda Cai, Weijie Tan, Jianming Du",
+          "venue": "IEEE Internet of Things Journal",
+          "year": 2026,
+          "type": "journal",
+          "doi": "10.1109/JIOT.2026.3732016",
+          "pdf": "#",
+          "code": "#",
+          "tags": [
+            "XinRui Q1",
+            "CCF C"
+          ],
+          "bibtex": "@article{huang2026paatas,\n  title={{PA-ATAS}: Edge-Assisted Policy-Aware Accountable Threshold Aggregate Signatures for IoT Authorization},\n  author={Mingsong Huang and Changgen Peng and Chuanda Cai and Weijie Tan and Jianming Du},\n  journal={IEEE Internet of Things Journal},\n  year={2026},\n  doi={10.1109/JIOT.2026.3732016}\n}"
+        },
         {
           "title": "An efficient conditional privacy-preserving batch authentication scheme against collusion attacks for VANETs",
           "authors": "Yu Peng, Youliang Tian, Chuanda Cai, Qijia Zhang, Changgen Peng",

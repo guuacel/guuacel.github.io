@@ -20,7 +20,7 @@
      ====================================================================== */
   let profileData = null;
   let currentLang = 'zh';
-  const ASSET_VERSION = '20260825-highlight-author';
+  const ASSET_VERSION = '20261027-publications';
 
   /* ======================================================================
      DOM References
