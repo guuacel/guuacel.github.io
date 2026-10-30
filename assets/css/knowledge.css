@@ -594,6 +594,7 @@
 }
 
 .knowledge-code-block {
+  max-height: min(70vh, 46rem);
   max-width: 100%;
   margin: 0;
   padding: 1.15rem;

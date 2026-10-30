@@ -679,6 +679,7 @@
       )
     },
     window.GUOMI_BOOK,
+    window.RING_SIGNATURE_BOOK,
     {
       id: 'understanding-cryptography',
       color: '#2c6faa',
@@ -919,7 +920,10 @@
       { id: 'python', label: 'Python' },
       { id: 'cpp', label: 'C++' },
       { id: 'java', label: 'Java' }
-    ];
+    ].filter(function (language) {
+      return Boolean(examples[language.id] || examples[language.id + 'Url']);
+    });
+    if (!languages.length) return '';
     const tabs = languages.map(function (language, index) {
       return '<button class="knowledge-code-tab' + (index === 0 ? ' is-active' : '') + '"' +
         ' type="button" role="tab" data-code-lang="' + language.id + '"' +
@@ -928,9 +932,12 @@
       '</button>';
     }).join('');
     const panels = languages.map(function (language, index) {
+      const sourceUrl = examples[language.id + 'Url'];
       return '<pre class="knowledge-code-block" data-code-panel="' + language.id + '"' +
         (index === 0 ? '' : ' hidden') + '><code>' +
-        escapeHTML(examples[language.id] || '本语言暂无示例。') +
+        (sourceUrl ?
+          '<span data-code-source="' + escapeHTML(sourceUrl) + '">正在加载完整源码…</span>' :
+          escapeHTML(examples[language.id])) +
       '</code></pre>';
     }).join('');
     return '<div class="knowledge-code-panel">' +
@@ -1026,6 +1033,24 @@
     }
   }
 
+  function hydrateCodeExamples() {
+    const sources = elements.content.querySelectorAll('[data-code-source]');
+    sources.forEach(function (target) {
+      const sourceUrl = target.getAttribute('data-code-source');
+      fetch(sourceUrl)
+        .then(function (response) {
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+          return response.text();
+        })
+        .then(function (source) {
+          target.parentElement.textContent = source;
+        })
+        .catch(function () {
+          target.textContent = '源码加载失败，请使用“资料与实现库”中的链接下载。';
+        });
+    });
+  }
+
   function renderDiscussion(book, chapter) {
     discussionRenderToken += 1;
     const renderToken = discussionRenderToken;
@@ -1091,6 +1116,7 @@
     if (chapter) activeChapterId = chapter.id;
     elements.content.style.setProperty('--book-color', book.color);
     elements.content.innerHTML = chapter ? renderChapterContent(book, chapter) : renderOverviewContent(book);
+    hydrateCodeExamples();
     renderDiscussion(book, chapter);
     typesetMath();
   }
